@@ -1,10 +1,7 @@
 <script>
-
 export default {
-  name: "App"
+    name: "HomePage"
 }
 </script>
-
 <template>
 </template>
-

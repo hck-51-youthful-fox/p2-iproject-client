@@ -1,10 +1,7 @@
 <script>
-
 export default {
-  name: "App"
+    name: "RegisterPage"
 }
 </script>
-
 <template>
 </template>
-
