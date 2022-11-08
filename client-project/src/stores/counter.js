@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 const baseUrl = "http://localhost:3000";
 
 export const useNoteStore = defineStore("note", {
   state: () => ({
     isLogin: false,
     isPremium: false,
+    UserId: "",
+    payments: {},
   }),
   actions: {
     checkLogin() {
@@ -51,11 +54,19 @@ export const useNoteStore = defineStore("note", {
             password: result.password,
           },
         });
+        // console.log(response, "<<<< dari login");
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("status", response.data.status);
+        localStorage.setItem("UserId", response.data.id);
 
         this.isLogin = true;
+        this.UserId = response.data.id;
+        if (status === "reguler") {
+          this.isPremium = false;
+        } else if (status === "premium") {
+          this.isPremium = true;
+        }
         this.router.push("/");
       } catch (error) {
         Swal.fire({
@@ -64,6 +75,61 @@ export const useNoteStore = defineStore("note", {
         });
       }
     },
-    async payment() {},
+    async checkPremium() {
+      if (localStorage.getItem.status === "premium") {
+        this.isPremium = true;
+      } else if (localStorage.getItem.status === "reguler") {
+        this.isPremium = false;
+      }
+    },
+    async payment() {
+      try {
+        let { data } = await axios({
+          url: `${baseUrl}/payments`,
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(data, "<<< ini data payment");
+        let UserId = localStorage.getItem("UserId");
+        // ini pembayaran midtrans
+        snap.pay(`${data.transactionToken}`, {
+          onSuccess: async (result) => {
+            console.log(result, "<<< ini dari payment");
+            this.payments = result;
+
+            let response = await axios({
+              url: `${baseUrl}/payments/${UserId}`,
+              method: "PATCH",
+              headers: {
+                access_token: localStorage.getItem("access_token")
+              }
+            })
+            localStorage.setItem("status", 'premium')
+            this.isPremium = true
+            this.checkLogin()
+            alert("payment success!");
+            console.log(result);
+          },
+          onPending: function (result) {
+            /* You may add your own implementation here */
+            alert("wating your payment!");
+            console.log(result);
+          },
+          onError: function (result) {
+            /* You may add your own implementation here */
+            alert("payment failed!");
+            console.log(result);
+          },
+          onClose: function () {
+            /* You may add your own implementation here */
+            alert("you closed the popup without finishing the payment");
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });
