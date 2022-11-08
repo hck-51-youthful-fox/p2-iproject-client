@@ -11,7 +11,24 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useRZStore, ['loginToSite'])
+        ...mapActions(useRZStore, ['loginToSite', 'googleSignIn']),
+        handleCredentialResponse(response){
+        this.googleSignIn(response)
+      }
+    },
+    mounted() {
+      const cb = this.handleCredentialResponse
+      window.onload = function () {
+      google.accounts.id.initialize({
+      client_id:
+      "477962961064-dvup5hfmnigcka0t6nmpiheiqa7bafrf.apps.googleusercontent.com",
+      callback: cb,
+      });
+      google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" } // customization attributes
+     );
+    };
     }
 }
 </script>
