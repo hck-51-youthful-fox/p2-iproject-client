@@ -4,6 +4,13 @@ import axios from "axios";
 export const useRZStore = defineStore("RZ", {
   state: () => ({
     checkLogin: false,
+    user: {
+      username: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+      address: "",
+    },
   }),
   getters: {},
   actions: {
@@ -12,6 +19,7 @@ export const useRZStore = defineStore("RZ", {
       this.checkLogin = false;
       this.router.push("/login");
     },
+
     async loginToSite(email, password) {
       try {
         let { data } = await axios.post(`${baseUrl}/pub/login`, {
@@ -27,6 +35,7 @@ export const useRZStore = defineStore("RZ", {
         console.log(err);
       }
     },
+
     async register() {
       try {
         const { data } = await axios.post(`${baseUrl}/register`, this.user);
