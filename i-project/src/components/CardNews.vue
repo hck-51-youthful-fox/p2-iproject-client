@@ -4,6 +4,11 @@ import { mapActions, mapState } from "pinia";
 import { useDataStore } from "../stores/data";
 export default {
   nama: "cardNews",
+  data() {
+    return {
+      date: this.news.publishedAt,
+    };
+  },
   props: ["news"],
   methods: {
     ...mapActions(useDataStore, ["convertDate"]),
@@ -17,7 +22,7 @@ export default {
     data-mdb-ripple="true"
     data-mdb-ripple-color="light"
   >
-    <img :src="news.urlToImage" class="w-full h-96" />
+    <img :src="news.urlToImage" class="w-full h-full" />
     <a :href="news.url" target="_blank">
       <div
         class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
@@ -28,7 +33,7 @@ export default {
             <h5 class="font-bold text-lg mb-3">{{ news.title }}</h5>
             <p>
               <small
-                >Published <u>{{ news.publishedAt }}</u> by
+                >Published <u>{{ date.slice(0, 10) }}</u> by
                 {{ news.author }}</small
               >
             </p>

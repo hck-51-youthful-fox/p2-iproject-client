@@ -1,9 +1,27 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import navbar from "../components/Navbar.vue";
+import { useDataStore } from "../stores/data";
+
 export default {
   name: "Register",
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapActions(useDataStore, ["registerUser"]),
+  },
+  components: {
+    navbar,
+  },
 };
 </script>
 <template>
+  <navbar />
   <section id="register-form">
     <div class="flex columns-1 flex-wrap">
       <div
@@ -19,7 +37,7 @@ export default {
             <h2
               class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900"
             >
-              Sign Up and Chill the Movie
+              Sign Up and Typing
             </h2>
             <p
               class="mt-2 text-center text-sm text-gray-600 font-medium text-center"
@@ -32,6 +50,7 @@ export default {
               <div>
                 <label class="block" for="Name">Username</label>
                 <input
+                  v-model="username"
                   id="register-username"
                   type="text"
                   placeholder="Enter your username ..."
@@ -41,6 +60,7 @@ export default {
               <div class="mt-4">
                 <label class="block" for="email">Email</label>
                 <input
+                  v-model="email"
                   id="register-email"
                   type="text"
                   placeholder="Enter your email ..."
@@ -50,46 +70,21 @@ export default {
               <div class="mt-4">
                 <label class="block">Password</label>
                 <input
+                  v-model="password"
                   id="register-password"
                   type="password"
                   placeholder="Enter your password ..."
                   class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                 />
               </div>
-              <div class="mt-4">
-                <label class="block">Phone Number</label>
-                <input
-                  id="register-phone"
-                  type="number"
-                  placeholder="Enter your phone number ..."
-                  class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                />
-              </div>
-              <div class="mt-4">
-                <label class="block">Address</label>
-                <input
-                  id="register-address"
-                  type="text"
-                  placeholder="Enter your phone number ..."
-                  class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                />
-              </div>
+
               <div class="flex">
                 <button
-                  class="w-full py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                  class="w-full mt-12 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                  @click.prevent="registerUser(username, email, password)"
                 >
                   Create Account
                 </button>
-              </div>
-              <div class="text-center">
-                <p class="mt-8">
-                  <a
-                    href=""
-                    @click.prevent="notRegister"
-                    class="font-medium text-primary-600 hover:underline text-blue-500"
-                    >Already have account? Sign In</a
-                  >
-                </p>
               </div>
             </div>
           </form>

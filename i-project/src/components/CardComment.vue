@@ -19,10 +19,7 @@ export default {
       </div>
 
       <div class="mt-4 mb-6">
-        <div class="mb-3 text-xl font-bold">
-          Nulla sed leo tempus, feugiat velit vel, rhoncus neque?
-        </div>
-        <div class="text-sm text-neutral-600">
+        <div class="text-xl text-neutral-600">
           {{ listComment.comment }}
         </div>
         <div class="mt-4">

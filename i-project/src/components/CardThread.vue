@@ -20,6 +20,7 @@ export default {
 };
 </script>
 <template>
+  {{ listThread }}
   <section class="container mx-auto p-6 md:p-10 transform duration-500">
     <div class="flex items-center justify-center">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">

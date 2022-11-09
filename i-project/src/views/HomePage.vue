@@ -5,10 +5,11 @@ import cardVGA from "../components/CardVGA.vue";
 import cardNews from "../components/CardNews.vue";
 import { useDataStore } from "../stores/data";
 import { mapActions, mapState } from "pinia";
+import formPost from "../components/FormPost.vue";
 export default {
   name: "Homepage",
   computed: {
-    ...mapState(useDataStore, ["dataNews", "thread", "totalPages"]),
+    ...mapState(useDataStore, ["dataNews", "thread", "totalPages", "isLogin"]),
   },
   methods: {
     ...mapActions(useDataStore, ["news", "getThread"]),
@@ -18,6 +19,7 @@ export default {
     cardThread,
     cardVGA,
     cardNews,
+    formPost,
   },
   created() {
     this.news();
@@ -46,6 +48,7 @@ export default {
     </section>
   </section>
   <h2 class="text-3xl font-bold mt-20 mb-20 text-center">PC PEEKER FORUM</h2>
+  <formPost v-if="isLogin !== false" />
   <cardThread
     v-for="listThread in thread"
     :key="listThread.id"

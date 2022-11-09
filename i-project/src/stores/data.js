@@ -10,6 +10,8 @@ export const useDataStore = defineStore("data", {
     thread: [],
     totalPages: [],
     detail: [],
+    post: [],
+    dataGif: [],
   }),
   actions: {
     async login(email, password) {
@@ -67,14 +69,70 @@ export const useDataStore = defineStore("data", {
       }
     },
 
-    convertDate(data) {
-      return data.toLocaleDateString("en-GB");
+    async addThread(name, rating, thread, like) {
+      try {
+        const { data } = await axios.post(
+          `${baseUrl}/add`,
+          {
+            name,
+            rating,
+            thread,
+            like,
+          },
+          { headers: { access_token: localStorage.access_token } }
+        );
+        name = "";
+        rating = "";
+        thread = "";
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async registerUser(username, email, password) {
+      try {
+        await axios.post(`${baseUrl}/register`, {
+          username,
+          email,
+          password,
+        });
+        this.router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addComment(threadId, comment, imgUrl) {
+      try {
+        const { data } = await axios.post(
+          `${baseUrl}/comments/${threadId}`,
+          {
+            comment,
+            imgUrl,
+          },
+          { headers: { access_token: localStorage.access_token } }
+        );
+        window.location.reload();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
 
-    logout() {
+    async getGif() {
+      try {
+        const { data } = await axios.get(
+          `https://api.giphy.com/v1/gifs/trending?api_key=pA9DIBpOGTWtI1tkp35OdkMsi3g33cHH&limit=5&rating=g`
+        );
+        this.dataGif = data.data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    logoutSection() {
       localStorage.clear();
       this.isLogin = false;
-      this.router.push("/login");
+      this.router.push("/");
     },
   },
 });
