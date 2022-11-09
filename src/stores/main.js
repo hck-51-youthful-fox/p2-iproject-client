@@ -58,5 +58,18 @@ export const useMainStore = defineStore("main", {
       this.isLogin = false;
       this.router.push("/login");
     },
+
+    async registerUser() {
+      try {
+        let { data } = await axios.post("/register", {
+          email: this.user.email,
+          password: this.user.password,
+          username: this.user.username,
+        });
+        this.router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });

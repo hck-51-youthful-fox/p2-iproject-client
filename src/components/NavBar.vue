@@ -49,8 +49,8 @@ export default {
               <RouterLink class="nav-link active" aria-current="page" to="/login" v-if="!isLogin">Login</RouterLink>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#!" v-if="!isLogin"
-                >Register</a
+              <RouterLink class="nav-link active" aria-current="page" href="#!" v-if="!isLogin" to="/register"
+                >Register</RouterLink
               >
             </li>
             <a class="nav-link active" aria-current="page" href="#!" style="pointer-events: none;" v-if="isLogin"
