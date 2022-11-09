@@ -1,9 +1,22 @@
 <script>
+import { mapActions, mapState, mapWritableState } from "pinia";
+import { useMainStore } from "../stores/main";
 import NewsCard from "../components/NewsCard.vue";
+
 export default {
   name: "HomeView",
   components: {
     NewsCard,
+  },
+  computed: {
+    ...mapState(useMainStore, ["ApiNews"]),
+    ...mapWritableState(useMainStore, ["currentPage"]),
+  },
+  methods: {
+    ...mapActions(useMainStore, ["FetchNewsFromAPI"]),
+  },
+  created() {
+    this.FetchNewsFromAPI();
   },
 };
 </script>
@@ -43,9 +56,43 @@ export default {
       <div
         class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
       >
-        <div class="col mb-5" style="width: 400px" v-for="index in 3">
-          <NewsCard />
+        <div
+          class="col mb-5"
+          style="width: 400px"
+          v-for="(news, index) in ApiNews"
+          :key="news.id"
+        >
+          <NewsCard :news="news" :index="index" />
         </div>
+      </div>
+      <div class="pagination-div text-center mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="FetchNewsFromAPI(currentPage - 1)"
+              v-if="currentPage !== 1"
+              >Previous</a
+            >
+          </li>
+          <div class="" v-for="index in 10">
+            <li class="page-item">
+              <a class="page-link" @click.prevent="FetchNewsFromAPI(index)">{{
+                index
+              }}</a>
+            </li>
+          </div>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click.prevent="FetchNewsFromAPI(currentPage + 1)"
+              v-if="currentPage > 0"
+              >Next</a
+            >
+          </li>
+        </ul>
       </div>
     </div>
   </section>

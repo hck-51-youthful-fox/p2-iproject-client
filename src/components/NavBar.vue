@@ -27,25 +27,6 @@ export default {
           <li class="nav-item">
             <a class="nav-link" href="#!">Community Posts</a>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              id="navbarDropdown"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              >News Categories</a
-            >
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#!">All News</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#!">Technologies</a></li>
-              <li><a class="dropdown-item" href="#!">Sports</a></li>
-              <li><a class="dropdown-item" href="#!">Politics</a></li>
-              <li><a class="dropdown-item" href="#!">Travels</a></li>
-            </ul>
-          </li>
         </ul>
         <form class="d-flex">
           <!-- Login & Register Show when Not Logged In -->
@@ -58,6 +39,9 @@ export default {
                 >Register</a
               >
             </li>
+            <a class="nav-link active" aria-current="page" href="#!" style="pointer-events: none;"
+              >Hey, User</a
+            >
             <!-- Profile Show when Logged In -->
             <li class="nav-item dropdown">
               <a
@@ -69,6 +53,8 @@ export default {
                 aria-expanded="false"
                 >Profile</a
               >
+              <li class="nav-item">
+            </li>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <!-- Buy Premium Show when User Not Premium When Clicked Auto redirect to midtrans payment -->
                 <li><a class="dropdown-item" href="#!">Buy Premium</a></li>
