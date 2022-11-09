@@ -23,7 +23,9 @@ export default {
   <NavBar />
   <div class="container-fluid">
     <div class="card">
-      <div class="d-flex justify-content-center row mt-4 mb-4">INI NAMA</div>
+      <div class="d-flex justify-content-center row mt-4 mb-4">
+        <a href="#">INI NAMA</a>
+      </div>
       <div class="d-flex flex-wrap justify-content-center row">
         <div
           class="d-flex flex-wrap justify-content-between d-grid gap-3 col-9"

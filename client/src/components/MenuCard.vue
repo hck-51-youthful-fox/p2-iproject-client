@@ -2,6 +2,20 @@
 export default {
   name: "MenuCard",
   props: ["beverage"],
+  data() {
+    return {
+      temporaryForm: {
+        BeverageId: 0,
+        quantity: 0,
+      },
+    };
+  },
+  methods: {
+    addOrder(id) {
+      this.temporaryForm.BeverageId = id;
+      this.temporaryForm.quantity += 1;
+    },
+  },
 };
 </script>
 
@@ -20,8 +34,14 @@ export default {
         </p>
       </div>
       <div class="d-flex justify-content-center align-items-center mb-1 mt-2">
-        <button type="button" class="btn btn-success">
+        <button
+          type="button"
+          class="btn btn-success"
+          @click.prevent="addOrder(beverage.id)"
+        >
           <h6 class="mx-1 my-1">+ {{ beverage.price }}</h6>
+          {{ this.temporaryForm.BeverageId }}
+          {{ this.temporaryForm.quantity }}
         </button>
       </div>
     </div>
