@@ -9,6 +9,8 @@ export const useNoteStore = defineStore("note", {
     isPremium: false,
     UserId: "",
     payments: {},
+    notes: [],
+    category: [],
   }),
   actions: {
     checkLogin() {
@@ -16,6 +18,23 @@ export const useNoteStore = defineStore("note", {
         this.isLogin = true;
       } else {
         this.isLogin = false;
+      }
+    },
+    async logout() {
+      try {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Signed out",
+          text: "See you later!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.isLogin = false;
+        localStorage.clear();
+        this.router.push("/login");
+      } catch (error) {
+        console.log(error);
       }
     },
     async register(result) {
@@ -62,9 +81,9 @@ export const useNoteStore = defineStore("note", {
 
         this.isLogin = true;
         this.UserId = response.data.id;
-        if (status === "reguler") {
+        if ("status" === "reguler") {
           this.isPremium = false;
-        } else if (status === "premium") {
+        } else if ("status" === "premium") {
           this.isPremium = true;
         }
         this.router.push("/");
@@ -91,7 +110,7 @@ export const useNoteStore = defineStore("note", {
             access_token: localStorage.getItem("access_token"),
           },
         });
-        console.log(data, "<<< ini data payment");
+        // console.log(data, "<<< ini data payment");
         let UserId = localStorage.getItem("UserId");
         // ini pembayaran midtrans
         snap.pay(`${data.transactionToken}`, {
@@ -103,30 +122,114 @@ export const useNoteStore = defineStore("note", {
               url: `${baseUrl}/payments/${UserId}`,
               method: "PATCH",
               headers: {
-                access_token: localStorage.getItem("access_token")
-              }
-            })
-            localStorage.setItem("status", 'premium')
-            this.isPremium = true
-            this.checkLogin()
-            alert("payment success!");
-            console.log(result);
+                access_token: localStorage.getItem("access_token"),
+              },
+            });
+            localStorage.setItem("status", "premium");
+            this.isPremium = true;
+            this.checkLogin();
+            Swal.fire("payment success!");
+            // console.log(result);
           },
           onPending: function (result) {
             /* You may add your own implementation here */
-            alert("wating your payment!");
+            console.log("wating your payment!");
             console.log(result);
           },
           onError: function (result) {
             /* You may add your own implementation here */
-            alert("payment failed!");
+            console.log("payment failed!");
             console.log(result);
           },
           onClose: function () {
             /* You may add your own implementation here */
-            alert("you closed the popup without finishing the payment");
+            console.log("you closed the popup without finishing the payment");
           },
         });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchNotes() {
+      try {
+        let { data } = await axios({
+          url: `${baseUrl}/notes`,
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(data, "ini data dari fetch notes");
+        this.notes = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchCategories() {
+      try {
+        let { data } = await axios({
+          url: `${baseUrl}/categories`,
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.category = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addNotes(obj) {
+      try {
+        await axios({
+          url: `${baseUrl}/notes`,
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            title: obj.name,
+            description: obj.description,
+            date: obj.date,
+            CategoryId: obj.CategoryId,
+          },
+        });
+        this.fetchNotes();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deleteNotes(id) {
+      // console.log(id);
+      try {
+        await axios({
+          url: `${baseUrl}/notes/${id}`,
+          method: "DELETE",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        // console.log(data);
+        this.fetchNotes();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editNote(id, object) {
+      try {
+        let { dataEdit } = await axios({
+          url: `${baseUrl}/notes/${id}`,
+          method: "PATCH",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            name: object.name,
+            description: object.description,
+            date: object.date,
+          },
+        });
+        // console.log(dataEdit);
       } catch (error) {
         console.log(error);
       }

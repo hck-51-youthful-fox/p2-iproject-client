@@ -146,4 +146,12 @@ a:hover{
     #forgot{
         font-size: 0.95rem;
     }
+    #brand-logo {
+        font-size: 34px;
+      }
+      
+      #app-navbar {
+        background: linear-gradient(120deg, #0cf9e5, #5a84eb);
+      }
+      
 }

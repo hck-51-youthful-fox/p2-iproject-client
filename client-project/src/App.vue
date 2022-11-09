@@ -1,21 +1,18 @@
 <script>
-import LoginPage from "./views/LoginPage.vue";
-import RegisterPage from "./views/RegisterPage.vue";
-import HomePage from "./views/HomePage.vue";
+import { RouterView } from "vue-router";
+import NavBar from "./components/NavBar.vue";
 export default {
   name: "App",
   components: {
-    LoginPage,
-    RegisterPage,
-    HomePage,
+    NavBar,
+    RouterView,
   },
 };
 </script>
 
 <template>
   <div>
-    <LoginPage />
-    <RegisterPage />
-    <HomePage />
+    <NavBar />
+    <RouterView />
   </div>
 </template>
