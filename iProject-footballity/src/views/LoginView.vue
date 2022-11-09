@@ -9,12 +9,11 @@ export default {
       dataUser: {
         email: "",
         password: "",
-        username: "",
       },
     };
   },
   methods: {
-    ...mapActions(useFootballStore, ["changePage", 'login']),
+    ...mapActions(useFootballStore, ["changePage", "login"]),
   },
 };
 </script>

@@ -8,13 +8,18 @@ export default {
     MyTeamComponents,
     Navbar,
   },
+  data() {
+    return {
+      name: localStorage.username,
+    };
+  },
 };
 </script>
 <template>
   <Navbar />
   <section
     class="bg bg-dark pb-5"
-    style="margin-top: 50px; padding-bottom: 100px"
+    style="margin-top: 50px; padding-bottom: 110px"
   >
     <div class="container" style="padding-bottom: 60px">
       <div class="row">
@@ -27,7 +32,7 @@ export default {
               Position: 442 Attack
             </h4>
             <h2 style="margin-top: 20px; margin-bottom: 20px; color: white">
-              Manager: Bopak
+              Manager: {{ name }}
             </h2>
           </div>
           <div id="football-pitch" style="height: 720px; width: 1000px">

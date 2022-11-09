@@ -5,7 +5,7 @@ import { useFootballStore } from "../stores/football";
 export default {
   name: "Navbar",
   methods: {
-    ...mapActions(useFootballStore, ["changePage"]),
+    ...mapActions(useFootballStore, ["changePage", "logOut"]),
   },
 };
 </script>
@@ -32,9 +32,7 @@ export default {
         aria-labelledby="offcanvasDarkNavbarLabel"
       >
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-            Dark offcanvas
-          </h5>
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
           <button
             type="button"
             class="btn-close btn-close-white"
@@ -62,9 +60,15 @@ export default {
               >
             </li>
             <li class="nav-item">
-              <a @click.prevent="changePage('/login')" class="nav-link" href="#"
-                >Login</a
+              <a
+                @click.prevent="changePage('/positionForm')"
+                class="nav-link"
+                href="#"
+                >Add your team</a
               >
+            </li>
+            <li class="nav-item">
+              <a @click.prevent="logOut" class="nav-link" href="#">Logout</a>
             </li>
             <!-- <li class="nav-item dropdown">
               <a

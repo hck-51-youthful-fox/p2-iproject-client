@@ -22,7 +22,7 @@ export default {
   <!-- ini register section -->
   <section
     class="justify-content-center bg bg-dark"
-    style="padding-bottom: 100px"
+    style="padding-bottom: 170px"
   >
     <div class="d-flex align-items-center pt-3 ps-3">
       <img class="me-2" src="../assets/football-2-256.png" />
@@ -62,7 +62,6 @@ export default {
             placeholder="Password"
             v-model="dataUser.password"
           />
-          <label for="phone-register-form">Phone number</label>
           <button id="button" class="btn btn-success mt-4">Submit</button>
         </form>
       </div>

@@ -4,7 +4,9 @@ import axios from "../config/axios";
 
 export const useFootballStore = defineStore("football", {
   state() {
-    return {};
+    return {
+      myTeamData: [],
+    };
   },
   actions: {
     changePage(page) {
@@ -16,12 +18,16 @@ export const useFootballStore = defineStore("football", {
     },
     async login(dataUser) {
       console.log(dataUser, "dataUser login di store");
-      console.log(dataUser.email, "ini emaillll");
       try {
-        const { data: data } = await axios.post("/users/login", {
+        console.log(dataUser.email, "di dalam try");
+        console.log(dataUser.password, "di dalam try");
+        const { data } = await axios.post("/users/login", {
           email: dataUser.email,
           password: dataUser.password,
         });
+
+        console.log(data);
+
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("username", data.username);
@@ -69,6 +75,19 @@ export const useFootballStore = defineStore("football", {
           // text: `${error.response.data.message}`,
           footer: "",
         });
+        console.log(error);
+      }
+    },
+    async fetchMyTeam() {
+      try {
+        const { data } = await axios.get("/positions", {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data);
+        this.myTeamData = data;
+      } catch (error) {
         console.log(error);
       }
     },
