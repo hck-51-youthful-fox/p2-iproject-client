@@ -480,7 +480,7 @@ export default {
   },
   methods: {
     payment() {
-      snap.pay("4815af82-91c9-4bc2-8e06-7d613c277828", {
+      snap.pay("3fbbacd9-b827-47d7-9ec1-1ea8131c2f93", {
         onSuccess(result) {
           console.log(result);
           console.log("Berhasillllllll");
