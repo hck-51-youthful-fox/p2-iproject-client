@@ -22,6 +22,7 @@ export const useMainStore = defineStore("main", {
     postId: 0,
     search: "",
     searchNews: [],
+    userPost: [],
   }),
 
   actions: {
@@ -166,6 +167,41 @@ export const useMainStore = defineStore("main", {
         this.totalPages = data.total_pages;
         console.log(this.searchNews);
         console.log(this.currentPage);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async loggedInPost(page) {
+      if (!page) {
+        page = 1;
+      }
+
+      try {
+        let { data } = await axios.get(`/user/post?page=${page}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        this.userPost = data.rows;
+        this.totalPages = data.totalPages;
+        this.currentPage = data.currentPage;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async deletePost(id) {
+      try {
+        let { data } = await axios.delete(`/user/delete/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(data);
+        this.loggedInPost();
       } catch (error) {
         console.log(error);
       }

@@ -7,6 +7,7 @@ import RegisterView from "../views/RegisterView.vue";
 import CommunityView from "../views/CommunityView.vue";
 import DetailCommunityView from "../views/DetailCommunityView.vue";
 import SearchView from "../views/SearchView.vue";
+import UserPost from "../views/UserPost.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: "/search",
       name: "search",
       component: SearchView,
+    },
+    {
+      path: "/user/post",
+      name: "userpost",
+      component: UserPost,
     },
   ],
 });
