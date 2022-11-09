@@ -13,6 +13,7 @@ export default {
   methods: {
     ...mapActions(useFoodStore, ["convertPrice"]),
     ...mapActions(useCartStore, ["updateQuantity"]),
+    ...mapActions(useCartStore, ["deleteFoodFromCart"]),
     decreaseQty(id) {
       if (this.currentQuantity === 1) {
         this.currentQuantity = 1;
@@ -46,66 +47,87 @@ export default {
           </div>
         </div>
         <div class="w-2/3 px-4">
-          <h2 class="mb-2 text-xl font-bold dark:text-gray-400">
+          <h2 class="mb-2 text-xl font-semibold">
             {{ cartItem.Food.name }}
           </h2>
+          <button
+            @click="deleteFoodFromCart(cartItem.id)"
+            class="py-2 hover:text-gray-700 text-gray-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
     <div class="hidden px-4 lg:block lg:w-2/12">
-      <p class="text-lg font-bold text-blue-500">
+      <p class="text-lg text-gray-900">
         {{ convertPrice(cartItem.Food.price) }}
       </p>
     </div>
     <div class="w-auto px-4 md:w-1/6 lg:w-2/12">
-      <div
-        class="inline-flex items-center px-4 font-semibold text-gray-500 border border-gray-200 rounded-md"
-      >
+      <div class="inline-flex items-center font-semibold text-gray-500">
         <button
           @click="decreaseQty(cartItem.id)"
-          class="py-2 hover:text-gray-700"
+          class="inline-flex items-center justify-center w-8 h-8 mr-2 text-white transition-colors duration-150 bg-[#00B14F] rounded-md focus:shadow-outline hover:bg-[#13984f]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            viewBox="0 0 24 24"
             fill="currentColor"
-            class="bi bi-dash"
-            viewBox="0 0 16 16"
+            class="w-6 h-6"
           >
             <path
-              d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"
-            ></path>
+              fill-rule="evenodd"
+              d="M3.75 12a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75z"
+              clip-rule="evenodd"
+            />
+            {{ cartItem.quantity }}
           </svg>
         </button>
         <input
           v-model="cartItem.quantity"
           type="number"
-          class="w-12 px-2 py-4 text-center border-0 rounded-md dark:bg-gray-800 bg-gray-50 dark:text-gray-400 md:text-right"
+          class="w-12 px-2 text-center border-0 rounded-md bg-gray-50 md:text-right"
         />
-        <button
-          @click="increaseQty(cartItem.id)"
-          class="py-2 hover:text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-plus"
-            viewBox="0 0 16 16"
+        <div class="cursor-pointer">
+          <button
+            @click="increaseQty(cartItem.id)"
+            class="inline-flex items-center justify-center w-8 h-8 mr-2 text-white transition-colors duration-150 bg-[#00B14F] rounded-md focus:shadow-outline hover:bg-[#13984f]"
           >
-            <path
-              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
             >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
               {{ cartItem.quantity }}
-            </path>
-          </svg>
-        </button>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
     <div class="w-auto px-4 text-right md:w-1/6 lg:w-2/12">
-      <p class="text-lg font-bold text-blue-500">
+      <p class="text-lg text-gray-900">
         {{ convertPrice(cartItem.totalPrice) }}
       </p>
     </div>
