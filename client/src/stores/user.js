@@ -43,7 +43,7 @@ export const useUserStore = defineStore("user", {
         });
         localStorage.setItem("access_token", data.data.access_token);
         localStorage.setItem("username", data.data.username);
-        localStorage.setItem("role", data.data.status);
+        localStorage.setItem("status", data.data.status);
         localStorage.setItem("authorId", data.data.id);
         localStorage.setItem("email", data.data.email);
 
@@ -89,11 +89,11 @@ export const useUserStore = defineStore("user", {
           (this.address = "");
       } catch (error) {
         console.log(error);
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Oops...",
-        //   text: `${error.response.data.msg}`,
-        // });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error.response.data.msg}`,
+        });
       }
     },
 
@@ -110,7 +110,7 @@ export const useUserStore = defineStore("user", {
 
         localStorage.setItem("access_token", data.data.access_token);
         localStorage.setItem("username", data.data.username);
-        localStorage.setItem("role", data.data.status);
+        localStorage.setItem("status", data.data.status);
         localStorage.setItem("authorId", data.data.id);
         localStorage.setItem("email", data.data.email);
 
@@ -119,11 +119,11 @@ export const useUserStore = defineStore("user", {
         Swal.fire("Logged In!", "You have logged in!", "success");
       } catch (error) {
         console.log(error);
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Oops...",
-        //   text: `${error.response.data.msg}`,
-        // });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error.response.data.msg}`,
+        });
       }
     },
   },

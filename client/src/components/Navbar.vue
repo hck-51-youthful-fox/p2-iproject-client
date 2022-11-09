@@ -1,14 +1,22 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useUserStore } from "../stores/user";
+import { useMatchStore } from "../stores/match";
 export default {
   name: "NavBar",
   components: {},
   computed: {
     ...mapState(useUserStore, ["isLogin"]),
+    ...mapState(useMatchStore, ["isPremium"]),
+    infoUser() {
+      return {
+        status: localStorage.getItem("status"),
+      };
+    },
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
+    ...mapActions(useMatchStore, ["handlePayment"]),
   },
 };
 </script>
@@ -46,10 +54,20 @@ export default {
             </li>
             <li>
               <a
+                v-if="infoUser.status === 'premium'"
                 @click.prevent="$router.push('/standings')"
                 href="#"
                 class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                 >Standings</a
+              >
+            </li>
+            <li>
+              <a
+                v-if="infoUser.status === 'free'"
+                @click.prenvet="handlePayment()"
+                href="#"
+                class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                >Subscribe</a
               >
             </li>
           </div>
