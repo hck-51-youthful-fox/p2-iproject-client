@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import CartView from "../views/CartView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,19 +20,27 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: HomeView,
+      component: LoginView,
     },
     {
       path: "/register",
       name: "register",
-      component: HomeView,
+      component: RegisterView,
     },
     {
       path: "/cart",
       name: "cart",
-      component: HomeView,
+      component: CartView,
     },
   ],
+});
+
+router.beforeEach((to, from) => {
+  if (to.name === "login" && localStorage.access_token) return { name: "home" };
+  else if (to.name === "register" && localStorage.access_token)
+    return { name: "home" };
+  else if (to.name === "cart" && !localStorage.access_token)
+    return { name: "home" };
 });
 
 export default router;
