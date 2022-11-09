@@ -41,11 +41,11 @@ export default {
       <form
         @submit.prevent="logginButton"
         id="login-form"
-        style="background-color: whitesmoke; padding: 50px; border-radius: 50px"
+        style="background-color: black; padding: 50px; border-radius: 50px"
       >
-        <h1 style="margin-bottom: 45px">LOG IN HERE</h1>
+        <h1 style="margin-bottom: 45px; color: red;">LOG IN HERE</h1>
         <div class="form-group">
-          <label>Email address</label>
+          <label style="color: red;">Email address</label>
           <input
             type="email"
             class="form-control"
@@ -56,7 +56,7 @@ export default {
           />
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label style="color: red;" for="exampleInputPassword1">Password</label>
           <input
             type="password"
             class="form-control"
@@ -68,13 +68,11 @@ export default {
         </div>
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1"
+          <label class="form-check-label" for="exampleCheck1" style="color: white;"
             >Remember me</label
           >
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
-        <div id="buttonDiv" style="padding-top: 15px"></div>
-        <GoogleLogin :callback="callback" />
       </form>
     </div>
   </section>
