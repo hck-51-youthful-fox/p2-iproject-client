@@ -7,6 +7,14 @@ export const useMainStore = defineStore("main", {
     ApiNews: [],
     totalPages: 0,
     currentPage: 0,
+    user: {
+      email: "",
+      username: "",
+      password: ""
+    },
+    isLogin : false,
+    username : localStorage.getItem("username"),
+    isPremium: localStorage.getItem("isPremium")
   }),
 
   actions: {
@@ -27,5 +35,22 @@ export const useMainStore = defineStore("main", {
         console.log(error);
       }
     },
+
+    async loginUser() {
+      try {
+        let { data } = await axios.post("/login", {
+          email: this.user.email,
+          password: this.user.password
+        })
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("isPremium", data.isPremium);
+        this.isLogin = true
+        this.router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 });

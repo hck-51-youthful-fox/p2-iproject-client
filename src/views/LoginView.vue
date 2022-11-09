@@ -1,6 +1,14 @@
 <script>
+import { mapActions, mapState, mapWritableState } from "pinia";
+import { useMainStore } from "../stores/main";
 export default {
   name: "LoginView",
+  computed: {
+    ...mapWritableState(useMainStore, ["user"])
+  },
+  methods: {
+    ...mapActions(useMainStore, ["loginUser"])
+  }
 };
 </script>
 
@@ -10,11 +18,11 @@ export default {
     <form @submit.prevent="loginUser">
       <div class="form-group">
         <label>Email</label>
-        <input type="email" class="form-control" name="email" />
+        <input type="email" class="form-control" name="email" v-model="user.email" />
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" name="password" />
+        <input type="password" class="form-control" name="password" v-model="user.password" />
       </div>
       <button
         type="submit"
