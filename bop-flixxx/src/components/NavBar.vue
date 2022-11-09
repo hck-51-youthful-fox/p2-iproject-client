@@ -24,6 +24,7 @@ export default {
           @click.prevent="$router.push({ name: 'home' })"
           class="navbar-brand"
           href="#"
+          style="color: red;"
         >
           <img
             src="../assets/unnamed-removebg-preview.png"
@@ -38,14 +39,14 @@ export default {
           <button
             @click="$router.push({ name: 'login' })"
             type="button"
-            class="btn btn-nav btn-outline-dark"
+            class="btn btn-nav btn-outline-danger"
           >
             Log In
           </button>
           <button
             @click="$router.push({ name: 'register' })"
             type="button"
-            class="btn btn-nav btn-outline-dark"
+            class="btn btn-nav btn-outline-danger"
           >
             Sign Up
           </button>
