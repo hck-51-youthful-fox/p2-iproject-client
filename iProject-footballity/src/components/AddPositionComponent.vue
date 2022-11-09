@@ -1,4 +1,6 @@
 <script>
+import Navbar from "./Navbar.vue";
+
 export default {
   name: "AddPositionComponent",
   data() {
@@ -18,17 +20,21 @@ export default {
       },
     };
   },
+  components: {
+    Navbar,
+  },
 };
 </script>
 <template>
+  <Navbar />
   <section
     class="justify-content-center bg bg-dark"
     style="padding-bottom: 30px"
   >
-    <div class="d-flex align-items-center pt-3 ps-3">
+    <!-- <div class="d-flex align-items-center pt-3 ps-3">
       <img class="me-2" src="../assets/football-2-256.png" />
       <h4 style="color: green"><strong>Footballity</strong></h4>
-    </div>
+    </div> -->
     <div id="login-form" class="d-flex col justify-content-center mt-5">
       <div style="width: 500px">
         <h2 style="color: white">Add your dream team</h2>

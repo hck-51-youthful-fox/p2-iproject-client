@@ -15,6 +15,13 @@ export const useFootballStore = defineStore("football", {
     logOut() {
       localStorage.clear();
       this.changePage("/login");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Anda Berhasil Logout!`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
     async login(dataUser) {
       console.log(dataUser, "dataUser login di store");
