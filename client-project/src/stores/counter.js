@@ -10,7 +10,7 @@ export const useNoteStore = defineStore("note", {
     UserId: "",
     payments: {},
     notes: [],
-    category: [],
+    categories: [],
   }),
   actions: {
     checkLogin() {

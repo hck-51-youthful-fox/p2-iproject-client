@@ -17,7 +17,6 @@ export default {
       this.login(this.dataLogin);
     },
   },
-  
 };
 </script>
 
@@ -28,7 +27,7 @@ export default {
     <form @submit.prevent="handleLogin" method="post" class="container">
       <div class="form-group py-2">
         <div class="input-field">
-          <span class="far fa-user p-2">login</span>
+          <span class="far fa-user p-2"></span>
           <input
             v-model="dataLogin.email"
             type="text"
@@ -40,10 +39,10 @@ export default {
       </div>
       <div class="form-group py-1 pb-2">
         <div class="input-field">
-          <span class="fas fa-lock p-2">Password</span>
+          <span class="fas fa-lock p-2"></span>
           <input
             v-model="dataLogin.password"
-            type="text"
+            type="password"
             placeholder="Enter your Password"
             required
             class=""

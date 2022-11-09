@@ -55,7 +55,7 @@ export default {
           <span class="fas fa-lock p-2">Password</span>
           <input
             v-model="dataRegistrasi.password"
-            type="text"
+            type="password"
             placeholder="Enter your Password"
             required
             class=""
