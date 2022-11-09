@@ -8,7 +8,7 @@ export const useDataStore = defineStore("data", {
     dataNews: [],
     newsImage: [],
     thread: [],
-    totalPages: [],
+    totalPage: [],
     detail: [],
     post: [],
     dataGif: [],
@@ -84,7 +84,7 @@ export const useDataStore = defineStore("data", {
         name = "";
         rating = "";
         thread = "";
-        console.log(data);
+        window.location.reload();
       } catch (error) {
         console.log(error);
       }

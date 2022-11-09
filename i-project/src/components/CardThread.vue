@@ -20,7 +20,6 @@ export default {
 };
 </script>
 <template>
-  {{ listThread }}
   <section class="container mx-auto p-6 md:p-10 transform duration-500">
     <div class="flex items-center justify-center">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
@@ -39,10 +38,13 @@ export default {
         </div>
 
         <div class="mt-4 mb-6">
-          <a class="mb-3 text-xl font-bold" @click.prevent="clickHandler()">
+          <a
+            class="mb-3 text-xl font-bold cursor-pointer"
+            @click.prevent="clickHandler()"
+          >
             {{ listThread.name }}
           </a>
-          <div class="text-sm text-neutral-600">
+          <div class="text-sm text-neutral-600 cursor-pointer">
             {{ listThread.thread }}
           </div>
         </div>
@@ -67,6 +69,9 @@ export default {
                     d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                   />
                 </svg>
+                <span @click.prevent="clickHandler()">{{
+                  listThread.Comments.length
+                }}</span>
               </div>
               <div
                 class="flex cursor-pointer items-center transition hover:text-slate-600"

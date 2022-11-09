@@ -44,10 +44,10 @@ export default {
         </div>
 
         <div class="mt-4 mb-6">
-          <div class="mb-3 text-xl font-bold">
+          <div class="mb-3 text-2xl font-bold">
             {{ detail[0].name }}
           </div>
-          <div class="text-sm text-neutral-600">
+          <div class="text-xl text-neutral-600">
             {{ detail[0].thread }}
           </div>
         </div>
