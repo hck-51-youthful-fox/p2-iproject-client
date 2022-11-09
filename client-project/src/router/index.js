@@ -2,41 +2,41 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "../views/LoginPage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 import HomePage from "../views/HomePage.vue";
-import PaymentPage from "../views/PaymentPage.vue";
+import PremiumPage from "../views/PremiumPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "Home",
       component: HomePage,
     },
     {
       path: "/login",
-      name: "login",
+      name: "Login",
       component: LoginPage,
     },
     {
       path: "/register",
-      name: "register",
+      name: "Register",
       component: RegisterPage,
     },
     {
-      path: "/payments",
-      name: "payments",
-      component: PaymentPage,
+      path: "/premium",
+      name: "Premium",
+      component: PremiumPage,
     },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  if (!localStorage.getItem.access_token && to.name === "home") {
-    next("/login");
-  } else if (!localStorage.getItem.access_token && to.name === "payment") {
-    next("/login");
-  } else if (localStorage.getItem.access_token && to.name === "login") {
+  console.log(to.name, "<<<<");
+  if (to.name === "Login" && localStorage.getItem("access_token")) {
     next("/");
+  }
+  if (to.name === "Premium" && !localStorage.getItem("access_token")) {
+    next("/login");
   } else {
     next();
   }

@@ -119,11 +119,6 @@ a:hover{
 .btn.btn-block:hover{
     background-color: #55268be0;
 }
-@media(max-width: 575px){
-    .wrapper{
-        margin: 10px;
-    }
-}
 @media(max-width:424px){
     .wrapper{
         padding: 30px 10px;
@@ -133,23 +128,7 @@ a:hover{
         position: relative;
         padding-left: 22px;
     }
-    .option label.text-muted{
-        font-size: 0.95rem;
-    }
-    .checkmark {
-        position: absolute;
-        top: 2px;
-    }
-    .option .checkmark:after{
-        top: 50%;
-    }
-    #forgot{
-        font-size: 0.95rem;
-    }
-    #brand-logo {
-        font-size: 34px;
-      }
-      
+  
       #app-navbar {
         background: linear-gradient(120deg, #0cf9e5, #5a84eb);
       }

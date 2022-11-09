@@ -17,9 +17,7 @@ export default {
       this.login(this.dataLogin);
     },
   },
-  created() {
-    this.checkLogin();
-  },
+  
 };
 </script>
 

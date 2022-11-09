@@ -81,9 +81,9 @@ export const useNoteStore = defineStore("note", {
 
         this.isLogin = true;
         this.UserId = response.data.id;
-        if ("status" === "reguler") {
+        if (localStorage.getItem("status") === "reguler") {
           this.isPremium = false;
-        } else if ("status" === "premium") {
+        } else if (localStorage.getItem("status") === "premium") {
           this.isPremium = true;
         }
         this.router.push("/");
