@@ -1,51 +1,65 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from "../views/LoginView.vue"
-import RegisterView from "../views/RegisterView.vue"
-import UserControlView from "../views/UserControlView.vue"
-import GameDetailView from "../views/GameDetailView.vue"
-import ReviewView from "../views/ReviewView.vue"
-import ExploreView from "../views/ExploreView.vue"
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import UserControlView from "../views/UserControlView.vue";
+import GameDetailView from "../views/GameDetailView.vue";
+import ReviewView from "../views/ReviewView.vue";
+import ExploreView from "../views/ExploreView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path : "/",
+      path: "/",
       name: "home",
-      component : HomeView
+      component: HomeView,
     },
     {
-      path : "/login",
+      path: "/login",
       name: "login",
-      component : LoginView
+      component: LoginView,
     },
     {
-      path : "/register",
+      path: "/register",
       name: "register",
-      component : RegisterView
+      component: RegisterView,
     },
     {
-      path : "/user",
+      path: "/user",
       name: "control-panel",
-      component : UserControlView
+      component: UserControlView,
     },
     {
-      path : "/game/:id/",
+      path: "/games/:id",
       name: "game-detail",
-      component : GameDetailView
+      component: GameDetailView,
     },
     {
-      path : "/game/:id/review",
+      path: "/games/:id/review",
       name: "review-game",
-      component : ReviewView
+      component: ReviewView,
     },
     {
-      path : "/explore",
+      path: "/explore",
       name: "explore",
-      component : ExploreView
+      component: ExploreView,
     },
-  ]
-})
+  ],
+});
 
-export default router
+router.beforeEach((to, from) => {
+  if (
+    localStorage.getItem("access_token") &
+    (to.name == "login" || to.name == "register")
+  ) {
+    return { name: "home" };
+  } else if (
+    !localStorage.getItem("access_token") &
+    (to.name == "explore" || to.name == "user" || to.name == "review-game")
+  ) {
+    return { name: "home" };
+  }
+});
+
+export default router;
