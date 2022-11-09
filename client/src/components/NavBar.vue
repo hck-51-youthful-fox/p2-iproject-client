@@ -1,6 +1,11 @@
 <script>
 export default {
   name: "NavBar",
+  methods: {
+    moveToCart() {
+      this.$router.push("/cart");
+    },
+  },
 };
 </script>
 
@@ -52,7 +57,7 @@ export default {
           </li>
         </ul>
         <div class="cart-link">
-          <div class="notification">
+          <div class="notification" @click.prevent="moveToCart">
             <img src="@/assets/cart.svg" href="#" alt="" srcset="" />
             <span class="badge">4</span>
           </div>
