@@ -5,6 +5,11 @@ import { mapState, mapActions } from "pinia";
 
 export default {
   nama: "NavBar",
+  data() {
+    return {
+      displayName: "",
+    };
+  },
   components: {
     RouterLink,
   },
@@ -13,6 +18,16 @@ export default {
   },
   computed: {
     ...mapState(useBonfireStore, ["isLoggedIn"]),
+  },
+  watch: {
+    isLoggedIn() {
+      this.displayName = localStorage.getItem(`username`);
+    },
+  },
+  created() {
+    if (localStorage.getItem(`username`)) {
+      this.displayName = localStorage.getItem(`username`);
+    }
   },
 };
 </script>
@@ -23,8 +38,9 @@ export default {
       <RouterLink
         class="d-flex justify-content-center align-items-center navbar-brand px-5 m-0"
         :to="'/'"
-        ><img src="../assets/dark-souls-bonfire.gif" height="55"
-      /><h2 class="mb-0 mx-2">Faded Bonfires</h2></RouterLink>
+        ><img src="../assets/dark-souls-bonfire.gif" height="55" />
+        <h2 class="mb-0 mx-2">Faded Bonfires</h2></RouterLink
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -58,7 +74,7 @@ export default {
           </li>
           <li v-show="isLoggedIn" class="nav-item active">
             <RouterLink class="nav-link text-white" :to="'/explore'"
-              ><i class="bi bi-door-open"></i> Explore</RouterLink
+              ><i class="bi bi-book"></i> Explore</RouterLink
             >
           </li>
         </ul>
@@ -66,14 +82,14 @@ export default {
         <ul v-show="isLoggedIn" class="navbar-nav">
           <li class="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle align-items-center"
               href="#"
               id="navbarDarkDropdownMenuLink"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-            >
-              User Menu
+              ><i class="bi bi-person-circle"></i>
+              {{ displayName }}
             </a>
             <ul
               class="dropdown-menu dropdown-menu-dark"
@@ -81,12 +97,13 @@ export default {
             >
               <li>
                 <RouterLink class="dropdown-item" :to="'/user'"
-                  >User Details</RouterLink
+                  ><i class="bi bi-info-square-fill"></i> User
+                  Details</RouterLink
                 >
               </li>
               <li>
                 <a class="dropdown-item" href="/" @click.prevent="logout"
-                  >Logout</a
+                  ><i class="bi bi-box-arrow-left"></i> Logout</a
                 >
               </li>
             </ul>
