@@ -7,6 +7,9 @@ export default {
   computed: {
     ...mapState(useMainStore, ["username", "isLogin", "isPremium"])
   },
+  methods: {
+    ...mapActions(useMainStore, ["logoutUser"])
+  },
   created() {
     this.username
     console.log(this.isLogin);
@@ -70,7 +73,7 @@ export default {
                 <!-- Buy Premium Show when User Not Premium When Clicked Auto redirect to midtrans payment -->
                 <li><a class="dropdown-item" href="#!" v-if="!isPremium">Buy Premium</a></li>
                 <li><a class="dropdown-item" href="#!">Your Posts</a></li>
-                <li><a class="dropdown-item" href="#!">Log Out</a></li>
+                <li><a class="dropdown-item" href="#!" @click.prevent="logoutUser">Log Out</a></li>
               </ul>
             </li>
           </ul>

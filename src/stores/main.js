@@ -10,11 +10,11 @@ export const useMainStore = defineStore("main", {
     user: {
       email: "",
       username: "",
-      password: ""
+      password: "",
     },
-    isLogin : false,
-    username : localStorage.getItem("username"),
-    isPremium: localStorage.getItem("isPremium")
+    isLogin: false,
+    username: localStorage.getItem("username"),
+    isPremium: localStorage.getItem("isPremium"),
   }),
 
   actions: {
@@ -40,17 +40,23 @@ export const useMainStore = defineStore("main", {
       try {
         let { data } = await axios.post("/login", {
           email: this.user.email,
-          password: this.user.password
-        })
+          password: this.user.password,
+        });
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("username", data.username);
         localStorage.setItem("isPremium", data.isPremium);
-        this.isLogin = true
+        this.isLogin = true;
         this.router.push("/");
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+
+    async logoutUser() {
+      localStorage.clear();
+      this.isLogin = false;
+      this.router.push("/login");
+    },
   },
 });
