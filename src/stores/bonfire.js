@@ -9,6 +9,8 @@ export const useBonfireStore = defineStore("bonfire", {
     isLoggedIn: false,
     isVerified: "",
     games: [],
+    searchQuery: "",
+    currentPage: 1,
     gameDetail: {},
     explore: [],
   }),
@@ -23,7 +25,7 @@ export const useBonfireStore = defineStore("bonfire", {
         localStorage.setItem(`username`, data.username);
         localStorage.setItem(`verified`, data.verified);
         this.isLoggedIn = true;
-        this.isVerified = localStorage.getItem(`verified`)
+        this.isVerified = localStorage.getItem(`verified`);
         Swal.fire({
           title: "Success!",
           icon: "success",
@@ -79,16 +81,41 @@ export const useBonfireStore = defineStore("bonfire", {
       this.isLoggedIn = false;
       this.router.push("/");
     },
-    async fetchGames() {
+    flushGames() {
+      this.currentPage = 0;
+      this.games = [];
+    },
+    flushExplore() {
+      this.explore = [];
+    },
+    flushSearch() {
+      this.searchQuery = "";
+    },
+    async fetchGames(search) {
       try {
-        let { data } = await axios.get(`${baseUrl}/games`, {});
-        this.games = data;
+        if (search) {
+          this.searchQuery = search;
+        }
+
+        const current = Math.floor(this.games.length / 10);
+
+        let url = `${baseUrl}/games`;
+
+        url = current >= 1 ? url + `?page=${current + 1}` : url + `?page=1`;
+        url = this.searchQuery ? url + `&search=${search}` : url;
+
+        let { data } = await axios.get(url, {});
+
+        data.games.forEach((el) => {
+          this.games.push(el);
+        });
+        this.currentPage++;
       } catch (error) {
         Swal.fire({
-            title: "An Error has occured...",
-            icon: "error",
-            text: err.response.data.message,
-          });
+          title: "An Error has occured...",
+          icon: "error",
+          text: error.response.data.message,
+        });
       }
     },
     async fetchGameById(id) {
@@ -97,10 +124,10 @@ export const useBonfireStore = defineStore("bonfire", {
         this.gameDetail = data;
       } catch (error) {
         Swal.fire({
-            title: "An Error has occured...",
-            icon: "error",
-            text: err.response.data.message,
-          });
+          title: "An Error has occured...",
+          icon: "error",
+          text: err.response.data.message,
+        });
       }
     },
     async exploreGames() {
@@ -121,10 +148,10 @@ export const useBonfireStore = defineStore("bonfire", {
         });
       } catch (error) {
         Swal.fire({
-            title: "An Error has occured...",
-            icon: "error",
-            text: err.response.data.message,
-          });
+          title: "An Error has occured...",
+          icon: "error",
+          text: err.response.data.message,
+        });
       }
     },
     async postReview(payload) {
@@ -150,12 +177,15 @@ export const useBonfireStore = defineStore("bonfire", {
         this.router.push(`/games/${this.gameDetail.id}`);
       } catch (error) {
         Swal.fire({
-            title: "An Error has occured...",
-            icon: "error",
-            text: err.response.data.message,
-          });
+          title: "An Error has occured...",
+          icon: "error",
+          text: err.response.data.message,
+        });
       }
     },
+    async fetchUserDetails() {
+        
+    }
   },
   getters: {},
 });

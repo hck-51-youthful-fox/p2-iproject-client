@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
       <RouterLink
         class="d-flex justify-content-center align-items-center navbar-brand px-5 m-0"

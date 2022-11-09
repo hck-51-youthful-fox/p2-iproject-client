@@ -8,33 +8,65 @@ export default {
   components: {
     GameCard,
   },
+  data() {
+    return {
+      searchQuery :''
+    }
+  },
   methods: {
-    ...mapActions(useBonfireStore, ["fetchGames"]),
+    ...mapActions(useBonfireStore, ["fetchGames", "flushGames","flushSearch"]),
+    onScroll() {
+      this.isUserScrolling = window.scrollY > 0;
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        // you're at the bottom of the page
+        this.fetchGames();
+      }
+    },
+    fetchWithQuery() {
+      this.flushGames()
+      this.fetchGames(this.searchQuery)
+    },
+    clearSearch() {
+      this.flushGames()
+      this.flushSearch()
+      this.fetchGames()
+    }
   },
   computed: {
     ...mapState(useBonfireStore, ["games"]),
   },
   created() {
+    window.addEventListener("scroll", this.onScroll);
     this.fetchGames();
   },
+  destroyed() {
+    window.removeEventListener("scroll", this.onScroll);
+  },
+  beforeUnmount() {
+    this.flushGames();
+  }
 };
 </script>
 
 <template>
   <div class="card bg-dark mt-2">
     <div class="card-body">
-      <form>
-        <div class="d-flex justify-content-center align-items-center">
+      <form @submit.prevent="fetchWithQuery">
+        <div class="d-flex justify-content-between align-items-center">
           <div class="col-10 mx-1 form-group text-white">
             <input
-              type="email"
+              v-model="searchQuery"
+              type="text"
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="search by title..."
             />
           </div>
-          <div class="col-1 mx-1">
-            <button class="btn btn-warning">Search</button>
+          <div class="col-mx">
+            <button type="submit" class="btn btn-warning">Search</button>
+          </div>
+          <div class="col-mx">
+            <button type="button" @click="clearSearch" class="btn btn-warning">Clear Search</button>
           </div>
         </div>
       </form>
