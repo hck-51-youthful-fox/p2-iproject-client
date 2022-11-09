@@ -27,6 +27,7 @@ export default {
       this.fetchGames(this.searchQuery)
     },
     clearSearch() {
+      this.searchQuery = ''
       this.flushGames()
       this.flushSearch()
       this.fetchGames()

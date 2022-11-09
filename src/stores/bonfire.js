@@ -16,6 +16,41 @@ export const useBonfireStore = defineStore("bonfire", {
     loggedUserDetails: {},
   }),
   actions: {
+    async googleLogin(payload) {
+			try {
+				let { data } = await axios.post(
+					`${baseUrl}/users/google-login`,
+					{},
+					{
+						headers: { google_token: payload.credential },
+					}
+				);
+
+				localStorage.setItem(`access_token`, data.access_token);
+				localStorage.setItem(`username`, data.username);
+        localStorage.setItem(`verified`, 'Verified');
+				this.loggedUserName = localStorage.getItem(`username`);
+				this.isLoggedIn = true;
+        this.isVerified = 'Verified'
+				Swal.fire({
+					position: "top-end",
+					icon: "success",
+					title: `Welcome, ${this.loggedUserName}!`,
+					showConfirmButton: false,
+					timer: 1250,
+					timerProgressBar: true,
+				});
+				this.router.push("/");
+			} catch (error) {
+				console.log(error)
+				Swal.fire({
+					icon: "error",
+					title: `An error has occured...`,
+					html: error.response.data.message,
+					showConfirmButton: false,
+				});
+			}
+		},
     async postLogin(payload) {
       try {
         const { data } = await axios.post(`${baseUrl}/users/login`, {
@@ -103,7 +138,9 @@ export const useBonfireStore = defineStore("bonfire", {
         let url = `${baseUrl}/games`;
 
         url = current >= 1 ? url + `?page=${current + 1}` : url + `?page=1`;
-        url = this.searchQuery ? url + `&search=${search}` : url;
+        url = this.searchQuery ? url + `&search=${this.searchQuery}` : url;
+
+        console.log(url)
 
         let { data } = await axios.get(url, {});
 

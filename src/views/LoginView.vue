@@ -4,12 +4,11 @@ import { useBonfireStore } from "../stores/bonfire";
 import CustomButton from "../components/CustomButton.vue";
 import { RouterLink } from "vue-router";
 
-
 export default {
   name: "LoginView",
   components: {
     CustomButton,
-    RouterLink
+    RouterLink,
   },
   data() {
     return {
@@ -17,20 +16,37 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useBonfireStore, ["postLogin"]),
+    ...mapActions(useBonfireStore, ["postLogin", "googleLogin"]),
+    googleLoginHandler() {
+      google.accounts.id.initialize({
+        client_id:
+          "165735934430-kv0505e548ovvt023j1jaf6tqjn7iums.apps.googleusercontent.com",
+        callback: this.googleLogin,
+      });
+      google.accounts.id.renderButton(document.getElementById("google-login"), {
+        theme: "outline",
+        size: "large",
+      });
+    },
   },
-  created() {
+  mounted() {
+    this.googleLoginHandler();
     this.loginForm = {
       email: "",
       password: "",
     };
+  },
+  watch: {
+    $route() {
+      this.googleLoginHandler();
+    },
   },
 };
 </script>
 
 <template>
   <div class="card container mt-5 p-0 rounded">
-    <div class="card-body bg-5">
+    <div class="card-body bg-secondary">
       <section class="mx-3">
         <form @submit.prevent="postLogin(loginForm)">
           <h3>Login:</h3>
@@ -64,12 +80,14 @@ export default {
 
         <div class="my-2">
           <p>Or login with Google :</p>
-          <div id="google-login"></div>
+          <div>
+            <div id="google-login"></div>
+          </div>
         </div>
 
         <p class="mt-3">
           Don't have an account?
-          <RouterLink :to="'/register'" class="mt-1">register here</RouterLink>
+          <RouterLink :to="'/register'" class="mt-1 text-body">register here</RouterLink>
         </p>
       </section>
     </div>

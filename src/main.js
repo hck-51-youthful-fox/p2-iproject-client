@@ -6,6 +6,7 @@ import router from "./router";
 
 import Swal from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import "./assets/style.css";
 
 const app = createApp(App);
 const pinia = createPinia();

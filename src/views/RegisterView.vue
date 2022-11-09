@@ -31,7 +31,7 @@ export default {
 
 <template>
   <div class="card container mt-5 p-0 rounded">
-		<div class="card-body bg-5">
+		<div class="card-body bg-secondary">
 			<section class="mx-3">
 				<form @submit.prevent="postregister(registerForm)">
 					<h3>Register:</h3>
@@ -77,7 +77,7 @@ export default {
 				</form>
 				<p class="mt-3">
 					I actually have an account!
-					<RouterLink :to="'/login'" class="mt-1">register here</RouterLink>
+					<RouterLink :to="'/login'" class="mt-1 text-body">register here</RouterLink>
 				</p>
 			</section>
 		</div>
