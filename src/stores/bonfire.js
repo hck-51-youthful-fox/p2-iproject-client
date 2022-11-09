@@ -13,6 +13,7 @@ export const useBonfireStore = defineStore("bonfire", {
     currentPage: 1,
     gameDetail: {},
     explore: [],
+    loggedUserDetails: {},
   }),
   actions: {
     async postLogin(payload) {
@@ -184,8 +185,78 @@ export const useBonfireStore = defineStore("bonfire", {
       }
     },
     async fetchUserDetails() {
+      try {
+        let access_token = localStorage.getItem("access_token");
+        let { data } = await axios.get(`${baseUrl}/users/details`, {
+          headers: {
+            access_token,
+          },
+        });
+
+        this.loggedUserDetails = data;
+
+        console.log(`kesini gan`);
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          title: "An Error has occured...",
+          icon: "error",
+          text: err.response.data.message,
+        });
+      }
+    },
+    async postUserUpdate() {
+      try {
+        let access_token = localStorage.getItem("access_token");
+        await axios.put(`${baseUrl}/users/details`, this.loggedUserDetails, {
+          headers: {
+            access_token,
+          },
+        });
+
+        Swal.fire({
+          title: "Success!",
+          icon: "success",
+          text: `User details updated successfully!`,
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          title: "An Error has occured...",
+          icon: "error",
+          text: error.response.data.message,
+        });
+      }
+    },
+    async verifyUser() {
+      try {
+        let access_token = localStorage.getItem("access_token");
+        let { data } = await axios.patch(
+          `${baseUrl}/users/details/verify`,
+          this.loggedUserDetails,
+          {
+            headers: {
+              access_token,
+            },
+          }
+        );
         
-    }
+        localStorage.setItem(`verified`,`Verified`)
+        this.isVerified = `Verified`
+        Swal.fire({
+          title: "Success!",
+          icon: "success",
+          text: data.message,
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          title: "An Error has occured...",
+          icon: "error",
+          text: error.response.data.message,
+        });
+      }
+    },
   },
   getters: {},
 });

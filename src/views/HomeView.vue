@@ -63,10 +63,10 @@ export default {
             />
           </div>
           <div class="col-mx">
-            <button type="submit" class="btn btn-warning">Search</button>
+            <button type="submit" class="btn btn-danger">Search</button>
           </div>
           <div class="col-mx">
-            <button type="button" @click="clearSearch" class="btn btn-warning">Clear Search</button>
+            <button type="button" @click="clearSearch" class="btn btn-danger">Clear Search</button>
           </div>
         </div>
       </form>
