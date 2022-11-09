@@ -174,7 +174,8 @@ export const useNoteStore = defineStore("note", {
             access_token: localStorage.getItem("access_token"),
           },
         });
-        this.category = data;
+        console.log(data, "ini dari category");
+        this.categories = data;
       } catch (error) {
         console.log(error);
       }

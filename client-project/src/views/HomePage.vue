@@ -15,14 +15,20 @@ export default {
     NotePage,
   },
   methods: {
-    ...mapActions(useNoteStore, ["payment", "checkPremium"]),
+    ...mapActions(useNoteStore, [
+      "payment",
+      "checkPremium",
+      // "fetchNotes",
+      // "fetchCategories",
+    ]),
   },
   computed: {
     ...mapState(useNoteStore, ["isPremium"]),
   },
   created() {
     this.checkPremium();
-  
+    // this.fetchNotes();
+    // this.fetchCategories();
   },
 };
 </script>
@@ -44,8 +50,9 @@ export default {
         >If you want to enjoy your note,</span
       >
       <button @click.prevent="payment" id="pay-button">click here!</button>
+      <span v-if="isPremium" class="mt-4">Thanks for choice us</span>
     </div>
-    <addPage />
+    <addPage v-if="isPremium" />
     <NotePage />
   </div>
 </template>
