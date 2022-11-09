@@ -1,6 +1,6 @@
 <script>
 import { mapActions } from "pinia";
-import { useFootballStore } from "../stores/counter";
+import { useFootballStore } from "../stores/football";
 
 export default {
   name: "Navbar",
@@ -61,7 +61,12 @@ export default {
                 >My Team</a
               >
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item">
+              <a @click.prevent="changePage('/login')" class="nav-link" href="#"
+                >Login</a
+              >
+            </li>
+            <!-- <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -81,9 +86,9 @@ export default {
                   <a class="dropdown-item" href="#">Something else here</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
-          <form class="d-flex mt-3" role="search">
+          <!-- <form class="d-flex mt-3" role="search">
             <input
               class="form-control me-2"
               type="search"
@@ -91,7 +96,7 @@ export default {
               aria-label="Search"
             />
             <button class="btn btn-success" type="submit">Search</button>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
