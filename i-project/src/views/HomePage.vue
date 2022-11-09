@@ -2,97 +2,48 @@
 import navBar from "../components/Navbar.vue";
 import cardThread from "../components/cardThread.vue";
 import cardVGA from "../components/CardVGA.vue";
+import cardNews from "../components/CardNews.vue";
+import { useDataStore } from "../stores/data";
+import { mapActions, mapState } from "pinia";
 export default {
   name: "Homepage",
+  computed: {
+    ...mapState(useDataStore, ["dataNews"]),
+  },
+  methods: {
+    ...mapActions(useDataStore, ["news"]),
+  },
   components: {
     navBar,
     cardThread,
     cardVGA,
+    cardNews,
+  },
+  created() {
+    this.news();
   },
 };
 </script>
 <template>
   <navBar />
-  <section class="container mx-auto p-10 px-0 md:p-10 md:py-12 md:px-0">
-    <section class="p-5 md:p-0 xl:grid xl:grid-cols-12 xl:grid-rows-6 xl:h-200">
-      <section
-        class="row-start-1 row-end-5 col-start-1 col-end-9 bg-orange-100"
-      >
-        <article class="p-5 flex justify-between items-center h-full">
-          <div class="space-y-5">
-            <h2 class="text-3xl md:text-5xl max-w-md">NVIDIA 3090</h2>
-            <button
-              class="p-2 px-6 bg-red-500 text-white rounded-md hover:bg-red-600"
-            >
-              Read More
-            </button>
-          </div>
-          <div>
-            <img class="h-auto w-96" src="" alt="" />
-          </div>
-        </article>
-      </section>
-      <section
-        class="row-start-5 row-end-7 col-start-1 col-end-4 bg-purple-300"
-      >
-        <article class="flex items-center h-full bg-green-900 p-6">
-          <div>
-            <p class="text-3xl font-xl text-white mt-2">NVIDIA 3090</p>
-          </div>
-        </article>
-      </section>
-      <section class="row-start-5 row-end-7 col-start-4 col-end-9 bg-gray-200">
-        <article class="p-10 flex justify-between items-center h-full">
-          <div class="space-y-5">
-            <h2 class="text-3xl max-w-xs">NVIDIA 3090</h2>
-
-            <button
-              class="p-2 px-6 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              Read More
-            </button>
-          </div>
-          <div>
-            <img class="h-auto w-full ml-10 -mt-5" src="" alt="" />
-          </div>
-        </article>
-      </section>
-      <section class="row-start-1 row-end-4 col-start-9 col-end-13 bg-teal-100">
-        <article class="p-10 flex justify-between items-center h-full">
-          <div class="space-y-5">
-            <h2 class="text-2xl max-w-sm">NVIDIA 3090</h2>
-
-            <button
-              class="p-2 px-6 bg-green-500 text-white rounded-md hover:bg-green-600"
-            >
-              Read More
-            </button>
-          </div>
-          <div>
-            <img class="h-auto w-80" src="" alt="" />
-          </div>
-        </article>
-      </section>
-      <section
-        class="row-start-4 row-end-7 col-start-9 col-end-13 bg-purple-100"
-      >
-        <article class="p-10 flex justify-between items-center h-full">
-          <div class="space-y-5">
-            <h2 class="text-2xl max-w-sm">NVIDIA 3090</h2>
-
-            <button
-              class="p-2 px-6 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-            >
-              Read More
-            </button>
-          </div>
-          <div>
-            <img class="h-auto w-80" src="" alt="" />
-          </div>
-        </article>
-      </section>
+  <div class="container my-12 px-6 mx-auto">
+    <section class="mb-32 text-gray-800">
+      <h2 class="text-3xl font-bold mb-12 text-center">NEWS</h2>
+      <div class="grid lg:grid-cols-4 gap-6">
+        <cardNews v-for="news in dataNews.news" :key="news.id" :news="news" />
+      </div>
+    </section>
+  </div>
+  <section class="container mx-auto py-6 md:py-10 antialiased">
+    <h2 class="text-3xl font-bold mb-20 text-center">TOP PEFORMANCE VGA</h2>
+    <section class="grid lg:grid-cols-2 2xl:grid-cols-4 grid-cols-1 gap-8">
+      <cardVGA
+        v-for="listVga in dataNews.topVGA"
+        :key="listVga.id"
+        :listVga="listVga"
+      />
     </section>
   </section>
-  <cardVGA />
+  <h2 class="text-3xl font-bold mt-20 mb-20 text-center">PC PEEKER FORUM</h2>
   <cardThread />
 </template>
