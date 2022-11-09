@@ -21,20 +21,11 @@ export default {
       <img class="object-fill border" :src="food.imageUrl" />
     </div>
     <div class="py-4 pb-5">
-      <h5 class="text-xl font-semibold tracking-tight text-gray-90">
+      <h5 class="text-xl font-regular tracking-tight text-gray-600">
         {{ food.name }}
       </h5>
-      <div class="flex justify-between items-center pt-2">
-        <span
-          class="bg-gray-200 text-gray-800 text-sm font-semibold px-2.5 py-0.5 rounded"
-          >{{ food.Category.name }}</span
-        >
-        <div>
-          <span class="font-semibold px-2.5 py-0.5 rounded ml-3"></span>
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <span class="text-2xl font-bold text-gray-900">{{
+      <div class="flex pt-2 justify-between items-center">
+        <span class="text-2xl font-semibold text-gray-800">{{
           convertPrice(food.price)
         }}</span>
         <div class="cursor-pointer">

@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import CartView from "../views/CartView.vue";
+import TransactionView from "../views/TransactionView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       name: "cart",
       component: CartView,
     },
+    {
+      path: "/invoice",
+      name: "invoice",
+      component: TransactionView,
+    },
   ],
 });
 
@@ -40,6 +46,8 @@ router.beforeEach((to, from) => {
   else if (to.name === "register" && localStorage.access_token)
     return { name: "home" };
   else if (to.name === "cart" && !localStorage.access_token)
+    return { name: "home" };
+  else if (to.name === "transaction" && !localStorage.access_token)
     return { name: "home" };
 });
 

@@ -81,77 +81,83 @@ export default {
 
 <template>
   <section
-    class="h-40 pt-96 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-no-repeat"
+    class="pt-96 py-24 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-no-repeat"
   ></section>
-  <section class="pt-4 px-40">
-    <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-hidden">
-      <div class="relative">
-        <h2 class="w-full text-3xl font-bold text-center md:text-4xl">
-          All Foods
-        </h2>
-      </div>
-
-      <div class="flex pt-8 items-center">
-        <div class="flex items-center">
-          <ul class="flex items-center space-x-6">
-            <li>
-              <form class="flex items-center">
-                <label for="simple-search" class="sr-only">Search</label>
-                <div class="relative w-full">
-                  <div
-                    class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                  <h1>{{ search }}</h1>
-                  <input
-                    type="text"
-                    v-model="search"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                    placeholder="Search"
-                    required
-                  />
-                </div>
-                <button
-                  @click="searchFood(this.search)"
-                  type="submit"
-                  class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
-                  </svg>
-                  <span class="sr-only">Search</span>
-                </button>
-              </form>
-            </li>
-          </ul>
+  <div
+    class="content bg-white pt-8 md:p-8 pb-12 ml-4 lg:max-w-lg w-96 lg:absolute top-96 left-40 border round-md border-slate-300"
+  >
+    <div class="flex justify-between font-semibold round-md text-3xl">
+      <p>Mau pesan makan apa hari ini?</p>
+    </div>
+    <div class="flex pt-4">
+      <form @submit.prevent="searchFood(this.search)" class="flex items-center">
+        <label for="simple-search" class="sr-only">Cari makanan</label>
+        <div class="relative w-full">
+          <div
+            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <h1>{{ search }}</h1>
+          <input
+            type="text"
+            v-model="search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+            placeholder="Cari makanan"
+            required
+          />
         </div>
-      </div>
-      <div class="flex pt-8 flex-row-reverse items-center">
-        <div class="flex items-center">
+        <button
+          type="submit"
+          class="p-2.5 ml-2 text-sm font-medium text-white bg-[#00B14F] rounded-lg border border-[#00B14F] hover:bg-[#13984f] focus:ring-4 focus:outline-none focus:ring-[#13984f]"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+          <span class="sr-only">Search</span>
+        </button>
+      </form>
+    </div>
+  </div>
+  <section class="pt-20 px-40 bg-slate-50">
+    <main class="flex-1 max-h-full p-5">
+      <div class="flex py-4">
+        <h2
+          v-if="!selectedCategory"
+          class="w-full text-3xl font-bold text-start md:text-4xl"
+        >
+          Semua Makanan
+        </h2>
+        <h2
+          v-if="selectedCategory"
+          class="w-full text-3xl font-bold text-start md:text-4xl"
+        >
+          {{ selectedCategory }}
+        </h2>
+        <div class="flex flex-row-reverse items-start">
           <ul class="flex items-center space-x-6">
             <li>
               <form>
@@ -165,7 +171,7 @@ export default {
                     selected
                     value=""
                   >
-                    Filter by category
+                    Semua Makanan
                   </option>
                   <option v-else selected value="">
                     {{
@@ -217,7 +223,7 @@ export default {
               </a>
               <a
                 v-else
-                class="bg-gray-300 relative inline-flex items-center rounded-l-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
+                class="bg-gray-200 relative inline-flex items-center rounded-l-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
                 disabled
               >
                 <svg
@@ -262,7 +268,7 @@ export default {
               </a>
               <a
                 v-else
-                class="bg-gray-300 relative inline-flex items-center rounded-r-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
+                class="bg-gray-200 relative inline-flex items-center rounded-r-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
                 disabled
               >
                 <svg
