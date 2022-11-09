@@ -1,6 +1,7 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/NavBar.vue";
+import Preloader from "./components/Preloader.vue";
 import { useBonfireStore } from "./stores/bonfire";
 import { mapWritableState } from "pinia";
 
@@ -10,9 +11,10 @@ export default {
     RouterView,
     RouterLink,
     NavBar,
+    Preloader
   },
   computed : {
-    ...mapWritableState(useBonfireStore,['isVerified','isLoggedIn'])
+    ...mapWritableState(useBonfireStore,['isVerified','isLoggedIn','isLoading'])
   },
   created() {
     if(localStorage.getItem("access_token")) {
@@ -26,6 +28,9 @@ export default {
 
 <template>
   <NavBar />
+  <div v-show="isLoading">
+    <Preloader />
+  </div>
   <div class="container-fluid">
     <RouterView />
   </div>
