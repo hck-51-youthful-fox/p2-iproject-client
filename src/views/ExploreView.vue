@@ -10,17 +10,17 @@ export default {
   },
   data() {
     return {
-      isUserScrolling : false
-    }
+      isUserScrolling: false,
+    };
   },
   methods: {
-    ...mapActions(useBonfireStore, ["exploreGames"]),
+    ...mapActions(useBonfireStore, ["exploreGames", "flushExplore"]),
     onScroll() {
       this.isUserScrolling = window.scrollY > 0;
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         // you're at the bottom of the page
-        this.exploreGames()
-    }
+        this.exploreGames();
+      }
     },
   },
   computed: {
@@ -28,10 +28,11 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.onScroll);
-    this.exploreGames()
+    this.exploreGames();
   },
   destroyed() {
     window.removeEventListener("scroll", this.onScroll);
+    this.flushExplore();
   },
 };
 </script>
