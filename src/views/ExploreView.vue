@@ -1,10 +1,48 @@
 <script>
+import { useBonfireStore } from "../stores/bonfire";
+import { mapActions, mapState } from "pinia";
+import GameCard from "../components/GameCard.vue";
 
 export default {
-  nama : "ExploreGame"
-}
+  nama: "ExploreView",
+  components: {
+    GameCard,
+  },
+  data() {
+    return {
+      isUserScrolling : false
+    }
+  },
+  methods: {
+    ...mapActions(useBonfireStore, ["exploreGames"]),
+    onScroll() {
+      this.isUserScrolling = window.scrollY > 0;
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        // you're at the bottom of the page
+        this.exploreGames()
+    }
+    },
+  },
+  computed: {
+    ...mapState(useBonfireStore, ["explore"]),
+  },
+  created() {
+    window.addEventListener("scroll", this.onScroll);
+    this.exploreGames()
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.onScroll);
+  },
+};
 </script>
 
 <template>
-  ini {{$route.fullPath}}
+  <div class="row">
+    <GameCard
+      v-for="(game, index) in explore"
+      :key="`game-${game.id}`"
+      :game="game"
+      :index="index"
+    />
+  </div>
 </template>
