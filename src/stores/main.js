@@ -15,6 +15,7 @@ export const useMainStore = defineStore("main", {
     isLogin: false,
     username: localStorage.getItem("username"),
     isPremium: localStorage.getItem("isPremium"),
+    midtrans: "",
   }),
 
   actions: {
@@ -71,5 +72,31 @@ export const useMainStore = defineStore("main", {
         console.log(error);
       }
     },
+
+    async payment() {
+      try {
+        let { data } = await axios.post(
+          "/user/payment",
+          {},
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+
+        this.midtrans = data.redirect_url;
+        // window.location.href = data.redirect_url;
+        window.open(data.redirect_url, "_blank");
+        // this.isPremium = true
+        localStorage.setItem("isPremium", true);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getPostFromDB() {
+      
+    }
   },
 });

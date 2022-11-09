@@ -5,10 +5,10 @@ import { useMainStore } from "../stores/main";
 export default {
   name: "NavBar",
   computed: {
-    ...mapState(useMainStore, ["username", "isLogin", "isPremium"])
+    ...mapState(useMainStore, ["username", "isLogin", "isPremium", "midtrans"])
   },
   methods: {
-    ...mapActions(useMainStore, ["logoutUser"])
+    ...mapActions(useMainStore, ["logoutUser", "payment"])
   },
   created() {
     this.username
@@ -71,7 +71,7 @@ export default {
             </li>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <!-- Buy Premium Show when User Not Premium When Clicked Auto redirect to midtrans payment -->
-                <li><a class="dropdown-item" href="#!" v-if="!isPremium">Buy Premium</a></li>
+                <li><a class="dropdown-item" @click.prevent="payment" v-if="isPremium === true">Buy Premium</a></li>
                 <li><a class="dropdown-item" href="#!">Your Posts</a></li>
                 <li><a class="dropdown-item" href="#!" @click.prevent="logoutUser">Log Out</a></li>
               </ul>
