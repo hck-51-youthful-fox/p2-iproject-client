@@ -12,7 +12,7 @@ export const useBonfireStore = defineStore("bonfire", {
     isLoading: false,
     games: [],
     searchQuery: "",
-    currentPage: 1,
+    currentPage: 0,
     totalGame: 0,
     gameDetail: {},
     explore: [],
@@ -74,6 +74,9 @@ export const useBonfireStore = defineStore("bonfire", {
           title: "Success!",
           icon: "success",
           text: `Welcome back, ${data.username}!`,
+          showConfirmButton: false,
+          timer: 1250,
+          timerProgressBar: true,
         });
       } catch (error) {
         this.toggleLoading(false);
@@ -123,6 +126,9 @@ export const useBonfireStore = defineStore("bonfire", {
         title: "Success!",
         icon: "success",
         text: `Logged out successfully!`,
+        showConfirmButton: false,
+        timer: 1250,
+        timerProgressBar: true,
       });
       this.isLoggedIn = false;
       this.isVerified = "";
@@ -140,6 +146,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async fetchGames(search) {
       try {
+        this.currentPage++;
         this.toggleLoading(true);
         if (search) {
           this.searchQuery = search;
@@ -159,7 +166,6 @@ export const useBonfireStore = defineStore("bonfire", {
         data.games.forEach((el) => {
           this.games.push(el);
         });
-        this.currentPage++;
         this.toggleLoading(false);
       } catch (error) {
         this.toggleLoading(false);
@@ -234,6 +240,9 @@ export const useBonfireStore = defineStore("bonfire", {
           title: "Success!",
           icon: "success",
           text: data.message,
+          showConfirmButton: false,
+          timer: 1250,
+          timerProgressBar: true,
         });
       } catch (error) {
         this.toggleLoading(false);
@@ -279,6 +288,9 @@ export const useBonfireStore = defineStore("bonfire", {
           title: "Success!",
           icon: "success",
           text: `User details updated successfully!`,
+          showConfirmButton: false,
+          timer: 1250,
+          timerProgressBar: true,
         });
       } catch (error) {
         this.toggleLoading(false);
@@ -310,6 +322,9 @@ export const useBonfireStore = defineStore("bonfire", {
           title: "Success!",
           icon: "success",
           text: data.message,
+          showConfirmButton: false,
+          timer: 1250,
+          timerProgressBar: true,
         });
       } catch (error) {
         this.toggleLoading(false);
