@@ -21,7 +21,7 @@ export default {
   <!-- ini login section -->
   <section
     class="justify-content-center bg bg-dark"
-    style="padding-bottom: 80px"
+    style="padding-bottom: 200px; padding-top: 40px"
   >
     <div class="d-flex align-items-center pt-3 ps-3">
       <img class="me-2" src="../assets/football-2-256.png" />
