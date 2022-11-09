@@ -1,6 +1,6 @@
 <script>
 import { mapActions } from "pinia";
-import { useUserStore } from "../stores/customer";
+import { useUserStore } from "../stores/user";
 export default {
   name: "Register",
   data() {
