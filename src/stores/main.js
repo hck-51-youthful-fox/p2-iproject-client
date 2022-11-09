@@ -16,6 +16,10 @@ export const useMainStore = defineStore("main", {
     username: localStorage.getItem("username"),
     isPremium: localStorage.getItem("isPremium"),
     midtrans: "",
+    DbNews: [],
+    selectedNews: {},
+    comment: "",
+    postId: 0,
   }),
 
   actions: {
@@ -95,8 +99,53 @@ export const useMainStore = defineStore("main", {
       }
     },
 
-    async getPostFromDB() {
-      
-    }
+    async getPostFromDB(page) {
+      if (!page) {
+        page = 1;
+      }
+
+      try {
+        let { data } = await axios.get(`/news?page=${page}`);
+
+        this.DbNews = data.rows;
+        this.totalPages = data.totalPages;
+        this.currentPage = data.currentPage;
+        console.log(this.DbNews, ">>>>>>>>>>>>>>>>>>>>>>>>>");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getPostById(id) {
+      try {
+        let { data } = await axios.get(`/news/${id}`);
+
+        this.selectedNews = data;
+        console.log(this.selectedNews);
+        this.postId = id;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async postComment(id) {
+      try {
+        let { data } = await axios.post(
+          `/user/comment/${id}`,
+          {
+            comment: this.comment,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        this.getPostById(this.postId);
+        this.comment = "";
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });

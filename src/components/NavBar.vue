@@ -39,7 +39,7 @@ export default {
             <RouterLink class="nav-link active" aria-current="page" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#!">Community Posts</a>
+            <RouterLink class="nav-link" to="/c">Community Posts</RouterLink>
           </li>
         </ul>
         <form class="d-flex">
