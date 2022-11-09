@@ -1,9 +1,21 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useAllStore } from "../stores/all";
 import NavBar from "../components/NavBar.vue";
+import MenuCard from "../components/MenuCard.vue";
 
 export default {
   name: "MenuPage",
-  components: { NavBar },
+  components: { NavBar, MenuCard },
+  computed: {
+    ...mapState(useAllStore, ["beverages"]),
+  },
+  methods: {
+    ...mapActions(useAllStore, ["getBeverages"]),
+  },
+  created() {
+    this.getBeverages();
+  },
 };
 </script>
 
@@ -12,60 +24,17 @@ export default {
   <div class="container-fluid">
     <div class="card">
       <div class="d-flex justify-content-center row mt-4 mb-4">INI NAMA</div>
-      <div class="d-flex justify-content-center row">
-        <div class="col-3">
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
+      <div class="d-flex flex-wrap justify-content-center row">
+        <div
+          class="d-flex flex-wrap justify-content-between d-grid gap-3 col-9"
+        >
+          <MenuCard
+            v-for="beverage in beverages"
+            :key="beverage.id"
+            :beverage="beverage"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style>
-.card-body {
-  border: 1px solid;
-}
-
-.card {
-  border: 0;
-}
-</style>
