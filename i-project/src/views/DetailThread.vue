@@ -1,14 +1,30 @@
 <script>
+import { mapActions, mapState } from "pinia";
 import navBar from "../components/Navbar.vue";
+import { useDataStore } from "../stores/data";
+import cardComment from "../components/CardComment.vue";
+
 export default {
   name: "Detail",
+  computed: {
+    ...mapState(useDataStore, ["detail"]),
+  },
+  methods: {
+    ...mapActions(useDataStore, ["getDetail"]),
+  },
   components: {
     navBar,
+    cardComment,
+  },
+  created() {
+    const idThread = this.$route.params.idThread;
+    this.getDetail(idThread);
   },
 };
 </script>
 <template>
   <navBar />
+  {{ detail }}
   <section class="container mx-auto p-6 md:p-10 transform duration-500">
     <div class="flex items-center justify-center">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
@@ -23,72 +39,19 @@ export default {
 
         <div class="mt-4 mb-6">
           <div class="mb-3 text-xl font-bold">
-            Nulla sed leo tempus, feugiat velit vel, rhoncus neque?
+            {{ detail[0].name }}
           </div>
           <div class="text-sm text-neutral-600">
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massa Aliquam a tristique
-            sapien, nec bibendum urna. Maecenas convallis dignissim turpis, non
-            suscipit mauris interdum at. Morbi sed gravida nisl, a pharetra
-            nulla. Etiam tincidunt turpis leo, ut mollis ipsum consectetur quis.
-            Etiam faucibus est risus, ac condimentum mauris consequat nec.
-            Curabitur eget feugiat massa Aliquam a tristique sapien, nec
-            bibendum urna. Maecenas convallis dignissim turpis, non suscipit
-            mauris interdum at. Morbi sed gravida nisl, a pharetra nulla. Etiam
-            tincidunt turpis leo, ut mollis ipsum consectetur quis. Etiam
-            faucibus est risus, ac condimentum mauris consequat nec. Curabitur
-            eget feugiat massa Aliquam a tristique sapien, nec bibendum urna.
-            Maecenas convallis dignissim turpis, non suscipit mauris interdum
-            at. Morbi sed gravida nisl, a pharetra nulla. Etiam tincidunt turpis
-            leo, ut mollis ipsum consectetur quis. Etiam faucibus est risus, ac
-            condimentum mauris consequat nec. Curabitur eget feugiat massa
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massa
+            {{ detail[0].thread }}
           </div>
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-center mt-4">
-      <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
-        <div class="flex w-full items-center justify-between border-b pb-3">
-          <div class="flex items-center space-x-3">
-            <div
-              class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"
-            ></div>
-            <div class="text-lg font-bold text-slate-700">Beja</div>
-          </div>
-        </div>
-
-        <div class="mt-4 mb-6">
-          <div class="mb-3 text-xl font-bold">
-            Nulla sed leo tempus, feugiat velit vel, rhoncus neque?
-          </div>
-          <div class="text-sm text-neutral-600">
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massa Aliquam a tristique
-            sapien, nec bibendum urna. Maecenas convallis dignissim turpis, non
-            suscipit mauris interdum at. Morbi sed gravida nisl, a pharetra
-            nulla. Etiam tincidunt turpis
-          </div>
-          <div class="mt-4">
-            <img
-              class="w-32 h-32 rounded-lg"
-              src="https://i.pravatar.cc/32"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <cardComment
+      v-for="listComment in detail[0].Comments"
+      :key="listComment.id"
+      :listComment="listComment"
+    />
     <div class="flex items-center justify-center mt-4">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
         <form>

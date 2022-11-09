@@ -7,7 +7,9 @@ export const useDataStore = defineStore("data", {
     isLogin: false,
     dataNews: [],
     newsImage: [],
-    thread:[]
+    thread: [],
+    totalPages: [],
+    detail: [],
   }),
   actions: {
     async login(email, password) {
@@ -35,12 +37,34 @@ export const useDataStore = defineStore("data", {
       }
     },
 
-    async getThread(){
-        try {
-            const {data} = await axios.get(`${baseUrl}/news`)
-        } catch (error) {
-            
+    async getThread(name, page) {
+      try {
+        if (!page) {
+          page = 0;
         }
+        let halaman = page;
+        if (!name) {
+          name = "";
+        }
+        let cari = name;
+        const { data } = await axios.get(
+          `${baseUrl}/thread?page=${halaman}&name=${cari}`
+        );
+
+        this.thread = data.rows;
+        this.totalPage = data.totalPages;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getDetail(idThread) {
+      try {
+        const { data } = await axios.get(`${baseUrl}/detail/${idThread}`);
+        this.detail = data;
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     convertDate(data) {

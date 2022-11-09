@@ -8,10 +8,10 @@ import { mapActions, mapState } from "pinia";
 export default {
   name: "Homepage",
   computed: {
-    ...mapState(useDataStore, ["dataNews"]),
+    ...mapState(useDataStore, ["dataNews", "thread", "totalPages"]),
   },
   methods: {
-    ...mapActions(useDataStore, ["news"]),
+    ...mapActions(useDataStore, ["news", "getThread"]),
   },
   components: {
     navBar,
@@ -21,6 +21,7 @@ export default {
   },
   created() {
     this.news();
+    this.getThread();
   },
 };
 </script>
@@ -45,5 +46,9 @@ export default {
     </section>
   </section>
   <h2 class="text-3xl font-bold mt-20 mb-20 text-center">PC PEEKER FORUM</h2>
-  <cardThread />
+  <cardThread
+    v-for="listThread in thread"
+    :key="listThread.id"
+    :listThread="listThread"
+  />
 </template>

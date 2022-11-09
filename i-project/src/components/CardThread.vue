@@ -1,8 +1,22 @@
 <script>
+import { mapActions, mapState } from "pinia";
 import { RouterLink } from "vue-router";
+import { useDataStore } from "../stores/data";
 
 export default {
   name: "CardThread",
+  props: ["listThread"],
+  methods: {
+    ...mapActions(useDataStore, ["getDetail"]),
+    clickHandler() {
+      this.$router.push({
+        name: "detail",
+        params: {
+          idThread: this.listThread.id,
+        },
+      });
+    },
+  },
 };
 </script>
 <template>
@@ -17,20 +31,18 @@ export default {
             <div class="text-lg font-bold text-slate-700">Beja</div>
           </div>
           <div class="flex items-center space-x-8">
-            <div class="text-xs text-neutral-500">2 hours ago</div>
+            <div class="text-xs text-neutral-500">
+              User rating : {{ listThread.rating }}
+            </div>
           </div>
         </div>
 
         <div class="mt-4 mb-6">
-          <RouterLink to="/detail" class="mb-3 text-xl font-bold">
-            Nulla sed leo tempus, feugiat velit vel, rhoncusasdasdasd neque?
-          </RouterLink>
+          <a class="mb-3 text-xl font-bold" @click.prevent="clickHandler()">
+            {{ listThread.name }}
+          </a>
           <div class="text-sm text-neutral-600">
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massaasdasdasdasd
+            {{ listThread.thread }}
           </div>
         </div>
 

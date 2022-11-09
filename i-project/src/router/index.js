@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomePage,
     },
     {
-      path: "/detail",
+      path: "/detail/:idThread",
       name: "detail",
       component: detailPage,
 
