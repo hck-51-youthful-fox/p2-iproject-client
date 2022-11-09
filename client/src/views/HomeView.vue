@@ -83,7 +83,7 @@ export default {
   <section
     class="h-40 pt-96 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-no-repeat"
   ></section>
-  <section class="pt-4 px-80">
+  <section class="pt-4 px-40">
     <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-hidden">
       <div class="relative">
         <h2 class="w-full text-3xl font-bold text-center md:text-4xl">

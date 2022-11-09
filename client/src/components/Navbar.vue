@@ -8,6 +8,9 @@ export default {
   computed: {
     ...mapState(useCustomerStore, ["isLogin"]),
   },
+  methods: {
+    ...mapActions(useCustomerStore, ["logout"]),
+  },
 };
 </script>
 
@@ -19,23 +22,29 @@ export default {
       <img src="../assets/logo.svg" class="mr-3 h-6 sm:h-9" alt="Sadida Logo" />
     </RouterLink>
     <div class="flex items-center">
-      <ul class="flex items-center space-x-6">
-        <li class="font-semibold text-gray-700">
-          <RouterLink
-            :to="{ name: 'home' }"
-            class="block py-2 mr-4 pl-3 text-grey-900 rounded md:bg-transparent md:text-grey-900 md:p-0 text-lg font"
-            aria-current="page"
-            >Home</RouterLink
-          >
-        </li>
-        <li class="font-semibold text-gray-700">
+      <ul class="flex items-center space-x-2">
+        <li>
           <RouterLink
             v-if="isLogin"
             :to="{ name: 'cart' }"
-            class="block py-2 pr-4 pl-3 text-grey-900 rounded md:bg-transparent md:text-grey-900 md:p-0 text-lg font"
-            aria-current="page"
-            >Cart</RouterLink
+            type="button"
+            class="text-gray-600 bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none border font-medium rounded-lg text-lg px-5 py-2.5 text-center mr-3 md:mr-0 mt-1"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-7 h-7"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+              />
+            </svg>
+          </RouterLink>
         </li>
         <li>
           <RouterLink
@@ -44,23 +53,13 @@ export default {
             type="button"
             class="text-black bg-white hover:bg-gray-200 focus:ring-4 border border-slate-400 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
           >
-            Login
-          </RouterLink>
-        </li>
-
-        <li>
-          <RouterLink
-            v-if="!isLogin"
-            :to="{ name: 'register' }"
-            type="button"
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0"
-          >
-            Register
+            Masuk/Daftar
           </RouterLink>
         </li>
         <li>
           <button
             v-if="isLogin"
+            @click="logout"
             type="button"
             class="text-gray-600 bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none border font-medium rounded-lg text-lg px-5 py-2.5 text-center mr-3 md:mr-0"
           >
