@@ -68,4 +68,33 @@ export default {
       <!-- End News Card -->
     </div>
   </div>
+  <div class="pagination-div text-center mt-5">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="#"
+          @click.prevent="getPostFromDB(currentPage - 1)"
+          v-if="currentPage !== 1"
+          >Previous</a
+        >
+      </li>
+      <div class="" v-for="index in totalPages">
+        <li class="page-item">
+          <a class="page-link" @click.prevent="getPostFromDB(index)">{{
+            index
+          }}</a>
+        </li>
+      </div>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="#"
+          @click.prevent="getPostFromDB(currentPage + 1)"
+          v-if="currentPage > 0"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </div>
 </template>
