@@ -2,13 +2,14 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const baseUrl = `http://localhost:3000`;
+// const baseUrl = `http://localhost:3000`;
+const baseUrl = `https://server-iproject-ionnotion.herokuapp.com`
 
 export const useBonfireStore = defineStore("bonfire", {
   state: () => ({
     isLoggedIn: false,
     isVerified: "",
-    isLoading:false,
+    isLoading: false,
     games: [],
     searchQuery: "",
     currentPage: 1,
@@ -18,45 +19,45 @@ export const useBonfireStore = defineStore("bonfire", {
   }),
   actions: {
     async googleLogin(payload) {
-			try {
-        this.toggleLoading()
-				let { data } = await axios.post(
-					`${baseUrl}/users/google-login`,
-					{},
-					{
-						headers: { google_token: payload.credential },
-					}
-				);
+      try {
+        this.toggleLoading(true);
+        let { data } = await axios.post(
+          `${baseUrl}/users/google-login`,
+          {},
+          {
+            headers: { google_token: payload.credential },
+          }
+        );
 
-				localStorage.setItem(`access_token`, data.access_token);
-				localStorage.setItem(`username`, data.username);
-        localStorage.setItem(`verified`, 'Verified');
-				this.loggedUserName = localStorage.getItem(`username`);
-				this.isLoggedIn = true;
-        this.isVerified = 'Verified'
+        localStorage.setItem(`access_token`, data.access_token);
+        localStorage.setItem(`username`, data.username);
+        localStorage.setItem(`verified`, "Verified");
+        this.loggedUserName = localStorage.getItem(`username`);
+        this.isLoggedIn = true;
+        this.isVerified = "Verified";
         this.router.push("/");
-        this.toggleLoading()
-				Swal.fire({
-					position: "top-end",
-					icon: "success",
-					title: `Welcome, ${this.loggedUserName}!`,
-					showConfirmButton: false,
-					timer: 1250,
-					timerProgressBar: true,
-				});
-			} catch (error) {
-        this.toggleLoading()
-				Swal.fire({
-					icon: "error",
-					title: `An error has occured...`,
-					html: error.response.data.message,
-					showConfirmButton: false,
-				});
-			}
-		},
+        this.toggleLoading(false);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Welcome, ${this.loggedUserName}!`,
+          showConfirmButton: false,
+          timer: 1250,
+          timerProgressBar: true,
+        });
+      } catch (error) {
+        this.toggleLoading(false);
+        Swal.fire({
+          icon: "error",
+          title: `An error has occured...`,
+          html: error.response.data.message,
+          showConfirmButton: false,
+        });
+      }
+    },
     async postLogin(payload) {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         const { data } = await axios.post(`${baseUrl}/users/login`, {
           email: payload.email,
           password: payload.password,
@@ -67,14 +68,14 @@ export const useBonfireStore = defineStore("bonfire", {
         this.isLoggedIn = true;
         this.isVerified = localStorage.getItem(`verified`);
         this.router.push("/");
-        this.toggleLoading()
+        this.toggleLoading(false);
         Swal.fire({
           title: "Success!",
           icon: "success",
           text: `Welcome back, ${data.username}!`,
         });
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -84,13 +85,13 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async postregister(payload) {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         await axios.post(`${baseUrl}/users/register`, {
           username: payload.username,
           email: payload.email,
           password: payload.password,
         });
-        this.toggleLoading()
+        this.toggleLoading(false);
         let result = await Swal.fire({
           icon: "success",
           title: "Register successful!",
@@ -107,7 +108,7 @@ export const useBonfireStore = defineStore("bonfire", {
           await this.postLogin(loginForm);
         }
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -123,7 +124,7 @@ export const useBonfireStore = defineStore("bonfire", {
         text: `Logged out successfully!`,
       });
       this.isLoggedIn = false;
-      this.isVerified = ''
+      this.isVerified = "";
       this.router.push("/");
     },
     flushGames() {
@@ -138,7 +139,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async fetchGames(search) {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         if (search) {
           this.searchQuery = search;
         }
@@ -156,9 +157,9 @@ export const useBonfireStore = defineStore("bonfire", {
           this.games.push(el);
         });
         this.currentPage++;
-        this.toggleLoading()
+        this.toggleLoading(false);
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -168,12 +169,12 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async fetchGameById(id) {
       try {
-        this.toggleLoading()
+        this.toggleLoading();
         let { data } = await axios.get(`${baseUrl}/games/${id}`, {});
         this.gameDetail = data;
-        this.toggleLoading()
+        this.toggleLoading();
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -183,7 +184,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async exploreGames() {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         const current = Math.floor(this.explore.length / 10);
         let url = `${baseUrl}/games/explore`;
 
@@ -198,9 +199,9 @@ export const useBonfireStore = defineStore("bonfire", {
         data.games.forEach((el) => {
           this.explore.push(el);
         });
-        this.toggleLoading()
+        this.toggleLoading(false);
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -210,7 +211,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async postReview(payload) {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         let access_token = localStorage.getItem("access_token");
         let { data } = await axios.post(
           `${baseUrl}/reviews/${this.gameDetail.id}`,
@@ -225,14 +226,14 @@ export const useBonfireStore = defineStore("bonfire", {
           }
         );
         this.router.push(`/games/${this.gameDetail.id}`);
-        this.toggleLoading()
+        this.toggleLoading(false);
         Swal.fire({
           title: "Success!",
           icon: "success",
           text: data.message,
         });
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -242,7 +243,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async fetchUserDetails() {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         let access_token = localStorage.getItem("access_token");
         let { data } = await axios.get(`${baseUrl}/users/details`, {
           headers: {
@@ -251,9 +252,9 @@ export const useBonfireStore = defineStore("bonfire", {
         });
 
         this.loggedUserDetails = data;
-        this.toggleLoading()
+        this.toggleLoading(false);
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -263,21 +264,21 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async postUserUpdate() {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         let access_token = localStorage.getItem("access_token");
         await axios.put(`${baseUrl}/users/details`, this.loggedUserDetails, {
           headers: {
             access_token,
           },
         });
-        this.toggleLoading()
+        this.toggleLoading(false);
         Swal.fire({
           title: "Success!",
           icon: "success",
           text: `User details updated successfully!`,
         });
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -287,7 +288,7 @@ export const useBonfireStore = defineStore("bonfire", {
     },
     async verifyUser() {
       try {
-        this.toggleLoading()
+        this.toggleLoading(true);
         let access_token = localStorage.getItem("access_token");
         let { data } = await axios.patch(
           `${baseUrl}/users/details/verify`,
@@ -298,17 +299,17 @@ export const useBonfireStore = defineStore("bonfire", {
             },
           }
         );
-        
-        localStorage.setItem(`verified`,`Verified`)
-        this.isVerified = `Verified`
-        this.toggleLoading()
+
+        localStorage.setItem(`verified`, `Verified`);
+        this.isVerified = `Verified`;
+        this.toggleLoading(false);
         Swal.fire({
           title: "Success!",
           icon: "success",
           text: data.message,
         });
       } catch (error) {
-        this.toggleLoading(false)
+        this.toggleLoading(false);
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
@@ -317,8 +318,8 @@ export const useBonfireStore = defineStore("bonfire", {
       }
     },
     toggleLoading(boolean) {
-      this.isLoading = boolean || !this.isLoading
-    }
+      this.isLoading = boolean || !this.isLoading;
+    },
   },
   getters: {},
 });
