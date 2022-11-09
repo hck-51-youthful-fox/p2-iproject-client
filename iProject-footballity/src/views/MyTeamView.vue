@@ -1,6 +1,8 @@
 <script>
 import MyTeamComponents from "../components/MyTeamComponenst.vue";
 import Navbar from "../components/Navbar.vue";
+import * as htmlToImage from "html-to-image";
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 
 export default {
   name: "MyTeamView",
@@ -8,13 +10,40 @@ export default {
     MyTeamComponents,
     Navbar,
   },
+  data() {
+    return {
+      name: localStorage.username,
+    };
+  },
+  methods: {
+    printHTML(element) {
+      htmlToImage
+        .toPng(document.getElementById(element))
+        .then(function (dataUrl) {
+          download(dataUrl, "my-node.png");
+        });
+    },
+    printToJPEG() {
+      htmlToImage
+        .toJpeg(document.getElementById("football-pitch"), { quality: 0.95 })
+        .then(function (dataUrl) {
+          var link = document.createElement("a");
+          link.download = "my-team.jpeg";
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 <template>
   <Navbar />
   <section
     class="bg bg-dark pb-5"
-    style="margin-top: 50px; padding-bottom: 100px"
+    style="margin-top: 50px; padding-bottom: 110px"
   >
     <div class="container" style="padding-bottom: 60px">
       <div class="row">
@@ -27,18 +56,19 @@ export default {
               Position: 442 Attack
             </h4>
             <h2 style="margin-top: 20px; margin-bottom: 20px; color: white">
-              Manager: Bopak
+              Manager: {{ name }}
             </h2>
           </div>
           <div id="football-pitch" style="height: 720px; width: 1000px">
             <MyTeamComponents />
-            <a
-              href="#"
-              class="btn mt-3"
-              style="color: white; background-color: green"
-              >Save your dream team!</a
-            >
           </div>
+          <a
+            @click.prevent="printToJPEG"
+            href="#"
+            class="btn mt-3"
+            style="color: white; background-color: green"
+            >Save your dream team!</a
+          >
         </div>
       </div>
     </div>

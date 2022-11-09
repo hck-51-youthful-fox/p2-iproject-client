@@ -1,5 +1,6 @@
 import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
+import cors from "cors";
 
 import App from "./App.vue";
 import router from "./router";
@@ -13,5 +14,6 @@ pinia.use(({ store }) => {
 
 app.use(router);
 app.use(pinia);
+// app.use(cors());
 
 app.mount("#app");
