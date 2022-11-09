@@ -1,23 +1,42 @@
 <script>
 import { useAllStore } from "../stores/all";
 import { mapActions } from "pinia";
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const sr = new Recognition();
 
 export default {
   name: "Navbar",
   data() {
     return {
       isModalOpen: false,
+      query: "",
     };
   },
+  props: ["page"],
   methods: {
-    ...mapActions(useAllStore, ["snapPayment"]),
+    ...mapActions(useAllStore, ["snapPayment", "fetchVideos"]),
+    handleSubmit() {
+      this.fetchVideos(this.query);
+    },
+    start() {
+      sr.start();
+    },
+  },
+  mounted() {
+    sr.onresult = (evt) => {
+      const t = Array.from(evt.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
+      this.query = t;
+    };
   },
 };
 </script>
 
 <template>
   <div class="wrapper">
-    <nav class="navbar bg-white navbar-expand-lg sticky-top py-1 px-0">
+    <nav class="navbar bg-white navbar-expand-lg sticky-top py-2 px-0">
       <div class="container-fluid">
         <a href="" class="nav-link ms-2">
           <span class="icon material-symbols-outlined">menu</span>
@@ -42,24 +61,37 @@ export default {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse row" id="navbarNavAltMarkup">
-          <div class="col-9 d-flex justify-content-center">
-            <div class="input-group w-50">
-              <input type="text" class="form-control" placeholder="Search.." />
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
+          <div class="col-9">
+            <div v-if="page === 'home'" class="d-flex justify-content-center">
+              <form
+                class="input-group input-group-sm w-50"
+                @submit.prevent="handleSubmit"
               >
-                <span
-                  class="material-symbols-outlined bg-light"
-                  id="basic-addon2"
-                  >search</span
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search.."
+                  v-model="query"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  id="button-addon2"
                 >
+                  <span
+                    class="material-symbols-outlined bg-light"
+                    id="basic-addon2"
+                    >search</span
+                  >
+                </button>
+              </form>
+              <button
+                @click.prevent="start"
+                class="btn btn-light rounded-pill ms-3"
+              >
+                <span class="icon material-symbols-outlined">mic</span>
               </button>
             </div>
-            <button class="btn btn-light rounded-pill ms-3">
-              <span class="icon material-symbols-outlined">mic</span>
-            </button>
           </div>
           <div class="col-3">
             <div class="navbar-nav d-flex justify-content-end me-2">
@@ -149,7 +181,7 @@ export default {
                 </ul>
                 <button
                   id="pay-button"
-                  class="btn btn-danger text-center w-100 fw-bold"
+                  class="btn btn-danger text-center w-100 fw-bold rounded-pill"
                   @click="snapPayment"
                 >
                   Subscribe

@@ -4,80 +4,80 @@ import Sidebar from "../components/Sidebar.vue";
 import Navbar from "../components/Navbar.vue";
 import CategoryBar from "../components/CategoryBar.vue";
 import VideoCard from "../components/VideoCard.vue";
-// import { usePublicStore } from "../stores/public";
-// import { mapState, mapActions } from "pinia";
+import { useAllStore } from "../stores/all";
+import { mapState, mapActions } from "pinia";
 
 export default {
   name: "HomePage",
   data() {
     return {
       currentPage: 0,
-      videos: [
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-        {
-          link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
-          title:
-            "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
-          channel: "mrnigelng",
-          views: "6.3M",
-          publishedDate: "20111031",
-        },
-      ],
+      // videos: [
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      //   {
+      //     link: "https://i.ytimg.com/vi/TOrFzCfwPrg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDpcYPdcPmJyOFL4OG0i8TQjxOYVg",
+      //     title:
+      //       "Uncle Roger Review REYNOLD POERNOMO Fried Rice (Masterchef Finalist)",
+      //     channel: "mrnigelng",
+      //     views: "6.3M",
+      //     publishedDate: "20111031",
+      //   },
+      // ],
     };
   },
   components: {
@@ -88,16 +88,17 @@ export default {
     VideoCard,
   },
   computed: {
-    // ...mapState(usePublicStore, ["products", "totalPage", "isLogin"]),
+    ...mapState(useAllStore, ["videos"]),
   },
   methods: {
-    // ...mapActions(usePublicStore, ["fetchProducts", "fetchWishlist"]),
+    ...mapActions(useAllStore, ["fetchVideos"]),
     handleClick(page) {
       // this.fetchProducts({ page });
       // this.currentPage = page;
     },
   },
   created() {
+    this.fetchVideos();
     // this.fetchProducts();
     // if (this.isLogin) {
     //   this.fetchWishlist();
@@ -108,7 +109,7 @@ export default {
 
 <template>
   <main>
-    <Navbar />
+    <Navbar page="home" />
     <!-- tambah searchbar + btn speech recognition, akun, tombol lonceng di navbar  -->
     <section class="container-fluid" id="home-section">
       <div class="row">

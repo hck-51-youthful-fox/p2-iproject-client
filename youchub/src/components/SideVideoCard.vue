@@ -2,22 +2,13 @@
 import moment from "moment";
 
 export default {
-  name: "VideoCard",
+  name: "SideVideoCard",
   props: ["video"],
   data() {
-    return {
-      //   video: {
-      //     link: "",
-      //     title: "",
-      //     channel: "",
-      //     views: "",
-      //     publishedDate: "",
-      //	isVerified: false
-      //   },
-    };
+    return {};
   },
   computed: {
-    views() {
+    miaw() {
       var newValue = this.video.views;
       if (this.video.views >= 1000) {
         var suffixes = ["", "K", "M", "B", "T"];
@@ -53,26 +44,25 @@ export default {
 </script>
 
 <template>
-  <div
-    role="button"
-    @click="$router.push(`/detail/${video.videoId}`)"
-    v-if="video.title"
-    class="card col-md-3 border-0 my-1"
-    style="max-width: 18rem"
-  >
-    <img :src="video.link" class="img-fluid rounded" alt="..." />
-    <div class="card-body row">
-      <div class="col-2">
-        <img :src="video.avatarUrl" class="w-100 p-1 rounded-circle" alt="" />
-      </div>
-      <div class="col-10">
-        <h5 class="card-title fw-bold fs-6 mb-0">
-          {{ video.title.slice(0, 30) + "..." }}
-        </h5>
-        <p class="card-text mb-0">
-          {{ video.channel }}
-        </p>
-        <p class="card-text">{{ views }} views • {{ video.publishedDate }}</p>
+  <div v-if="video.title" class="card border-0 my-1" style="">
+    <div
+      role="button"
+      @click="$router.push(`/detail/${video.videoId}`)"
+      class="card-body"
+    >
+      <div class="row">
+        <div class="col-5">
+          <img :src="video.link" class="img-fluid rounded" alt="..." />
+        </div>
+        <div class="col-7">
+          <h5 class="card-title fw-bold mb-0 vid-title">
+            {{ video.title.slice(0, 30) + "..." }}
+          </h5>
+          <p class="card-text mb-0">
+            {{ video.channel }}
+          </p>
+          <p class="card-text">{{ miaw }} views • {{ video.publishedDate }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -82,8 +72,11 @@ export default {
 .card-body {
   padding: 4px;
 }
-.col-10,
-.col-2 {
+.col-5 {
   padding: 0;
+}
+
+.vid-title {
+  font-size: 14px;
 }
 </style>
