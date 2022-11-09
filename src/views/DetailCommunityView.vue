@@ -22,8 +22,6 @@ export default {
   <div class="container">
     <h1>{{ selectedNews.title }}</h1>
 
-    <p>By : {{ selectedNews.User.username }}</p>
-
     <img :src="selectedNews.imageUrl" alt="img" />
 
     <p>{{ selectedNews.content }}</p>

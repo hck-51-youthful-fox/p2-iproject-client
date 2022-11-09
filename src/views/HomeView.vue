@@ -10,10 +10,10 @@ export default {
   },
   computed: {
     ...mapState(useMainStore, ["ApiNews"]),
-    ...mapWritableState(useMainStore, ["currentPage"]),
+    ...mapWritableState(useMainStore, ["currentPage", "search"]),
   },
   methods: {
-    ...mapActions(useMainStore, ["FetchNewsFromAPI"]),
+    ...mapActions(useMainStore, ["FetchNewsFromAPI", "searchPost"]),
   },
   created() {
     this.FetchNewsFromAPI();
@@ -41,11 +41,13 @@ export default {
           placeholder="Find News..."
           aria-label="Recipient's username"
           aria-describedby="button-addon2"
+          v-model="search"
         />
         <button
           class="btn btn-outline-secondary"
           type="button"
           id="button-addon2"
+          @click.prevent="searchPost"
         >
           Search
         </button>

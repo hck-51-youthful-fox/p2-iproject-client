@@ -1,18 +1,16 @@
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useMainStore } from "../stores/main";
-import { RouterLink, RouterView } from "vue-router";
 export default {
-  name: "CommunityView",
+  name: "SearchView",
   computed: {
-    ...mapWritableState(useMainStore, ["DbNews", "currentPage", "totalPages"]),
+    ...mapWritableState(useMainStore, ["searchNews", "currentPage", "search"]),
   },
   methods: {
-    ...mapActions(useMainStore, ["getPostFromDB"]),
+    ...mapActions(useMainStore, ["searchPost"]),
   },
   created() {
-    // console.log("afgdfsdgf");
-    this.getPostFromDB();
+    this.searchPost(1);
   },
 };
 </script>
@@ -21,9 +19,9 @@ export default {
   <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
       <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Communities Posts</h1>
+        <h1 class="display-4 fw-bolder">Search Posts</h1>
         <p class="lead fw-normal text-white-50 mb-0">
-          Be careful with fake news!
+          You Are Search News Contain : {{ search }}
         </p>
       </div>
     </div>
@@ -31,11 +29,15 @@ export default {
   <div
     class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mt-5"
   >
-    <div class="col mb-5" style="width: 400px" v-for="(news, index) in DbNews">
+    <div
+      class="col mb-5"
+      style="width: 400px"
+      v-for="(news, index) in searchNews"
+    >
       <!-- News Card -->
       <div class="card h-100">
         <!-- Product image-->
-        <img class="card-img-top" :src="news.imageUrl" alt="..." />
+        <img class="card-img-top" :src="news.media" alt="..." />
         <!-- Product details-->
         <div class="card-body p-4">
           <div class="text-center">
@@ -50,17 +52,15 @@ export default {
                 height: 150px;
               "
             >
-              {{ news.content }}
+              {{ news.summary }}
             </span>
           </div>
         </div>
         <!-- Product actions-->
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
           <div class="text-center">
-            <RouterLink
-              class="btn btn-outline-dark mt-auto"
-              :to="`/community/${news.id}`"
-              >READ MORE...</RouterLink
+            <a class="btn btn-outline-dark mt-auto" :href="news.link"
+              >READ MORE...</a
             >
           </div>
         </div>
@@ -74,14 +74,14 @@ export default {
         <a
           class="page-link"
           href="#"
-          @click.prevent="getPostFromDB(currentPage - 1)"
+          @click.prevent="searchPost(currentPage - 1)"
           v-if="currentPage !== 1"
           >Previous</a
         >
       </li>
-      <div class="" v-for="index in totalPages">
+      <div class="" v-for="index in 5">
         <li class="page-item">
-          <a class="page-link" @click.prevent="getPostFromDB(index)">{{
+          <a class="page-link" @click.prevent="searchPost(index)">{{
             index
           }}</a>
         </li>
@@ -90,7 +90,7 @@ export default {
         <a
           class="page-link"
           href="#"
-          @click.prevent="getPostFromDB(currentPage + 1)"
+          @click.prevent="searchPost(currentPage + 1)"
           v-if="currentPage > 0"
           >Next</a
         >

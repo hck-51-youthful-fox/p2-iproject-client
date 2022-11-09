@@ -20,6 +20,8 @@ export const useMainStore = defineStore("main", {
     selectedNews: {},
     comment: "",
     postId: 0,
+    search: "",
+    searchNews: [],
   }),
 
   actions: {
@@ -143,6 +145,27 @@ export const useMainStore = defineStore("main", {
         );
         this.getPostById(this.postId);
         this.comment = "";
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async searchPost(page) {
+      if (!page) {
+        page = 1;
+      }
+      try {
+        let { data } = await axios.get(
+          `/api/news/search?page=${page}&search=${this.search}`
+        );
+
+        this.router.push("/search");
+        // console.log(data);
+        this.searchNews = data.articles;
+        this.currentPage = data.page;
+        this.totalPages = data.total_pages;
+        console.log(this.searchNews);
+        console.log(this.currentPage);
       } catch (error) {
         console.log(error);
       }
