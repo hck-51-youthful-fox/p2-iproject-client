@@ -5,6 +5,7 @@ import Library from "../views/Library.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Subscribe from "../views/Subscribe.vue";
+import GameDetail from "../views/GameDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: "/subscribe",
       name: "subscribe",
       component: Subscribe,
+    },
+    {
+      path: "/games/:id",
+      name: "detail",
+      component: GameDetail,
     },
   ],
 });

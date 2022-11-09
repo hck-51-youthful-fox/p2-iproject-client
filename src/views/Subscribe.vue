@@ -8,7 +8,16 @@ export default {
   emits: [""],
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    payment() {
+      snap.pay("3fbbacd9-b827-47d7-9ec1-1ea8131c2f93", {
+        onSuccess(result) {
+          console.log(result);
+          console.log("Berhasillllllll");
+        },
+      });
+    },
+  },
   created() {},
 };
 </script>
@@ -21,8 +30,10 @@ export default {
   <div>
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+      @click.prevent="payment"
+      id="pay-button"
     >
-      Button
+      Pay, Pay, Pay!
     </button>
   </div>
 </template>

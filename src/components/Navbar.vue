@@ -15,7 +15,7 @@ export default {
 
 <template>
   <header
-    class="h-16 w-full flex items-center relative justify-center px-5 space-x-10"
+    class="h-32 w-full flex items-center relative justify-center px-5 space-x-10"
   >
     <div class="hidden relative md:block">
       <div
