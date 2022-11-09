@@ -7,11 +7,14 @@ export const useFoodStore = defineStore("foods", {
     foods: [],
     currentPage: 1,
     currentFilter: "",
+    currentSearch: "",
     totalPage: 1,
   }),
   actions: {
-    async fetchFoods(page, filter) {
+    async fetchFoods(page, filter, search) {
       try {
+        console.log(page);
+        console.log(search, "search");
         let category = "";
         if (!page) {
           page = 1;
@@ -22,19 +25,30 @@ export const useFoodStore = defineStore("foods", {
           category = `&filter[category]=${filter}`;
         }
 
+        let currentSearch;
+        if (search) {
+          currentSearch = `&search=${search}`;
+          category = "";
+        } else {
+          currentSearch = "";
+        }
+        let find = currentSearch;
+
         let currentPage = page;
 
         if (currentPage > 1 && filter) {
           currentPage = 1;
         }
         const { data } = await axios.get(
-          `/pub/food?page[number]=${currentPage}${category}`
+          `/pub/food?page[number]=${currentPage}${category}${find}`
         );
         this.foods = data;
         this.currentPage = currentPage;
+        this.currentSearch = currentSearch;
         this.currentFilter = filter;
         this.totalPage = data.totalPage;
       } catch (error) {
+        console.log(error);
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

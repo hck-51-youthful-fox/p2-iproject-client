@@ -34,7 +34,7 @@ export default {
           convertPrice(food.price)
         }}</span>
         <div class="cursor-pointer">
-          <a @click.prevent="addProductHandler(product.id)"
+          <a
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

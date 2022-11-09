@@ -10,6 +10,7 @@ export default {
       selectedCategory: "",
       perPage: 3,
       pageAccessedNow: 1,
+      search: "",
     };
   },
   components: {
@@ -20,7 +21,7 @@ export default {
     ...mapActions(useCategoriesStore, ["fetchCategories"]),
     previousHandler() {
       this.currentPage -= 1;
-      this.fetchFoods(this.currentPage, this.selectedCategory);
+      this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
     nextHandler() {
       this.currentPage += 1;
@@ -28,7 +29,7 @@ export default {
         this.pageAccessedNow = this.totalPage;
         this.currentPage = this.pageAccessedNow;
       }
-      this.fetchFoods(this.currentPage, this.selectedCategory);
+      this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
     changePageNumber(index) {
       this.$router.push({
@@ -38,7 +39,7 @@ export default {
         },
       });
       this.currentPage = index;
-      this.fetchFoods(this.currentPage, this.selectedCategory);
+      this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
     filterByCategory(choosenCategory) {
       this.$router.push({
@@ -48,7 +49,17 @@ export default {
         },
       });
       this.currentFilter = choosenCategory;
-      this.fetchFoods(this.currentPage, this.selectedCategory);
+      this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
+    },
+    searchFood(search) {
+      this.$router.push({
+        name: "foods",
+        query: {
+          search: `${search}`,
+        },
+      });
+      this.currentSearch = search;
+      this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
   },
   computed: {
@@ -61,7 +72,8 @@ export default {
   created() {
     const page = this.$route.query.page;
     const filter = this.$route.query.filter;
-    this.fetchFoods(page, filter);
+    const search = this.$route.query.search;
+    this.fetchFoods(page, filter, search);
     this.fetchCategories();
   },
 };
@@ -69,18 +81,74 @@ export default {
 
 <template>
   <section
-    class="pt-96 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-center bg-no-repeat"
-  >
-    <div
-      class="relative w-full px-4 py-32 sm:px-6 lg:flex md:h-full lg:items-center lg:px-8"
-    ></div>
-  </section>
+    class="h-40 pt-96 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-no-repeat"
+  ></section>
   <section class="pt-4 px-80">
     <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-hidden">
       <div class="relative">
         <h2 class="w-full text-3xl font-bold text-center md:text-4xl">
           All Foods
         </h2>
+      </div>
+
+      <div class="flex pt-8 items-center">
+        <div class="flex items-center">
+          <ul class="flex items-center space-x-6">
+            <li>
+              <form class="flex items-center">
+                <label for="simple-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                  <div
+                    class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h1>{{ search }}</h1>
+                  <input
+                    type="text"
+                    v-model="search"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                    placeholder="Search"
+                    required
+                  />
+                </div>
+                <button
+                  @click="searchFood(this.search)"
+                  type="submit"
+                  class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">Search</span>
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="flex pt-8 flex-row-reverse items-center">
         <div class="flex items-center">

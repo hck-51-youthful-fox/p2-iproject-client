@@ -13,7 +13,7 @@ export default {
 
 <template>
   <nav
-    class="flex justify-between px-80 py-4 items-center bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200"
+    class="flex justify-between px-48 py-4 items-center bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200"
   >
     <RouterLink :to="{ name: 'home' }" class="flex items-center">
       <img src="../assets/logo.svg" class="mr-3 h-6 sm:h-9" alt="Sadida Logo" />
