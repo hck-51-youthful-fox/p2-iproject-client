@@ -8,9 +8,6 @@ export default {
   methods: {
     ...mapActions(useInvestrStore, ["fetchRealtimeData"]),
   },
-  computed: {
-    ...mapState(useInvestrStore, ["realtimeStock"]),
-  },
   created() {
     this.fetchRealtimeData();
   },
@@ -18,6 +15,5 @@ export default {
 </script>
 
 <template>
-  <p>{{ realtimeStock }}</p>
   <RouterView />
 </template>

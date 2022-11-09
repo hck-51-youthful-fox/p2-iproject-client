@@ -14,6 +14,7 @@ export const useInvestrStore = defineStore("investr", {
     isLogin: false,
     email: "",
     realtimeStock: [],
+    realtimeLabel: [],
   }),
   actions: {
     async login(obj) {
@@ -88,15 +89,16 @@ export const useInvestrStore = defineStore("investr", {
         const data = snapshot.val();
         let i = 0;
         let temp = [];
-        let obj = {};
+        let tempLabel = [];
         for (let key in data) {
           let d = new Date(key * 1000);
           let datetext =
             d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-          obj[datetext] = data[key].p;
-          temp.push(obj);
+          tempLabel.push(datetext);
+          temp.push(data[key].p);
         }
         this.realtimeStock = temp;
+        this.realtimeLabel = tempLabel;
 
         console.log(temp);
       });
