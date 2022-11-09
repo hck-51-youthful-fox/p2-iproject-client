@@ -1,26 +1,23 @@
 <script>
+import { mapActions, mapState } from "pinia";
 import { RouterView } from "vue-router";
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
-
-const firebaseConfig = {
-  databaseURL: "https://investr-12fcc-default-rtdb.firebaseio.com",
-};
-const fireApp = initializeApp(firebaseConfig);
+import { useInvestrStore } from "./stores";
 
 export default {
   name: "app",
+  methods: {
+    ...mapActions(useInvestrStore, ["fetchRealtimeData"]),
+  },
+  computed: {
+    ...mapState(useInvestrStore, ["realtimeStock"]),
+  },
   created() {
-    const db = getDatabase();
-    const BINANCE = ref(db, "stocks/BINANCE:BTCUSDT");
-    onValue(BINANCE, (snapshot) => {
-      const data = snapshot.val();
-      console.log("from firebase");
-    });
+    this.fetchRealtimeData();
   },
 };
 </script>
 
 <template>
+  <p>{{ realtimeStock }}</p>
   <RouterView />
 </template>

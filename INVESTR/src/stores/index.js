@@ -1,10 +1,19 @@
 import { defineStore } from "pinia";
 import axios from "../config/index";
 
+import { getDatabase, ref, onValue } from "firebase/database";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  databaseURL: "https://investr-12fcc-default-rtdb.firebaseio.com",
+};
+const fireApp = initializeApp(firebaseConfig);
+
 export const useInvestrStore = defineStore("investr", {
   state: () => ({
     isLogin: false,
     email: "",
+    realtimeStock: [],
   }),
   actions: {
     async login(obj) {
@@ -71,6 +80,26 @@ export const useInvestrStore = defineStore("investr", {
         this.isLogin = true;
         this.email = localStorage.email;
       }
+    },
+    fetchRealtimeData() {
+      const db = getDatabase();
+      const BINANCE = ref(db, "stocks/AAPL");
+      onValue(BINANCE, (snapshot) => {
+        const data = snapshot.val();
+        let i = 0;
+        let temp = [];
+        let obj = {};
+        for (let key in data) {
+          let d = new Date(key * 1000);
+          let datetext =
+            d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+          obj[datetext] = data[key].p;
+          temp.push(obj);
+        }
+        this.realtimeStock = temp;
+
+        console.log(temp);
+      });
     },
     async confirmAlert() {
       try {
