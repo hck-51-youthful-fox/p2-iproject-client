@@ -2,6 +2,7 @@
 import { mapActions, mapState } from "pinia";
 import { useShowStore } from "../stores/shows";
 import MovieCard from "../components/MovieCard.vue";
+import { useUserStore } from "../stores/user";
 
 export default {
   name: "Home",
@@ -16,6 +17,7 @@ export default {
   },
   computed: {
     ...mapState(useShowStore, ["shows"]),
+    ...mapState(useUserStore,["isLogin"])
   },
   methods: {
     ...mapActions(useShowStore, ["fetchShows"]),
@@ -44,10 +46,10 @@ export default {
 <template>
   <div class="mb-5">
     <img
-      src="https://irpp.org/wp-content/uploads/2022/02/Finding-the-Right-Job-A-Skills-Based-Approach-to-Career-Planning.jpg"
+      src="../assets/unnamed-removebg-preview.png"
       class="d-block w-100"
       alt="Banner"
-      style="height: 250px"
+      style="height: 850px"
     />
   </div>
   <div class="row mx-0">
@@ -60,7 +62,7 @@ export default {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Job Name"
+                  placeholder="Show title"
                   aria-describedby="button-addon2"
                   v-model="search"
                 />
@@ -73,6 +75,14 @@ export default {
                 </button>
               </div>
             </form>
+            <button
+              @click.prevent="$router.push({ name: 'rented' })"
+              type="button"
+              class="btn btn-dark"
+              v-if="isLogin"
+            >
+              My Rent
+            </button>
           </div>
         </div>
       </div>
@@ -97,7 +107,7 @@ export default {
         <li @click.prevent="nextPage" class="page-item">
           <a class="page-link" href="#">Next</a>
         </li>
-      </ul> 
+      </ul>
     </nav>
   </div>
 </template>

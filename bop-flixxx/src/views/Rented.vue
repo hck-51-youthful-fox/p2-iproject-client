@@ -12,30 +12,26 @@ export default {
     ...mapState(useShowStore, ["rented"]),
   },
   methods: {
-    ...mapActions(useShowStore,["fetchRented"]),
+    ...mapActions(useShowStore, ["fetchRented"]),
   },
-  created(){
-    this.useShowStore()
-  }
+  created() {
+    this.fetchRented();
+  },
 };
 </script>
 
 <template>
   <div class="mb-5">
     <img
-      src="https://irpp.org/wp-content/uploads/2022/02/Finding-the-Right-Job-A-Skills-Based-Approach-to-Career-Planning.jpg"
+      src="../assets/unnamed-removebg-preview.png"
       class="d-block w-100"
       alt="Banner"
-      style="height: 250px"
+      style="height: 850px"
     />
   </div>
   <div class="col-10">
     <div class="row row-cols-3 row-cols-xs-3 g-4">
-      <RentedCard
-        v-for="rent in rented"
-        :key="rent.id"
-        :rent="rent"
-      />
+      <RentedCard v-for="rent in rented" :key="rent.id" :rent="rent" />
     </div>
   </div>
 </template>

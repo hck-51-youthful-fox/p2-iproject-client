@@ -26,20 +26,29 @@ export const useShowStore = defineStore("show", {
     async fetchShowById(id) {
       try {
         let { data } = await axios.get(`/${id}`);
-        console.log(data, "dari fetch");
         this.show = data;
       } catch (err) {
         console.log(err);
       }
     },
-    async addRent(id) {
+    // async addRent(id) {
+    //   try {
+
+    //     let access_token = localStorage.access_token;
+    //     let { data } = await axios.post(
+    //       `/rents/${id}`,
+    //       {},
+    //       { headers: { access_token } }
+    //     );
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
+    async deleteRented(id) {
       try {
         let access_token = localStorage.access_token;
-        let { data } = await axios.post(
-          `/rents/${id}`,
-          {},
-          { headers: { access_token } }
-        );
+        await axios.delete("/rents/" + id, { headers: { access_token } });
+        this.fetchRented()
       } catch (err) {
         console.log(err);
       }
@@ -62,7 +71,6 @@ export const useShowStore = defineStore("show", {
           querySearch = `search?q=${search}`;
         }
         let { data } = await axios.get(`/${querySearch}`);
-        console.log(data, "<<<<<<<<<<<<<<<<<<<<<");
         this.searched = data;
         this.router.push({ name: "search", params: { query: search } });
       } catch (err) {
