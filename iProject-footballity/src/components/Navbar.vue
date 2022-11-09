@@ -68,6 +68,14 @@ export default {
               >
             </li>
             <li class="nav-item">
+              <a
+                @click.prevent="changePage('/searchPlayer')"
+                class="nav-link"
+                href="#"
+                >Search a player</a
+              >
+            </li>
+            <li class="nav-item">
               <a @click.prevent="logOut" class="nav-link" href="#">Logout</a>
             </li>
             <!-- <li class="nav-item dropdown">

@@ -2,7 +2,7 @@
 import Navbar from "../components/Navbar.vue";
 import MyTeamView from "./MyTeamView.vue";
 import TablesPLComponents from "../components/TablesPLComponents.vue";
-import CorouselComponenst from "../components/corouselComponenst.vue";
+import CorouselComponents from "../components/CorouselComponents.vue";
 
 export default {
   name: "HomeView",
@@ -10,7 +10,7 @@ export default {
     Navbar,
     MyTeamView,
     TablesPLComponents,
-    CorouselComponenst,
+    CorouselComponents,
   },
 };
 </script>
@@ -19,7 +19,7 @@ export default {
   <Navbar />
   <section class="bg bg-dark" style="padding-top: 70px">
     <div class="row">
-      <CorouselComponenst />
+      <CorouselComponents />
     </div>
     <div class="row">
       <div class="col col-8"></div>

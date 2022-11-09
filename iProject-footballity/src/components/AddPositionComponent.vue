@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from "pinia";
+import { useFootballStore } from "../stores/football";
 import Navbar from "./Navbar.vue";
 
 export default {
@@ -23,6 +25,9 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    ...mapActions(useFootballStore, ["addPosition"]),
+  },
 };
 </script>
 <template>
@@ -38,7 +43,12 @@ export default {
     <div id="login-form" class="d-flex col justify-content-center mt-5">
       <div style="width: 500px">
         <h2 style="color: white">Add your dream team</h2>
-        <form id="login-form" method="post" class="col-sm-12">
+        <form
+          id="login-form"
+          @submit.prevent="addPosition(dataPlayer)"
+          method="post"
+          class="col-sm-12"
+        >
           <label for="GK-login-form">Goal Keeper</label>
           <select v-model="dataPlayer.GK" class="form-control">
             <option value="" selected="true" disabled="true">
