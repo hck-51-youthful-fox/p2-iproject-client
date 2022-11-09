@@ -23,8 +23,8 @@ export default {
       <RouterLink
         class="d-flex justify-content-center align-items-center navbar-brand px-5 m-0"
         :to="'/'"
-        ><img src="@/assets/logosmall.png" height="55"
-      /></RouterLink>
+        ><img src="../assets/dark-souls-bonfire.gif" height="55"
+      /><h2 class="mb-0 mx-2">Faded Bonfires</h2></RouterLink>
       <button
         class="navbar-toggler"
         type="button"

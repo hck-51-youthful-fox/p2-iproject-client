@@ -32,6 +32,19 @@ export default {
         return false;
       }
     },
+    getStatus() {
+      if(this.gameDetail.rating > 95) {
+        return "Blazing!!"
+      } else if (this.gameDetail.rating > 80) {
+        return "Lit!"
+      } else if (this.gameDetail.rating > 65) {
+        return "Fine"
+      } else if (this.gameDetail.rating > 33) {
+        return "Faded..."
+      } else {
+        return "Dead."
+      }
+    }
   },
   created() {
     this.fetchGameById(this.$route.params.id);
@@ -46,7 +59,11 @@ export default {
         <div
           class="class-header rounded-top text-white bg-dark d-flex justify-content-between"
         >
-          <h1 class="m-3">{{ gameDetail.name }}</h1>
+          <div class="d-flex justify-content-center align-items-center">
+            <h1 class="m-3">{{ gameDetail.name }}</h1>
+            <h2 class="m-3">Rating : {{ gameDetail.rating }}%</h2>
+            <h2 class="m-3">{{ getStatus }}</h2>
+          </div>
           <div class="d-flex justify-content-center">
             <button class="btn btn-dark" v-for="genre in gameDetail.Genres">
               {{ genre.name }}
@@ -66,11 +83,12 @@ export default {
               </RouterLink>
             </div>
             <div v-show="hasPostedReview">
-              <Button class="d-flex align-self-center btn btn-secondary m-0 text-center"
+              <Button
+                class="d-flex align-self-center btn btn-secondary m-0 text-center"
                 >Already Posted a review</Button
               >
             </div>
-            </div>
+          </div>
           <div class="container-fluid my-4">
             <ReviewCard
               v-for="review in gameDetail.UserReviews"

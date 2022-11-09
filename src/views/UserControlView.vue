@@ -11,10 +11,10 @@ export default {
     ...mapState(useBonfireStore,['isVerified']),
     ...mapWritableState(useBonfireStore, ["loggedUserDetails"]),
     getUpdatedDate() {
-      return this.loggedUserDetails.updatedAt.split("T")[0];
+      return this.loggedUserDetails.updatedAt.split("T")[0] || '-';
     },
     getCreatedDate() {
-      return this.loggedUserDetails.createdAt.split("T")[0];
+      return this.loggedUserDetails.createdAt.split("T")[0] || '-';
     },
   },
   created() {
