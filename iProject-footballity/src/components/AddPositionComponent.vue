@@ -29,7 +29,7 @@ export default {
   <Navbar />
   <section
     class="justify-content-center bg bg-dark"
-    style="padding-bottom: 30px"
+    style="padding-bottom: 30px; padding-top: 50px"
   >
     <!-- <div class="d-flex align-items-center pt-3 ps-3">
       <img class="me-2" src="../assets/football-2-256.png" />
