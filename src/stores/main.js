@@ -23,6 +23,12 @@ export const useMainStore = defineStore("main", {
     search: "",
     searchNews: [],
     userPost: [],
+    post: {
+      title: "",
+      content: "",
+      imageUrl: "",
+      tag: "",
+    },
   }),
 
   actions: {
@@ -124,8 +130,11 @@ export const useMainStore = defineStore("main", {
         let { data } = await axios.get(`/news/${id}`);
 
         this.selectedNews = data;
-        console.log(this.selectedNews);
         this.postId = id;
+        this.post.title = data.title;
+        this.post.content = data.content;
+        this.post.imageUrl = data.imageUrl;
+        this.post.tag = data.tag;
       } catch (error) {
         console.log(error);
       }
@@ -202,6 +211,31 @@ export const useMainStore = defineStore("main", {
         });
         console.log(data);
         this.loggedInPost();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async editPost(id) {
+      // console.log(this.post, "Dari Object post");
+      // console.log(id, "ID Post");
+      try {
+        let { data } = await axios.put(
+          `/user/edit/${id}`,
+          {
+            title: this.post.title,
+            content: this.post.content,
+            imageUrl: this.post.imageUrl,
+            tag: this.post.tag,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        console.log("Post Edit Successfully!");
+        this.router.push("/user/post");
       } catch (error) {
         console.log(error);
       }

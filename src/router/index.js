@@ -47,6 +47,11 @@ const router = createRouter({
       name: "userpost",
       component: UserPost,
     },
+    {
+      path: "/user/post/:id",
+      name: "edituserpost",
+      component: EditView,
+    },
   ],
 });
 

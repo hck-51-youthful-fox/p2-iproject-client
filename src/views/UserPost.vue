@@ -69,7 +69,9 @@ export default {
               :to="`/community/${news.id}`"
               >READ MORE...</RouterLink
             >
-            <RouterLink class="btn btn-outline-dark mt-auto mx-3" to=""
+            <RouterLink
+              class="btn btn-outline-dark mt-auto mx-3"
+              :to="`/user/post/${news.id}`"
               >Edit</RouterLink
             >
             <a
