@@ -19,7 +19,9 @@ export default {
       this.isUserScrolling = window.scrollY > 0;
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         // you're at the bottom of the page
-        this.fetchGames();
+        if(this.games.length<this.totalGame) {
+          this.fetchGames();
+        }
       }
     },
     fetchWithQuery() {
@@ -34,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useBonfireStore, ["games"]),
+    ...mapState(useBonfireStore, ["games",'totalGame']),
   },
   created() {
     window.addEventListener("scroll", this.onScroll);

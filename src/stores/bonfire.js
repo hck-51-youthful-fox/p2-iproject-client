@@ -13,6 +13,7 @@ export const useBonfireStore = defineStore("bonfire", {
     games: [],
     searchQuery: "",
     currentPage: 1,
+    totalGame: 0,
     gameDetail: {},
     explore: [],
     loggedUserDetails: {},
@@ -152,6 +153,8 @@ export const useBonfireStore = defineStore("bonfire", {
         url = this.searchQuery ? url + `&search=${this.searchQuery}` : url;
 
         let { data } = await axios.get(url, {});
+
+        this.totalGame = data.totalGame
 
         data.games.forEach((el) => {
           this.games.push(el);
