@@ -141,6 +141,6 @@ export default {
 </template>
 <style>
 img {
-  width: 72px;
+  width: 55px;
 }
 </style>

@@ -6,6 +6,7 @@ export const useFootballStore = defineStore("football", {
   state() {
     return {
       myTeamData: [],
+      plData: [],
     };
   },
   actions: {
@@ -95,6 +96,62 @@ export const useFootballStore = defineStore("football", {
         console.log(data);
         this.myTeamData = data;
       } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchPremierLeague() {
+      try {
+        const { data } = await axios.get("/api/premier", {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data);
+        this.plData = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addPosition(player) {
+      console.log(player, "ini player");
+      try {
+        const { data } = await axios.post(
+          "/positions",
+          {
+            GK: player.GK,
+            LB: player.LB,
+            LCB: player.LCB,
+            RCB: player.RCB,
+            RB: player.RB,
+            LMF: player.LMF,
+            LCMF: player.LCMF,
+            RCMF: player.RCMF,
+            RMF: player.RMF,
+            SS: player.SS,
+            ST: player.ST,
+          },
+          {
+            headers: {
+              access_token: localStorage.access_token,
+            },
+          }
+        );
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Berhasil membentuk tim!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        console.log(data, "ini data");
+        this.changePage("/");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Please input all the players`,
+          footer: "",
+        });
         console.log(error);
       }
     },

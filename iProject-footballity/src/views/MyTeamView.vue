@@ -1,5 +1,5 @@
 <script>
-import MyTeamComponents from "../components/MyTeamComponenst.vue";
+import MyTeamComponents from "../components/MyTeamComponents.vue";
 import Navbar from "../components/Navbar.vue";
 // import * as htmlToImage from "html-to-image";
 // import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
@@ -58,7 +58,7 @@ export default {
     class="bg bg-dark pb-5"
     style="padding-top: 70px; padding-bottom: 110px"
   >
-    <div style="padding-left: 30px; padding-bottom: 60px">
+    <div style="padding-left: 20px; padding-bottom: 60px">
       <div class="row">
         <div class="col col-10" style="align-items: flex-end">
           <div
@@ -75,7 +75,7 @@ export default {
               Manager: {{ name }}
             </h2>
           </div>
-          <div id="football-pitch" style="height: 1000px; width: 1500px">
+          <div id="football-pitch" style="height: 900px; width: 1200px">
             <MyTeamComponents />
           </div>
           <a
