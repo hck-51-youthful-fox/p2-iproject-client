@@ -1,7 +1,7 @@
 <script>
 import { mapActions } from "pinia";
 import { useUserStore } from "../stores/user";
-import {GoogleLogin} from "vue3-google-login"
+import { GoogleLogin } from "vue3-google-login";
 
 export default {
   name: "Login",
@@ -11,11 +11,11 @@ export default {
       password: "",
     };
   },
-  components:{
-    GoogleLogin
+  components: {
+    GoogleLogin,
   },
   methods: {
-    ...mapActions(useUserStore, ["login","handleCredentialResponse"]),
+    ...mapActions(useUserStore, ["login", "handleCredentialResponse"]),
     async logginButton() {
       let payload = {
         email: this.email,
@@ -23,9 +23,9 @@ export default {
       };
       await this.login(payload);
     },
-    callback(response){
-      this.handleCredentialResponse(response)
-    }
+    callback(response) {
+      this.handleCredentialResponse(response);
+    },
   },
 };
 </script>
@@ -34,7 +34,7 @@ export default {
   <section
     id="login-section"
     style="
-      background-image: url('https://trg-investama.com/wp-content/uploads/2021/04/career-path.jpg');
+      background-image: url('https://external-preview.redd.it/B6MrrY-dyD1lnvvrb2BCISx1xQwGx-e7pjm-qeXwAkE.jpg?auto=webp&s=ade83a5a759042ffed5324e5172c9a59a27aaaa9');
     "
   >
     <div class="container-fluid login">
