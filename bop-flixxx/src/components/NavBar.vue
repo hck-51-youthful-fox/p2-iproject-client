@@ -16,7 +16,7 @@ export default {
 <template>
   <section id="navbar-section" class="sticky-top">
     <nav
-      class="navbar navbar-expand-lg bg-light"
+      class="navbar navbar-expand-lg bg-dark"
       style="background-color: #e3f2fd"
     >
       <div class="container-fluid">
@@ -26,13 +26,13 @@ export default {
           href="#"
         >
           <img
-            src="../image/icons8-career-path-64.png"
+            src="../assets/unnamed-removebg-preview.png"
             alt="Logo"
             width="30"
             height="24"
             class="d-inline-block align-text-top"
           />
-          Joby
+          BOPFLIX
         </a>
         <div id="nav-button" class="nav-signup" v-if="!isLogin">
           <button
@@ -52,7 +52,7 @@ export default {
         </div>
         <div class="dropdown" v-if="isLogin">
           <button
-            class="btn btn-primary"
+            class="btn btn-danger"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
