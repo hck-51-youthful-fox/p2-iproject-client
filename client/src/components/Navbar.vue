@@ -33,7 +33,14 @@ export default {
         <ul
           class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white"
         >
-          <li class="flex flex-row gap-2 text-black">Live-Score</li>
+          <li class="flex flex-row gap-2 text-black">
+            <img
+              class="w-8"
+              src="https://ik.imagekit.io/kafax3vfm/png.monster-736_QOVGGPU1N.png?ik-sdk-version=javascript-1.4.3&updatedAt=1668043737207"
+              alt=""
+            />
+          </li>
+          <li class="flex flex-row gap-2 text-black">ライブスコア !</li>
           <div class="flex justify-center items-center gap-5">
             <li class="mx-auto">
               <a
