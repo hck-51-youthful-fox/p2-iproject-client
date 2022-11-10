@@ -28,7 +28,7 @@ export default {
             <div
               class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"
             ></div>
-            <div class="text-lg font-bold text-slate-700">User Anynomous</div>
+            <div class="text-lg font-bold text-slate-700">User Anonymous</div>
           </div>
           <div class="flex items-center space-x-8">
             <div class="text-xs text-neutral-500">
@@ -78,10 +78,10 @@ export default {
               >
                 <ShareNetwork
                   network="facebook"
-                  url="https://vuejs.org/"
+                  url="https://pc-peeker.web.app/"
                   title="all about typing"
                   description="typing as you can about PC"
-                  hashtags="pc"
+                  hashtags="pc, pcpeeker"
                 >
                   <button>
                     <svg
