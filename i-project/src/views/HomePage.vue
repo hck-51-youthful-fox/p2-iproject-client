@@ -60,7 +60,7 @@ export default {
         type="search"
         @click.prevent="getThread()"
         name="serch"
-        placeholder="Search the movie ..."
+        placeholder="Search the thread ..."
         class="w-96 bg-gray-200 h-12 px-5 pr-10 rounded-full text-sm focus:outline-none"
       />
       <button
@@ -87,8 +87,7 @@ export default {
           />
         </svg>
       </button>
-      <button>
-      </button>
+      <button></button>
     </div>
   </div>
   <cardThread

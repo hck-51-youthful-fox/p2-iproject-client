@@ -39,14 +39,21 @@ export default {
         </div>
         <div>
           <label for="email" class="block mb-1 ml-1 mt-4">Rating</label>
-          <input
+          <select
+            class="form-select w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
             v-model="rating"
-            id="rating"
-            type="number"
-            placeholder="Your email"
-            required=""
-            class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
-          />
+            id="movie-rating"
+            required
+          >
+            <option value="" selected disabled>
+              -- Select Total Rating --
+            </option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
         </div>
         <div>
           <label for="message" class="block mb-1 ml-1 mt-4">Thread</label>
