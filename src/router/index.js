@@ -60,15 +60,15 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if (!localStorage.getItem("access_token") && to.name === "register") {
-    return { name: "register" };
-  } else if (localStorage.getItem("access_token") && to.name === "login") {
-    return { name: "home" };
-  } else if (!localStorage.getItem("access_token") && to.name !== "login") {
-    return { name: "login" };
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (!localStorage.getItem("access_token") && to.name === "register") {
+//     return { name: "register" };
+//   } else if (localStorage.getItem("access_token") && to.name === "login") {
+//     return { name: "home" };
+//   } else if (!localStorage.getItem("access_token") && to.name !== "login") {
+//     return { name: "login" };
+//   }
+// });
 
 // router.beforeEach((to, from, next) => {
 //   if (!localStorage.getItem("access_token") && to.name === "home") {
