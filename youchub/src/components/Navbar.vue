@@ -14,7 +14,7 @@ export default {
   },
   props: ["page"],
   computed: {
-    ...mapState(useAllStore, ["isLogin", "profPic", "isPremium]),
+    ...mapState(useAllStore, ["isLogin", "profPic", "isPremium"]),
   },
   methods: {
     ...mapActions(useAllStore, ["snapPayment", "fetchVideos", "logout"]),
