@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://pcpeek.herokuapp.com";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -53,7 +54,6 @@ export const useDataStore = defineStore("data", {
         const { data } = await axios.get(`${baseUrl}/news`);
         this.dataNews = data;
         this.newsImage = data.news.urlToImage;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -83,7 +83,6 @@ export const useDataStore = defineStore("data", {
       try {
         const { data } = await axios.get(`${baseUrl}/detail/${idThread}`);
         this.detail = data;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -104,10 +103,6 @@ export const useDataStore = defineStore("data", {
         name = "";
         rating = "";
         thread = "";
-        Toast.fire({
-          icon: "success",
-          title: "Add new thread successfully",
-        });
         window.location.reload();
       } catch (error) {
         Toast.fire({
@@ -145,10 +140,6 @@ export const useDataStore = defineStore("data", {
           },
           { headers: { access_token: localStorage.access_token } }
         );
-        Toast.fire({
-          icon: "success",
-          title: "Add new comment successfully",
-        });
         window.location.reload();
       } catch (error) {
         Toast.fire({
@@ -164,7 +155,6 @@ export const useDataStore = defineStore("data", {
           `https://api.giphy.com/v1/gifs/trending?api_key=pA9DIBpOGTWtI1tkp35OdkMsi3g33cHH&limit=5&rating=g`
         );
         this.dataGif = data.data;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -175,7 +165,7 @@ export const useDataStore = defineStore("data", {
       this.router.push("/");
       Toast.fire({
         icon: "success",
-        title: "Signed Out   successfully",
+        title: "Signed Out successfully",
       });
     },
   },

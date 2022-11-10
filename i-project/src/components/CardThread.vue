@@ -28,7 +28,7 @@ export default {
             <div
               class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"
             ></div>
-            <div class="text-lg font-bold text-slate-700">Beja</div>
+            <div class="text-lg font-bold text-slate-700">User Anynomous</div>
           </div>
           <div class="flex items-center space-x-8">
             <div class="text-xs text-neutral-500">
@@ -76,24 +76,6 @@ export default {
               <div
                 class="flex cursor-pointer items-center transition hover:text-slate-600"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="mr-1.5 h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                  />
-                </svg>
-              </div>
-              <div
-                class="flex cursor-pointer items-center transition hover:text-slate-600"
-              >
                 <ShareNetwork
                   network="facebook"
                   url="https://vuejs.org/"
@@ -104,15 +86,17 @@ export default {
                   <button>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
+                      class="mr-1.5 h-5 w-5"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"
+                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
                       />
                     </svg>
                   </button>
+                  <span class="ml-1">Share on Facebook</span>
                 </ShareNetwork>
               </div>
             </div>

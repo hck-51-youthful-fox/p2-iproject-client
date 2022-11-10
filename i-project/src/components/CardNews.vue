@@ -30,7 +30,9 @@ export default {
       >
         <div class="flex justify-start items-end h-full">
           <div class="text-white m-6">
-            <h5 class="font-bold text-lg mb-3">{{ news.title }}</h5>
+            <h5 class="font-bold text-lg mb-3 break-words">
+              {{ news.title }}
+            </h5>
             <p>
               <small
                 >Published <u>{{ date.slice(0, 10) }}</u> by

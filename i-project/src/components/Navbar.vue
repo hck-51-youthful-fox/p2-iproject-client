@@ -60,7 +60,7 @@ export default {
             <a
               class="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug text-black border border-red-900"
             >
-              <span class="ml-2">Welcome,!</span>
+              <span class="ml-2">Welcome Enthusiast!</span>
             </a>
           </li>
           <li class="nav-item">

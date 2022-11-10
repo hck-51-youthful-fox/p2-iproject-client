@@ -75,9 +75,6 @@ export default {
             </button>
           </div>
         </form>
-        <div class="text-center">
-          <p>or Login With</p>
-        </div>
         <div id="buttonDiv"></div>
       </div>
     </div>
