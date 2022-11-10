@@ -15,6 +15,10 @@ export const useInvestrStore = defineStore("investr", {
     email: "",
     realtimeStock: [],
     realtimeLabel: [],
+    aapl: {},
+    amzn: {},
+    goog: {},
+    investments: [],
   }),
   actions: {
     async login(obj) {
@@ -22,13 +26,13 @@ export const useInvestrStore = defineStore("investr", {
         const { email, password } = obj;
         const { data } = await axios({
           method: "post",
-          url: "/clients/login",
+          url: "/login",
           data: { email, password },
         });
         localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("email", data.email);
+        localStorage.setItem("email", email);
         this.isLogin = true;
-        this.email = data.email;
+        this.email = email;
         this.router.push("/");
         this.successAlert("Login Success");
       } catch (error) {
@@ -38,7 +42,7 @@ export const useInvestrStore = defineStore("investr", {
     async handleCredentialResponse(response) {
       try {
         const { data } = await axios({
-          url: "/clients/google-sign-in",
+          url: "/google-sign-in",
           method: "POST",
           headers: {
             google_token: response.credential,
@@ -57,18 +61,16 @@ export const useInvestrStore = defineStore("investr", {
     },
     logout() {
       localStorage.clear();
-      this.router.push("/");
+      this.router.push("/signin");
       this.successAlert("Logout Success");
     },
     async signUp(obj) {
-      //cek lg
-
       try {
-        const { email, password, address, phoneNumber } = obj;
+        const { email, password, username } = obj;
         const { data } = await axios({
           method: "post",
-          url: "/clients/register",
-          data: { email, password, address, phoneNumber },
+          url: "/register",
+          data: { email, password, username },
         });
         this.router.push("/login");
         this.successAlert("Registration Success");
@@ -84,7 +86,7 @@ export const useInvestrStore = defineStore("investr", {
     },
     fetchRealtimeData() {
       const db = getDatabase();
-      const BINANCE = ref(db, "stocks/AAPL");
+      const BINANCE = ref(db, "stocks/BINANCE:BTCUSDT");
       onValue(BINANCE, (snapshot) => {
         const data = snapshot.val();
         let i = 0;
@@ -99,9 +101,81 @@ export const useInvestrStore = defineStore("investr", {
         }
         this.realtimeStock = temp;
         this.realtimeLabel = tempLabel;
-
-        console.log(temp);
+        // console.log(temp);
       });
+    },
+    async snapPayment(id) {
+      try {
+        let { data } = await axios({
+          method: "POST",
+          url: `/payment`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        snap.pay(`${data.transactionToken}`, {
+          // onSuccess: async (result) => {
+          //   this.paymentResponse = result;
+          // },
+          onSuccess: async (result) => {
+            try {
+              this.addInvestment(id);
+            } catch (error) {
+              console.log(error);
+            }
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    fecthData() {
+      Promise.all([
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=AMZN&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=AAPL&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=GOOG&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+      ])
+        .then(async ([res1, res2, res3]) => {
+          const a = await res1.json();
+          const b = await res2.json();
+          const c = await res3.json();
+          this.amzn = a;
+          this.aapl = b;
+          this.goog = c;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async addInvestment(StockId) {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: `/buy/${StockId}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.successAlert("Success buy stock");
+      } catch (error) {
+        this.errorAlert(error.response.data.message);
+      }
+    },
+    async fetchInvestment() {
+      try {
+        const { data } = await axios.get("/stocks", {
+          headers: { access_token: localStorage.access_token },
+        });
+        this.investments = data;
+      } catch (error) {
+        this.errorAlert(error.response.data.message);
+      }
     },
     async confirmAlert() {
       try {

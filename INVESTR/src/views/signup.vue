@@ -1,6 +1,21 @@
 <script>
+import { mapActions } from "pinia";
+import { useInvestrStore } from "../stores";
+
 export default {
   name: "signin",
+  data() {
+    return {
+      user: {
+        username: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useInvestrStore, ["signUp"]),
+  },
 };
 </script>
 <template>
@@ -25,6 +40,7 @@ export default {
                 class="form-control"
                 id="floatingText"
                 placeholder="jhondoe"
+                v-model="user.username"
               />
               <label for="floatingText">Username</label>
             </div>
@@ -34,6 +50,7 @@ export default {
                 class="form-control"
                 id="floatingInput"
                 placeholder="name@example.com"
+                v-model="user.email"
               />
               <label for="floatingInput">Email address</label>
             </div>
@@ -43,11 +60,16 @@ export default {
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Password"
+                v-model="user.password"
               />
               <label for="floatingPassword">Password</label>
             </div>
 
-            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">
+            <button
+              type="submit"
+              class="btn btn-primary py-3 w-100 mb-4"
+              @click="signUp(user)"
+            >
               Sign Up
             </button>
             <p class="text-center mb-0">

@@ -1,6 +1,18 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useInvestrStore } from "../stores";
+
 export default {
   name: "table",
+  methods: {
+    ...mapActions(useInvestrStore, ["logout", "fetchInvestment"]),
+  },
+  computed: {
+    ...mapState(useInvestrStore, ["email", "investments"]),
+  },
+  created() {
+    this.fetchInvestment();
+  },
 };
 </script>
 
@@ -15,7 +27,7 @@ export default {
         <div class="d-flex align-items-center ms-4 mb-4">
           <div class="position-relative"></div>
           <div class="ms-3">
-            <h6 class="mb-0">Jhon Doe</h6>
+            <h6 class="mb-0">{{ ElementInternals }}</h6>
             <span>Investor</span>
           </div>
         </div>
@@ -49,14 +61,14 @@ export default {
               class="nav-link dropdown-toggle"
               data-bs-toggle="dropdown"
             >
-              <span class="d-none d-lg-inline-flex">John Doe</span>
+              <span class="d-none d-lg-inline-flex">{{ email }}</span>
             </a>
             <div
               class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0"
             >
-              <a href="#" class="dropdown-item">My Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <a href="#" class="dropdown-item">Log Out</a>
+              <a href="#" class="dropdown-item" @click.prevent="logout"
+                >Log Out</a
+              >
             </div>
           </div>
         </div>
@@ -68,34 +80,24 @@ export default {
         <div class="row g-4">
           <div class="col-sm-12 col-xl-12">
             <div class="bg-secondary rounded h-100 p-4">
-              <h6 class="mb-4">Hoverable Table</h6>
+              <h6 class="mb-4">Your Investments</h6>
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Price Was</th>
+                    <th scope="col">Price Now</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Bought At</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>jhon@email.com</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mark@email.com</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>jacob@email.com</td>
+                  <tr v-for="data in investments">
+                    <th scope="row">{{ data.Stock.name }}</th>
+                    <td>{{ data.price }}</td>
+                    <td></td>
+                    <td>{{ data.volume }}</td>
+                    <td>{{ data.createdAt.split("T")[0] }}</td>
                   </tr>
                 </tbody>
               </table>
