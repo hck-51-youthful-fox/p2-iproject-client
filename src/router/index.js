@@ -60,12 +60,24 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
-  if (!localStorage.getItem("access_token") && to.name !== "login") {
-    return { name: "login" };
-  } else if (localStorage.getItem("access_token") && to.name === "login") {
-    return { name: "home" };
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (!localStorage.getItem("access_token") && to.name === "register") {
+//     return { name: "register" };
+//   } else if (localStorage.getItem("access_token") && to.name === "login") {
+//     return { name: "home" };
+//   } else if (!localStorage.getItem("access_token") && to.name !== "login") {
+//     return { name: "login" };
+//   }
+// });
 
+router.beforeEach((to, from, next) => {
+  if (!localStorage.getItem("access_token") && to.name === "home") {
+    next({ name: "login" });
+  } else if (
+    localStorage.getItem("access_token") &&
+    (to.name === "login" || to.name === "register")
+  ) {
+    next({ name: "home" });
+  } else next();
+});
 export default router;
