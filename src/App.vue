@@ -19,7 +19,6 @@ export default {
   created() {
     if(localStorage.getItem("access_token")) {
       this.isLoggedIn = true
-      console.log(localStorage.getItem.verified)
       this.isVerified = localStorage.getItem('verified')
     }
   }

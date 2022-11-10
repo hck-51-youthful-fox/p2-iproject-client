@@ -1,10 +1,16 @@
 <script>
 import { useBonfireStore } from "../stores/bonfire";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { RouterLink } from "vue-router";
+import axios from "axios";
 
 export default {
   nama: "ReviewCard",
+  data() {
+    return {
+      audio: "",
+    };
+  },
   components: { RouterLink },
   props: ["review"],
   computed: {
@@ -12,8 +18,38 @@ export default {
       return this.review.createdAt.split("T")[0];
     },
     ...mapState(useBonfireStore, ["isVerified", "explore"]),
+    audioSource() {
+      return `data:audio/mpeg;base64,${this.audio}`;
+    },
   },
-  methods: {},
+  methods: {
+    ...mapActions(useBonfireStore, ["textToSpeech"]),
+    // async textToSpeech(text) {
+    //   try {
+    //     const options = {
+    //       method: "GET",
+    //       url: "https://joj-text-to-speech.p.rapidapi.com/synthesize",
+    //       params: { lang: "id-ID", text: text, speed: "0.5" },
+    //       headers: {
+    //         "X-RapidAPI-Key":
+    //           "22f66d6d8amsh3d45c913971d1aap1528bcjsne9b7e46036ea",
+    //         "X-RapidAPI-Host": "joj-text-to-speech.p.rapidapi.com",
+    //       },
+    //     };
+
+    //     let data = await axios.request(options);
+    //     data.src = "data:audio/mp3;base64,..."
+    //     data.play()
+    //   } catch (error) {
+    //     console.log(error);
+    //     Swal.fire({
+    //       title: "An Error has occured...",
+    //       icon: "error",
+    //       text: error.response.data.message,
+    //     });
+    //   }
+    // },
+  },
   created() {},
 };
 </script>
@@ -35,7 +71,12 @@ export default {
       class="card-footer d-flex justify-content-between bg-dark align-items-center"
     >
       Score : {{ review.score }} / 100
-      <div></div>
+      <div>
+        <!-- <button v-show="!audio" @click="textToSpeech(review.review)" class="btn-sm btn-danger">
+          Play
+        </button>
+        <audio v-show="audio" controls :src="audioSource"></audio> -->
+      </div>
     </div>
   </div>
 </template>

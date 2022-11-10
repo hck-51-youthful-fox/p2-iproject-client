@@ -10,31 +10,35 @@ export default {
   },
   data() {
     return {
-      searchQuery :''
-    }
+      searchQuery: "",
+    };
   },
   methods: {
-    ...mapActions(useBonfireStore, ["fetchGames", "flushGames","flushSearch"]),
+    ...mapActions(useBonfireStore, ["fetchGames", "flushGames", "flushSearch"]),
     onScroll() {
       this.isUserScrolling = window.scrollY > 0;
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         // you're at the bottom of the page
-        this.fetchGames();
+        if (this.games.length < this.totalGame) {
+          console.log(this.games.length)
+          console.log(this.totalGame);
+          this.fetchGames();
+        }
       }
     },
     fetchWithQuery() {
-      this.flushGames()
-      this.fetchGames(this.searchQuery)
+      this.flushGames();
+      this.fetchGames(this.searchQuery);
     },
     clearSearch() {
-      this.searchQuery = ''
-      this.flushGames()
-      this.flushSearch()
-      this.fetchGames()
-    }
+      this.searchQuery = "";
+      this.flushGames();
+      this.flushSearch();
+      this.fetchGames();
+    },
   },
   computed: {
-    ...mapState(useBonfireStore, ["games"]),
+    ...mapState(useBonfireStore, ["games", "totalGame"]),
   },
   created() {
     window.addEventListener("scroll", this.onScroll);
@@ -45,7 +49,7 @@ export default {
   },
   beforeUnmount() {
     this.flushGames();
-  }
+  },
 };
 </script>
 
@@ -67,7 +71,9 @@ export default {
             <button type="submit" class="btn btn-danger">Search</button>
           </div>
           <div class="col-mx">
-            <button type="button" @click="clearSearch" class="btn btn-danger">Clear Search</button>
+            <button type="button" @click="clearSearch" class="btn btn-danger">
+              Clear Search
+            </button>
           </div>
         </div>
       </form>
