@@ -20,7 +20,8 @@ export default {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         // you're at the bottom of the page
         if (this.games.length < this.totalGame) {
-          console.log("fetch");
+          console.log(this.games.length)
+          console.log(this.totalGame);
           this.fetchGames();
         }
       }
