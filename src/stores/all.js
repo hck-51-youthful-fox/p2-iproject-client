@@ -140,11 +140,13 @@ export const useAllStore = defineStore("all", {
       const { data } = await instance.post({});
     },
     async payment() {
+      console.log("jalan kok");
       try {
         const access_token = localStorage.getItem("access_token");
         const { data } = await instance.get("/users/payment-test", {
           headers: { access_token },
         });
+        console.log(data);
         // console.log(data.data.redirect_url);
         // console.log(data.data.token);
         // this.router.push(data.data.redirect_url);
@@ -152,6 +154,7 @@ export const useAllStore = defineStore("all", {
         const UserId = localStorage.getItem("UserId");
 
         this.paymentToken = data.token;
+        console.log(this.paymentToken);
         snap.pay(this.paymentToken, {
           onSuccess: async function (result) {
             console.log(result);

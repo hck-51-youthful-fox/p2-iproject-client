@@ -16,10 +16,7 @@ export default {
   methods: {
     ...mapActions(useAllStore, ["payment"]),
   },
-  created() {
-    console.log(localStorage.getItem("UserId"));
-    console.log(localStorage.getItem("status"));
-  },
+  created() {},
 };
 </script>
 
