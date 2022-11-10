@@ -27,6 +27,9 @@ export default {
   },
   methods: {
     ...mapActions(useFootballStore, ["addPosition"]),
+    submitForm(){
+      this.addPosition(this.dataPlayer)
+    }
   },
 };
 </script>
@@ -45,7 +48,7 @@ export default {
         <h2 style="color: white">Add your dream team</h2>
         <form
           id="login-form"
-          @submit.prevent="addPosition(dataPlayer)"
+          @submit.prevent="submitForm"
           method="post"
           class="col-sm-12"
         >

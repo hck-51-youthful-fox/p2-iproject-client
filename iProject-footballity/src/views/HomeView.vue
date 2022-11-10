@@ -40,9 +40,7 @@ export default {
         <div class="row" style="margin-top: 100px">
           <div class="col col-2"></div>
           <div class="col col 10">
-            <h1 style="color: white">
-              Hello all over coaches around the world
-            </h1>
+            <h1 style="color: white">Hello all coaches around the world</h1>
             <h4>
               Karena saya adalah orang indonesia maka saya akan memperkenalkan
               diri dengan bahasa indonesia
