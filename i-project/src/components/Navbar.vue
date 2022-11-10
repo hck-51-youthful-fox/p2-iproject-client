@@ -1,7 +1,17 @@
 <script>
+import { mapActions, mapState } from "pinia";
 import { RouterLink } from "vue-router";
+import { useDataStore } from "../stores/data";
 
-export default {};
+export default {
+  name: "Navbar",
+  computed: {
+    ...mapState(useDataStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(useDataStore, ["logoutSection"]),
+  },
+};
 </script>
 <template>
   <nav
@@ -31,20 +41,22 @@ export default {};
       <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
           <li class="nav-item">
-            <a
+            <RouterLink
+              to="/login"
               class="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug text-black hover:opacity-75"
             >
-              <span class="ml-2">Sign In</span>
-            </a>
+              <span class="ml-2" v-if="isLogin === false">Sign In</span>
+            </RouterLink>
           </li>
           <li class="nav-item">
-            <a
+            <RouterLink
+              to="/register"
               class="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug text-black hover:opacity-75"
             >
-              <span class="ml-2">Sign Up</span>
-            </a>
+              <span class="ml-2" v-if="isLogin === false">Sign Up</span>
+            </RouterLink>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLogin !== false">
             <a
               class="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug text-black border border-red-900"
             >
@@ -55,7 +67,12 @@ export default {};
             <a
               class="px-3 py-2 flex items-center text-sm uppercase font-bold leading-snug text-black hover:opacity-75 cursor-pointer"
             >
-              <span class="ml-2">Logout</span>
+              <span
+                class="ml-2"
+                @click.prevent="logoutSection"
+                v-if="isLogin !== false"
+                >Logout</span
+              >
             </a>
           </li>
         </ul>

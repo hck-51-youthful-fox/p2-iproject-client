@@ -6,11 +6,17 @@ import cardComment from "../components/CardComment.vue";
 
 export default {
   name: "Detail",
+  data() {
+    return {
+      comment: "",
+      imgUrl: "cek cek",
+    };
+  },
   computed: {
-    ...mapState(useDataStore, ["detail"]),
+    ...mapState(useDataStore, ["detail", "dataGif", "isLogin"]),
   },
   methods: {
-    ...mapActions(useDataStore, ["getDetail"]),
+    ...mapActions(useDataStore, ["getDetail", "addComment", "getGif"]),
   },
   components: {
     navBar,
@@ -19,12 +25,12 @@ export default {
   created() {
     const idThread = this.$route.params.idThread;
     this.getDetail(idThread);
+    this.getGif();
   },
 };
 </script>
 <template>
   <navBar />
-  {{ detail }}
   <section class="container mx-auto p-6 md:p-10 transform duration-500">
     <div class="flex items-center justify-center">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
@@ -38,10 +44,10 @@ export default {
         </div>
 
         <div class="mt-4 mb-6">
-          <div class="mb-3 text-xl font-bold">
+          <div class="mb-3 text-2xl font-bold">
             {{ detail[0].name }}
           </div>
-          <div class="text-sm text-neutral-600">
+          <div class="text-xl text-neutral-600">
             {{ detail[0].thread }}
           </div>
         </div>
@@ -52,7 +58,7 @@ export default {
       :key="listComment.id"
       :listComment="listComment"
     />
-    <div class="flex items-center justify-center mt-4">
+    <div class="flex items-center justify-center mt-4" v-if="isLogin !== false">
       <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
         <form>
           <div
@@ -68,6 +74,7 @@ export default {
                   <button
                     type="button"
                     class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                    data-modal-toggle="defaultModal"
                   >
                     <svg
                       aria-hidden="true"
@@ -90,47 +97,32 @@ export default {
             <div class="py-2 px-4 bg-white rounded-b-lg white">
               <label for="editor" class="sr-only">Publish post</label>
               <textarea
+                v-model="comment"
                 id="editor"
                 rows="8"
-                class="block px-0 w-full text-sm text-dark-800 bg-white border-white white:bg-gray-200 focus:ring-0 white:text-dark white:placeholder-gray-400"
+                class="w-full px-4 py-2 mt-2 h-64 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
                 placeholder="Write an article..."
                 required=""
               ></textarea>
+              <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white h-32">
+                <div class="grid lg:grid-cols-4 gap-1">
+                  <img
+                    class="w-12 h-12 rounded-lg scale-100 hover:scale-200"
+                    v-for="listGif in dataGif"
+                    :src="listGif.images.original.url"
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           <button
+            @click.prevent="addComment(detail[0].id, comment, imgUrl)"
             type="submit"
             class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
           >
             Reply Post
-          </button>
-        </form>
-      </div>
-    </div>
-    <div class="flex items-center justify-center mt-4">
-      <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
-        <form>
-          <div
-            class="mb-4 w-full bg-white-50 rounded-lg border border-gray-200 white:bg-gray-700 white:border-gray-600"
-          >
-            <div class="py-2 px-4 bg-white rounded-b-lg white">
-              <label for="editor" class="sr-only">Publish post</label>
-              <textarea
-                id="editor"
-                rows="8"
-                class="block px-0 w-full text-sm text-dark-800 bg-white border-white white:bg-gray-200 focus:ring-0 white:text-dark white:placeholder-gray-400"
-                placeholder="Write an article..."
-                required=""
-              ></textarea>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-          >
-            Add Post
           </button>
         </form>
       </div>

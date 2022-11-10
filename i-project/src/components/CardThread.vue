@@ -38,10 +38,13 @@ export default {
         </div>
 
         <div class="mt-4 mb-6">
-          <a class="mb-3 text-xl font-bold" @click.prevent="clickHandler()">
+          <a
+            class="mb-3 text-xl font-bold cursor-pointer"
+            @click.prevent="clickHandler()"
+          >
             {{ listThread.name }}
           </a>
-          <div class="text-sm text-neutral-600">
+          <div class="text-sm text-neutral-600 cursor-pointer">
             {{ listThread.thread }}
           </div>
         </div>
@@ -66,6 +69,9 @@ export default {
                     d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                   />
                 </svg>
+                <span @click.prevent="clickHandler()">{{
+                  listThread.Comments.length
+                }}</span>
               </div>
               <div
                 class="flex cursor-pointer items-center transition hover:text-slate-600"
@@ -84,6 +90,30 @@ export default {
                     d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
                   />
                 </svg>
+              </div>
+              <div
+                class="flex cursor-pointer items-center transition hover:text-slate-600"
+              >
+                <ShareNetwork
+                  network="facebook"
+                  url="https://vuejs.org/"
+                  title="all about typing"
+                  description="typing as you can about PC"
+                  hashtags="pc"
+                >
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"
+                      />
+                    </svg>
+                  </button>
+                </ShareNetwork>
               </div>
             </div>
           </div>
