@@ -20,7 +20,6 @@ export default {
   <div>
     <nav class="navbar navbar-dark navbar-expand-md" id="app-navbar">
       <div class="container">
-      
         <button
           @click.prevent="$router.push('/')"
           class="navbar-toggler"
@@ -40,30 +39,23 @@ export default {
                 <router-link to="/" href="#">Home</router-link>
               </li>
               <li v-if="!isLogin" class="nav-item" role="presentation">
-            <a
-              @click.prevent="this.$router.push('/login')"
-              class="nav-link"
-              href="#"
-              >Login</a
-            >
-          </li>
-          <li v-if="!isLogin" class="nav-item" role="presentation">
-            <a
-              @click.prevent="this.$router.push('/register')"
-              class="nav-link"
-              href="#"
-              >Register</a
-            >
-          </li>
-          <li class="nav-item" role="presentation">
-            <a
-              @click.prevent="this.$router.push('/payments')"
-              class="nav-link"
-              href="#"
-              >Premium</a
-            >
-          </li>
-              <li  class="nav-link px-4 text-center col-4">
+                <a
+                  @click.prevent="this.$router.push('/login')"
+                  class="nav-link"
+                  href="#"
+                  >Login</a
+                >
+              </li>
+              <li v-if="!isLogin" class="nav-item" role="presentation">
+                <a
+                  @click.prevent="this.$router.push('/register')"
+                  class="nav-link"
+                  href="#"
+                  >Register</a
+                >
+              </li>
+
+              <li class="nav-link px-4 text-center col-4">
                 <div v-if="isLogin === true">
                   <a @click.prevent="logout" href="#">Logout</a>
                 </div>

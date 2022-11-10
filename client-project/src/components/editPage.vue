@@ -6,20 +6,24 @@ export default {
   data() {
     return {
       noteLocal: {
-        name: "",
+        title: "",
+        description: "",
+        date: "",
       },
     };
   },
   computed: {
     // ini pake yg dipake itu yg balikan data dari by Id
-    ...mapState(useNoteStore, ["note"]),
+    ...mapState(useNoteStore, ["dataById"]),
   },
   methods: {
-    ...mapActions(useNoteStore, ["editNote"]),
+    ...mapActions(useNoteStore, ["editNote", "getNoteById"]),
   },
   created() {
-    this.fetchNotes(this.$route.params.id);
-    this.noteLocal.name = note.name;
+    this.getNoteById(this.dataById);
+    this.noteLocal.title = dataById.title;
+    this.noteLocal.description = dataById.description;
+    this.noteLocal.date = dataById.date;
   },
 };
 </script>
@@ -28,11 +32,11 @@ export default {
   <div class="bg-light" id="Add-New-Notes">
     <div class="container">
       <h3 class="mb-5 pt-3 border-1">Edit Notes</h3>
-      <form id="notes-form" @submit.prevent="handleAdd">
+      <form id="notes-form" @submit.prevent="editNote">
         <div class="form-group">
           <label for="notes-title" class="form-label">Title</label>
           <input
-            v-model="addNotes.title"
+            v-model="noteLocal.title"
             type="text"
             class="form-control"
             id="notes-name"
@@ -43,7 +47,7 @@ export default {
         <div class="form-group">
           <label for="notes-description" class="form-label">Description</label>
           <input
-            v-model="addNotes.description"
+            v-model="noteLocal.description"
             type="text"
             class="form-control"
             id="notes-description"
@@ -54,7 +58,7 @@ export default {
         <div class="form-group">
           <label for="notes-date" class="form-label">Date</label>
           <input
-            v-model="addNotes.date"
+            v-model="noteLocal.date"
             type="date"
             class="form-control"
             id="notes-price"
@@ -64,7 +68,7 @@ export default {
         </div>
         <label for="notes-category" class="form-label">Category</label>
         <select
-          v-model="addNotes.categoryId"
+          v-model="noteLocal.categoryId"
           id="notes-category"
           class="form-select"
         >
@@ -74,7 +78,7 @@ export default {
             :key="category.id"
             :value="category.id"
           >
-            {{ category.name }}
+            {{ category.title }}
           </option>
         </select>
 

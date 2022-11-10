@@ -28,7 +28,7 @@ export default {
     <form @submit.prevent="handleRegister" method="post" class="container">
       <div class="form-group py-2">
         <div class="input-field">
-          <span class="far fa-user p-2">Username</span>
+          <span class="far fa-user p-2"></span>
           <input
             v-model="dataRegistrasi.username"
             type="text"
@@ -40,7 +40,7 @@ export default {
       </div>
       <div class="form-group py-2">
         <div class="input-field">
-          <span class="far fa-user p-2">Email</span>
+          <span class="far fa-user p-2"></span>
           <input
             v-model="dataRegistrasi.email"
             type="text"
@@ -52,7 +52,7 @@ export default {
       </div>
       <div class="form-group py-1 pb-2">
         <div class="input-field">
-          <span class="fas fa-lock p-2">Password</span>
+          <span class="fas fa-lock p-2"></span>
           <input
             v-model="dataRegistrasi.password"
             type="password"

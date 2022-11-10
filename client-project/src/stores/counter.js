@@ -10,7 +10,9 @@ export const useNoteStore = defineStore("note", {
     UserId: "",
     payments: {},
     notes: [],
+    dataById: {},
     categories: [],
+    news: [],
   }),
   actions: {
     checkLogin() {
@@ -167,7 +169,7 @@ export const useNoteStore = defineStore("note", {
     },
     async fetchCategories() {
       try {
-        let { data } = await axios({
+        let data = await axios({
           url: `${baseUrl}/categories`,
           method: "GET",
           headers: {
@@ -175,12 +177,14 @@ export const useNoteStore = defineStore("note", {
           },
         });
         console.log(data, "ini dari category");
-        this.categories = data;
+        this.categories = data.data;
       } catch (error) {
         console.log(error);
       }
     },
     async addNotes(obj) {
+      // console.log("ini add");
+      console.log(obj, "dari add");
       try {
         await axios({
           url: `${baseUrl}/notes`,
@@ -189,15 +193,35 @@ export const useNoteStore = defineStore("note", {
             access_token: localStorage.getItem("access_token"),
           },
           data: {
-            title: obj.name,
+            title: obj.title,
             description: obj.description,
             date: obj.date,
-            CategoryId: obj.CategoryId,
+            categoryId: obj.categoryId,
           },
         });
         this.fetchNotes();
+        Swal.fire("Yeay!", "Your note has been added");
       } catch (error) {
         console.log(error);
+      }
+    },
+    async getNoteById(notesId) {
+      try {
+        console.log("getNoteById jalan");
+        let { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/notes/${notesId}`,
+          headers: {
+            access_token: localStorage.getItem(`access_token`),
+          },
+        });
+        // console.log(data, "<<<ini data product by id");
+        this.dataById = data;
+        console.log(this.dataById);
+        console.log(this.dataById, "<<<ini data yg dipake");
+        this.router.push("/notes/:notesId");
+      } catch (err) {
+        console.log(err);
       }
     },
     async deleteNotes(id) {
@@ -216,19 +240,28 @@ export const useNoteStore = defineStore("note", {
         console.log(error);
       }
     },
-    async editNote(id, object) {
+    async fetchNewsApi() {
+      try {
+        let { data } = await axios({
+          url: "https://newsapi.org/v2/top-headlines?country=id&apiKey=86b0d868bbee4e40b7af0532eb5cc1f8",
+          method: "GET",
+        });
+        console.log(data, "<<<");
+        this.news = data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editNote(notesId, object) {
+      console.log(notesId, object, "<<< ini edit");
       try {
         let { dataEdit } = await axios({
-          url: `${baseUrl}/notes/${id}`,
-          method: "PATCH",
+          url: `${baseUrl}/notes/${notesId}`,
+          method: "PUT",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
-          data: {
-            name: object.name,
-            description: object.description,
-            date: object.date,
-          },
+          data: object,
         });
         // console.log(dataEdit);
       } catch (error) {

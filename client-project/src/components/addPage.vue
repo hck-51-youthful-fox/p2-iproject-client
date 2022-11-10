@@ -5,7 +5,7 @@ export default {
   name: "addPage",
   data() {
     return {
-      addNotes: {
+      addNote: {
         title: "",
         description: "",
         date: "",
@@ -16,9 +16,11 @@ export default {
   methods: {
     ...mapActions(useNoteStore, ["addNotes", "fetchCategories"]),
     handleAdd() {
-      this.fetchCategories(this.addNotes);
-      (this.addNotes.title = ""), (this.addNotes.description = "");
-      (this.addNotes.date = ""), (this.addNotes.categoryId = "");
+      this.addNotes(this.addNote);
+      this.addNote.title = "";
+      this.addNote.description = "";
+      this.addNote.date = "";
+      this.addNote.categoryId = "";
     },
   },
   computed: {
@@ -31,14 +33,16 @@ export default {
 </script>
 
 <template>
-  <div class="bg-light" id="Add-New-Notes">
-    <div class="container">
-      <h3 class="mb-5 pt-3 border-1">Add new notes</h3>
-      <form id="notes-form" @submit.prevent="handleAdd">
+  <div class="bg-light p-2" id="Add-New-Notes">
+    <div class="container mt-3">
+      <div class="mt-5">
+        <h3 class="mb-5 pt-3 border-1 mt-5">Add new notes</h3>
+      </div>
+      <form id="notes-form" @submit.prevent="handleAdd(this.$route.params.id)">
         <div class="form-group">
           <label for="notes-title" class="form-label">Title</label>
           <input
-            v-model="addNotes.title"
+            v-model="addNote.title"
             type="text"
             class="form-control"
             id="notes-name"
@@ -49,7 +53,7 @@ export default {
         <div class="form-group">
           <label for="notes-description" class="form-label">Description</label>
           <input
-            v-model="addNotes.description"
+            v-model="addNote.description"
             type="text"
             class="form-control"
             id="notes-description"
@@ -60,31 +64,37 @@ export default {
         <div class="form-group">
           <label for="notes-date" class="form-label">Date</label>
           <input
-            v-model="addNotes.date"
+            v-model="addNote.date"
             type="date"
             class="form-control"
-            id="notes-price"
-            placeholder="Enter price notes"
+            id="notes-date"
+            placeholder="Enter date notes"
             autocomplete="off"
           />
         </div>
-        <label for="notes-category" class="form-label">Category</label>
-        <select
-          v-model="addNotes.categoryId"
-          id="notes-category"
-          class="form-select"
-        >
-          <option value="" selected disabled>-- Select Category --</option>
-          <option
-            v-for="category in categories"
-            :key="category.id"
-            :value="category.id"
-          >
-            {{ category.name }}
-          </option>
-        </select>
+        <div>
+          <div>
+            <label for="notes-category" class="form-label">Category</label>
+          </div>
+          <div>
+            <select
+              v-model="addNote.categoryId"
+              id="notes-categoryId"
+              class="form-select"
+            >
+              <option value="" selected disabled>-- Select Category --</option>
+              <option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.id"
+              >
+                {{ category.title }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-        <div class="col-1 d-flex align-items-end mb-2">
+        <div class="d-flex justify-content-start mb-2 mt-3">
           <button class="btn btn-secondary" type="submit">Add</button>
         </div>
       </form>

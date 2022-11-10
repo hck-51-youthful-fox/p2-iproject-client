@@ -8,7 +8,7 @@ export default {
     NoteTable,
   },
   methods: {
-    ...mapActions(useNoteStore, ["fetchNotes"]),
+    ...mapActions(useNoteStore, ["fetchNotes", "addNotes"]),
   },
   computed: {
     ...mapState(useNoteStore, ["notes"]),
@@ -23,6 +23,13 @@ export default {
   <div class="expense-table mt-5">
     <div class="">
       <div class="col-12 table-responsive">
+        <button
+          class="btn btn-dark mb-3"
+          id="new-notes"
+          @click.prevent="this.$router.push('/add')"
+        >
+          <span class="icon material-symbols-outlined"></span>Add New Notes
+        </button>
         <table class="table bg-light">
           <thead>
             <tr>
