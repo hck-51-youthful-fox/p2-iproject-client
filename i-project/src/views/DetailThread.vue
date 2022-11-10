@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       comment: "",
-      imgUrl: "cek cek",
+      imgUrl: "",
     };
   },
   computed: {
@@ -17,6 +17,14 @@ export default {
   },
   methods: {
     ...mapActions(useDataStore, ["getDetail", "addComment", "getGif"]),
+    setImgUR(img) {
+      this.imgUrl = img;
+    },
+    submitComment() {
+      this.addComment(this.detail[0].id, this.comment, this.imgUrl);
+      this.comment = "";
+      this.imgUrl = "";
+    },
   },
   components: {
     navBar,
@@ -24,6 +32,8 @@ export default {
   },
   created() {
     const idThread = this.$route.params.idThread;
+    this.comment = "";
+    this.imgUrl = "";
     this.getDetail(idThread);
     this.getGif();
   },
@@ -69,30 +79,7 @@ export default {
             >
               <div
                 class="flex flex-wrap items-center divide-gray-200 sm:divide-x white:divide-gray-600"
-              >
-                <div class="flex items-center space-x-1 sm:pr-4">
-                  <button
-                    type="button"
-                    class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                    data-modal-toggle="defaultModal"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <span class="sr-only">Upload image</span>
-                  </button>
-                </div>
-              </div>
+              ></div>
             </div>
             <div class="py-2 px-4 bg-white rounded-b-lg white">
               <label for="editor" class="sr-only">Publish post</label>
@@ -104,13 +91,20 @@ export default {
                 placeholder="Write an article..."
                 required=""
               ></textarea>
-              <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white h-32">
-                <div class="grid lg:grid-cols-4 gap-1">
+              <img
+                class="rounded-lg w-64 h-64 mb-4 mt-4"
+                v-if="imgUrl"
+                :src="imgUrl"
+                alt=""
+              />
+              <div class="rounded-xl border p-8 shadow-md w-full bg-white h-52">
+                <div class="flex flex-rows justify-center gap-2 cursor-pointer">
                   <img
-                    class="w-12 h-12 rounded-lg scale-100 hover:scale-200"
+                    class="w-32 h-32 rounded-lg scale-100 hover:scale-200"
                     v-for="listGif in dataGif"
                     :src="listGif.images.original.url"
                     alt=""
+                    @click="setImgUR(listGif.images.original.url)"
                   />
                 </div>
               </div>

@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-// const baseUrl = "http://localhost:3000";
-const baseUrl = "https://pcpeek.herokuapp.com";
+const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://pcpeek.herokuapp.com";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -103,7 +103,7 @@ export const useDataStore = defineStore("data", {
         name = "";
         rating = "";
         thread = "";
-        window.location.reload();
+        this.getThread();
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -140,7 +140,9 @@ export const useDataStore = defineStore("data", {
           },
           { headers: { access_token: localStorage.access_token } }
         );
-        window.location.reload();
+        comment = "";
+        imgUrl = "";
+        this.getDetail(threadId);
       } catch (error) {
         Toast.fire({
           icon: "error",
