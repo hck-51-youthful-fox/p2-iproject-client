@@ -10,7 +10,7 @@ export default {
       apakek: {},
     };
   },
-  components: {
+  computed: {
     ...mapState(useShowStore, ["show"]),
     ...mapState(useUserStore, ["isLogin"]),
   },
@@ -24,7 +24,6 @@ export default {
 </script>
 
 <template>
-  {{ show }}
   <div class="row justify-content-center mt-5">
     <div class="row gx-5">
       <div class="col">
@@ -40,10 +39,10 @@ export default {
                 @click.prevent="
                   $router.push({ name: 'upload', params: { id: show.id } })
                 "
-                style="color: blue; cursor: pointer"
+                style="color: green; cursor: pointer"
                 class="material-symbols-outlined"
               >
-                bookmark
+                add_shopping_cart
               </span>
             </h6>
           </div>

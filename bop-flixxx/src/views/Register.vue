@@ -22,7 +22,7 @@ export default {
         phoneNumber: this.phoneNumber,
         address: this.address,
       };
-      this.register(payload)
+      this.register(payload);
     },
   },
 };
@@ -98,12 +98,7 @@ export default {
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            class="btn btn-primary col-4"
-          >
-            Register
-          </button>
+          <button type="submit" class="btn btn-primary col-4">Register</button>
         </div>
       </form>
     </div>
