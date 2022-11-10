@@ -71,6 +71,7 @@ export const useBonfireStore = defineStore("bonfire", {
         this.router.push("/");
         this.toggleLoading(false);
         Swal.fire({
+          position: "top-end",
           title: "Success!",
           icon: "success",
           text: `Welcome back, ${data.username}!`,
@@ -123,6 +124,7 @@ export const useBonfireStore = defineStore("bonfire", {
     logout() {
       localStorage.clear();
       Swal.fire({
+        position: "top-end",
         title: "Success!",
         icon: "success",
         text: `Logged out successfully!`,
@@ -237,6 +239,7 @@ export const useBonfireStore = defineStore("bonfire", {
         this.router.push(`/games/${this.gameDetail.id}`);
         this.toggleLoading(false);
         Swal.fire({
+          position: "top-end",
           title: "Success!",
           icon: "success",
           text: data.message,
@@ -285,6 +288,7 @@ export const useBonfireStore = defineStore("bonfire", {
         });
         this.toggleLoading(false);
         Swal.fire({
+          position: "top-end",
           title: "Success!",
           icon: "success",
           text: `User details updated successfully!`,
@@ -319,6 +323,7 @@ export const useBonfireStore = defineStore("bonfire", {
         this.isVerified = `Verified`;
         this.toggleLoading(false);
         Swal.fire({
+          position: "top-end",
           title: "Success!",
           icon: "success",
           text: data.message,
