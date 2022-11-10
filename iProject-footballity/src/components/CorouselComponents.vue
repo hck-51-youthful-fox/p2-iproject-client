@@ -88,14 +88,14 @@ export default {
         v-for="clubs in plData"
         class="d-flex align-items-center carousel-item active bg bg-dark justify-content-center"
       >
-        <p>{{ clubs.Team.Nickname1 }}</p>
+        <p style="color: white">{{ clubs.Team.Nickname1 }}</p>
         <img
           id="image-club"
           :src="clubs.Team.WikipediaLogoUrl"
           alt="..."
           class="me-3 ms-3"
         />
-        <p>{{ clubs.TeamName }}</p>
+        <p style="color: white">{{ clubs.TeamName }}</p>
       </div>
     </div>
     <button
@@ -122,5 +122,8 @@ export default {
 #image-club {
   height: 200px;
   width: 200px;
+}
+p {
+  color: white;
 }
 </style>
