@@ -6,6 +6,7 @@ export const useAllStore = defineStore("counter", {
     videos: [],
     video: {},
     baseUrl: "http://localhost:3000",
+    // baseUrl: "https://youchubb.herokuapp.com",
     paymentResponse: "",
     isLogin: false,
     likes: [],
@@ -26,6 +27,7 @@ export const useAllStore = defineStore("counter", {
       } catch (error) {
         console.log(error);
         this.showErrorAlert(error);
+        this.showErrorAlert(error);
       }
     },
     async login(user) {
@@ -39,7 +41,7 @@ export const useAllStore = defineStore("counter", {
         localStorage.setItem("id", data.id);
         localStorage.setItem("email", data.email);
         localStorage.setItem("isPremium", data.isPremium);
-        localStorage.setItem("profPic", data.profPic);
+        localStorage.setItem("profPic", data.avatar);
         this.isLogin = true;
         this.isPremium = data.isPremium;
         this.profPic = data.avatar;
@@ -47,7 +49,8 @@ export const useAllStore = defineStore("counter", {
         this.showSuccessAlert("login success!");
       } catch (error) {
         console.log(error);
-        // this.showErrorAlert(error.response.data.message);
+        // this.showErrorAlert(error);
+        this.showErrorAlert(error.response.data.message);
       }
     },
     async logout() {
@@ -64,7 +67,9 @@ export const useAllStore = defineStore("counter", {
         });
         this.videos = data;
       } catch (error) {
+        console.log("<<<< ini error fetchVideos");
         console.log(error);
+        this.showErrorAlert(error);
       }
     },
     async fetchVideoDetail(id) {
@@ -76,6 +81,7 @@ export const useAllStore = defineStore("counter", {
         this.video = data;
       } catch (error) {
         console.log(error);
+        this.showErrorAlert(error);
       }
     },
     async fetchLikes() {
@@ -91,6 +97,7 @@ export const useAllStore = defineStore("counter", {
         this.likes = data;
       } catch (error) {
         console.log(error);
+        this.showErrorAlert(error);
       }
     },
     async addLikes(videoId, vid) {
@@ -142,6 +149,7 @@ export const useAllStore = defineStore("counter", {
         this.router.push("/");
       } catch (error) {
         console.log(error);
+        this.showErrorAlert(error);
       }
     },
     async snapPayment() {
@@ -159,11 +167,13 @@ export const useAllStore = defineStore("counter", {
               this.updateStatus();
             } catch (error) {
               console.log(error);
+              this.showErrorAlert(error);
             }
           },
         });
       } catch (error) {
         console.log(error);
+        this.showErrorAlert(error);
       }
     },
     async showSuccessAlert(msg) {
@@ -182,6 +192,7 @@ export const useAllStore = defineStore("counter", {
         return result;
       } catch (e) {
         console.error(e);
+        this.showErrorAlert(e);
       }
     },
     async showErrorAlert(msg) {
