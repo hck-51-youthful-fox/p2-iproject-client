@@ -7,6 +7,7 @@ export const useFootballStore = defineStore("football", {
     return {
       myTeamData: [],
       plData: [],
+      searchPlayerData: [],
     };
   },
   actions: {
@@ -40,7 +41,6 @@ export const useFootballStore = defineStore("football", {
         localStorage.setItem("email", data.email);
         localStorage.setItem("username", data.username);
         localStorage.setItem("id", data.id);
-        // console.log(data.access_token);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -53,7 +53,7 @@ export const useFootballStore = defineStore("football", {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          // text: `${error.response.data.message}`,
+          text: `${error.response.data.message}`,
           footer: "",
         });
         console.log(error);
@@ -80,7 +80,7 @@ export const useFootballStore = defineStore("football", {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          // text: `${error.response.data.message}`,
+          text: `${error.response.data.message}`,
           footer: "",
         });
         console.log(error);
@@ -152,6 +152,20 @@ export const useFootballStore = defineStore("football", {
           text: `Please input all the players`,
           footer: "",
         });
+        console.log(error);
+      }
+    },
+    async searchPlayerFunction(search) {
+      console.log(search, "ini search<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+      try {
+        const { data } = await axios.get(`/api/search?search=${search}`, {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data.result, "ini data search player");
+        this.searchPlayerData = data.result;
+      } catch (error) {
         console.log(error);
       }
     },

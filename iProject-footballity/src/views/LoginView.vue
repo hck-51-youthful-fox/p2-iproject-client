@@ -28,8 +28,10 @@ export default {
       <h4 style="color: green"><strong>Footballity</strong></h4>
     </div>
     <div class="text-center">
-      <h1>Log in and watch your favourite movies</h1>
-      <p>watch the updatest and best movie all over the world</p>
+      <h1>Log in build your team</h1>
+      <p style="color: white">
+        make your team and change the team whenever you want
+      </p>
     </div>
     <div id="login-form" class="d-flex col justify-content-center mt-5">
       <div style="width: 500px">
