@@ -40,8 +40,6 @@ export default {
           @click.prevent="addOrder(beverage.id)"
         >
           <h6 class="mx-1 my-1">+ {{ beverage.price }}</h6>
-          {{ this.temporaryForm.BeverageId }}
-          {{ this.temporaryForm.quantity }}
         </button>
       </div>
     </div>

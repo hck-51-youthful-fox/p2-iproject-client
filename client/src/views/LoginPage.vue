@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import axios from "../apis/axios";
 import { useAllStore } from "../stores/all";
 
@@ -15,7 +15,12 @@ export default {
   },
   methods: {
     ...mapActions(useAllStore, ["changeLoginStatus"]),
-    async moveToHome() {
+    moveToLandingPage() {
+      this.$router.push({
+        name: "landing-page",
+      });
+    },
+    moveToHome() {
       this.$router.push({
         name: "menu-page",
       });
@@ -43,7 +48,7 @@ export default {
 
         localStorage.setItem("access_token", data.access_token);
         this.getPosition();
-        this.changeLoginStatus(true);
+        localStorage.setItem("isLogin", this.changeLoginStatus(true));
         this.moveToHome();
       } catch (err) {
         Swal.fire({
@@ -104,7 +109,7 @@ export default {
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-            @click="moveToHome"
+            @click="moveToLandingPage"
           ></button>
         </div>
 

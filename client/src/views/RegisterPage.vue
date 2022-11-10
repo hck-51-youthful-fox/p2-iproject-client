@@ -13,9 +13,9 @@ export default {
     };
   },
   methods: {
-    async moveToHome() {
+    async moveToLandingPage() {
       this.$router.push({
-        name: "menu-page",
+        name: "landing-page",
       });
     },
     async register() {
@@ -51,7 +51,7 @@ export default {
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-            @click="moveToHome"
+            @click="moveToLandingPage"
           ></button>
         </div>
 

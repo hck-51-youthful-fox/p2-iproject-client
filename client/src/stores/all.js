@@ -5,7 +5,6 @@ export const useAllStore = defineStore("all", {
   state: () => ({
     beverages: [],
     transactions: [],
-    isLogin: false,
     weather: "",
   }),
   actions: {

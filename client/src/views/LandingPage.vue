@@ -1,6 +1,17 @@
 <script>
 export default {
   name: "LandingPage",
+  methods: {
+    moveToHome() {
+      this.$router.push({ name: "menu-page" });
+    },
+    moveToRegister() {
+      this.$router.push({ name: "register" });
+    },
+    moveToLogin() {
+      this.$router.push({ name: "login" });
+    },
+  },
 };
 </script>
 
@@ -9,9 +20,15 @@ export default {
     <div class="container">
       <img src="@/assets/kohihihihi500.png" />
       <div class="frame">
-        <button class="custom-btn btn-6"><span> MENU </span></button>
-        <button class="custom-btn btn-6"><span> PROMO </span></button>
-        <button class="custom-btn btn-6"><span> OUTLETS </span></button>
+        <button class="custom-btn btn-6" @click.prevent="moveToHome">
+          <span> MENU </span>
+        </button>
+        <button class="custom-btn btn-6" @click.prevent="moveToRegister">
+          <span> REGISTER </span>
+        </button>
+        <button class="custom-btn btn-6" @click.prevent="moveToLogin">
+          <span> LOGIN </span>
+        </button>
       </div>
     </div>
   </body>

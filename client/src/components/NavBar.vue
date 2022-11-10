@@ -1,10 +1,28 @@
 <script>
+import { mapState } from "pinia";
+import { useAllStore } from "../stores/all";
+
 export default {
   name: "NavBar",
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
   methods: {
     moveToCart() {
       this.$router.push("/cart");
     },
+    logout() {
+      localStorage.clear();
+      this.isLogin = false;
+      this.$router.push({ name: "menu-page" });
+    },
+  },
+  created() {
+    if (localStorage.getItem("access_token")) {
+      this.isLogin = true;
+    }
   },
 };
 </script>
@@ -37,7 +55,7 @@ export default {
           <li class="nav-item">
             <a class="nav-link" href="#">OUTLETS</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" v-if="isLogin">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -49,10 +67,11 @@ export default {
               Profile
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+                <a class="dropdown-item" href="#" @click.prevent="logout"
+                  >Logout</a
+                >
+              </li>
             </ul>
           </li>
         </ul>
