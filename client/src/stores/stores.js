@@ -312,7 +312,7 @@ export const useCartStore = defineStore("carts", {
             access_token: localStorage.access_token,
           },
         });
-        window.location.reload();
+        this.fetchCart();
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -417,8 +417,6 @@ export const useCartStore = defineStore("carts", {
                 text: "Pesananmu akan segera kami kirimkan",
               });
             }
-            window.location.reload();
-            // window.this.router.push({ name: "home" });
           },
           onError: function (result) {
             Swal.fire({
@@ -439,6 +437,8 @@ export const useCartStore = defineStore("carts", {
             });
           },
         });
+        this.fetchCart();
+        this.router.push({ name: "home" });
       } catch (error) {
         Swal.fire({
           icon: "error",
