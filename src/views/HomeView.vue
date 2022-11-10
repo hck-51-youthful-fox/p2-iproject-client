@@ -44,10 +44,8 @@ export default {
     window.addEventListener("scroll", this.onScroll);
     this.fetchGames();
   },
-  destroyed() {
-    window.removeEventListener("scroll", this.onScroll);
-  },
   beforeUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
     this.flushGames();
   },
 };
