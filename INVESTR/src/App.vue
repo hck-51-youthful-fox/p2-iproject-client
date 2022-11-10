@@ -6,10 +6,11 @@ import { useInvestrStore } from "./stores";
 export default {
   name: "app",
   methods: {
-    ...mapActions(useInvestrStore, ["fetchRealtimeData"]),
+    ...mapActions(useInvestrStore, ["fetchRealtimeData", "fecthData"]),
   },
   created() {
     this.fetchRealtimeData();
+    this.fecthData();
   },
 };
 </script>

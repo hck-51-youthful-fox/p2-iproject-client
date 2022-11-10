@@ -15,6 +15,9 @@ export const useInvestrStore = defineStore("investr", {
     email: "",
     realtimeStock: [],
     realtimeLabel: [],
+    aapl: {},
+    amzn: {},
+    goog: {},
   }),
   actions: {
     async login(obj) {
@@ -84,7 +87,7 @@ export const useInvestrStore = defineStore("investr", {
     },
     fetchRealtimeData() {
       const db = getDatabase();
-      const BINANCE = ref(db, "stocks/AAPL");
+      const BINANCE = ref(db, "stocks/BINANCE:BTCUSDT");
       onValue(BINANCE, (snapshot) => {
         const data = snapshot.val();
         let i = 0;
@@ -99,9 +102,58 @@ export const useInvestrStore = defineStore("investr", {
         }
         this.realtimeStock = temp;
         this.realtimeLabel = tempLabel;
-
         console.log(temp);
       });
+    },
+    async snapPayment() {
+      try {
+        let { data } = await axios({
+          method: "POST",
+          url: `/payment`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        snap.pay(`${data.transactionToken}`, {
+          // onSuccess: async (result) => {
+          //   this.paymentResponse = result;
+          // },
+          onSuccess: async (result) => {
+            try {
+              this.updateStatus();
+              // console.log('');
+            } catch (error) {
+              console.log(error);
+            }
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    fecthData() {
+      Promise.all([
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=AMZN&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=AAPL&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+        fetch(
+          "https://finnhub.io/api/v1/quote?symbol=GOOG&token=cdl1rqiad3i4r9fur7d0cdl1rqiad3i4r9fur7dg"
+        ),
+      ])
+        .then(async ([res1, res2, res3]) => {
+          const a = await res1.json();
+          const b = await res2.json();
+          const c = await res3.json();
+          this.amzn = a;
+          this.aapl = b;
+          this.goog = c;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     async confirmAlert() {
       try {

@@ -1,14 +1,51 @@
 <script>
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useInvestrStore } from "../stores";
+import VueApexCharts from "vue3-apexcharts";
 
 export default {
   name: "dashboard",
+  components: {
+    VueApexCharts,
+  },
+  data: function () {
+    return {
+      chartOptions: {
+        chart: {
+          id: "vuechart-example",
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+        },
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [30, 40, 35, 50, 49, 60, 70, 91],
+        },
+      ],
+    };
+  },
   computed: {
-    ...mapState(useInvestrStore, ["realtimeStock", "realtimeLabel"]),
+    ...mapState(useInvestrStore, [
+      "realtimeStock",
+      "realtimeLabel",
+      "aapl",
+      "amzn",
+      "goog",
+    ]),
+  },
+  watch: {
+    realtimeLabel() {
+      this.renderChart();
+    },
   },
   methods: {
+    ...mapActions(useInvestrStore, ["snapPayment"]),
     renderChart() {
+      console.log(this.realtimeLabel);
+      console.log(this.realtimeStock);
+      let myChart = null;
       const data = {
         labels: this.realtimeLabel,
         datasets: [
@@ -27,15 +64,16 @@ export default {
         data: data,
         options: { responsive: true },
       };
-      const myChart = new Chart(
-        document.getElementById("worldwide-sales"),
-        config
-      );
+
+      // if (myChart != null) chart.update();
+
+      myChart = new Chart(document.getElementById("worldwide-sales"), config);
+      console.log(myChart);
     },
   },
-  mounted() {
-    this.renderChart();
-  },
+  // mounted() {
+  //   this.renderChart();
+  // },
 };
 </script>
 <template>
@@ -126,28 +164,70 @@ export default {
           </div>
           <div class="table-responsive">
             <table
-              class="table text-start align-middle table-bordered table-hover mb-0"
+              class="table text-center align-middle table-bordered table-hover mb-0"
             >
               <thead>
                 <tr class="text-white">
-                  <th scope="col">Date</th>
-                  <th scope="col">Invoice</th>
-                  <th scope="col">Customer</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">Current Price</th>
+                  <th scope="col">High</th>
+                  <th scope="col">Low</th>
+                  <th scope="col">Previous Close</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>01 Jan 2045</td>
-                  <td>INV-0123</td>
-                  <td>Jhon Doe</td>
-                  <td>$123</td>
-                  <td>Paid</td>
+                  <td><strong>AAPL</strong></td>
+                  <td>{{ aapl.c }}</td>
+                  <td>{{ aapl.h }}</td>
+                  <td>{{ aapl.l }}</td>
+                  <td>{{ aapl.pc }}</td>
                   <td>
-                    <a class="btn btn-sm btn-primary me-1" href="">Detail</a>
-                    <a class="btn btn-sm btn-primary me-1" href="">Buy</a>
+                    <a
+                      class="btn btn-sm btn-primary m-2"
+                      href=""
+                      @click.prevent=""
+                      >Detail</a
+                    >
+                    <a
+                      class="btn btn-sm btn-primary m-2"
+                      @click.prevent="snapPayment"
+                      href=""
+                      >Buy</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>AMZN</strong></td>
+                  <td>{{ amzn.c }}</td>
+                  <td>{{ amzn.h }}</td>
+                  <td>{{ amzn.l }}</td>
+                  <td>{{ amzn.pc }}</td>
+                  <td>
+                    <a class="btn btn-sm btn-primary m-2" href="">Detail</a>
+                    <a
+                      class="btn btn-sm btn-primary m-2"
+                      @click.prevent="snapPayment"
+                      href=""
+                      >Buy</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>GOOG</strong></td>
+                  <td>{{ goog.c }}</td>
+                  <td>{{ goog.h }}</td>
+                  <td>{{ goog.l }}</td>
+                  <td>{{ goog.pc }}</td>
+                  <td>
+                    <a class="btn btn-sm btn-primary m-2" href="">Detail</a>
+                    <a
+                      class="btn btn-sm btn-primary m-2"
+                      @click.prevent="snapPayment"
+                      href=""
+                      >Buy</a
+                    >
                   </td>
                 </tr>
               </tbody>
