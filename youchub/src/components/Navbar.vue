@@ -1,6 +1,6 @@
 <script>
 import { useAllStore } from "../stores/all";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const sr = new Recognition();
 
@@ -13,8 +13,11 @@ export default {
     };
   },
   props: ["page"],
+  computed: {
+    ...mapState(useAllStore, ["isLogin", "profPic", "isPremium]),
+  },
   methods: {
-    ...mapActions(useAllStore, ["snapPayment", "fetchVideos"]),
+    ...mapActions(useAllStore, ["snapPayment", "fetchVideos", "logout"]),
     handleSubmit() {
       this.fetchVideos(this.query);
     },
@@ -41,7 +44,11 @@ export default {
         <a href="" class="nav-link ms-2">
           <span class="icon material-symbols-outlined">menu</span>
         </a>
-        <a href="" class="border-none col-md-3 col-lg-2 me-0 px-3 fs-6">
+        <a
+          @click.prevent="$router.push('/')"
+          href=""
+          class="border-none col-md-3 col-lg-2 me-0 px-3 fs-6"
+        >
           <img
             src="../assets/YouTube_Logo_2017.svg"
             alt=""
@@ -63,28 +70,30 @@ export default {
         <div class="collapse navbar-collapse row" id="navbarNavAltMarkup">
           <div class="col-9">
             <div v-if="page === 'home'" class="d-flex justify-content-center">
-              <form
-                class="input-group input-group-sm w-50"
-                @submit.prevent="handleSubmit"
-              >
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search.."
-                  v-model="query"
-                />
-                <button
-                  class="btn btn-outline-secondary"
-                  type="button"
-                  id="button-addon2"
+              <div class="w-50">
+                <form
+                  class="input-group input-group-sm"
+                  @submit.prevent="handleSubmit"
                 >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search.."
+                    v-model="query"
+                  />
+                  <!-- <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="button-addon2"
+                  > -->
                   <span
-                    class="material-symbols-outlined bg-light"
+                    class="input-group-text material-symbols-outlined bg-white"
                     id="basic-addon2"
                     >search</span
                   >
-                </button>
-              </form>
+                  <!-- </button> -->
+                </form>
+              </div>
               <button
                 @click.prevent="start"
                 class="btn btn-light rounded-pill ms-3"
@@ -94,9 +103,22 @@ export default {
             </div>
           </div>
           <div class="col-3">
-            <div class="navbar-nav d-flex justify-content-end me-2">
-              <!-- <a v-if="!isLogin" class="px-2 nav-link" to="/login"> Sign in</a>
-            <a v-if="!isLogin" class="px-2 nav-link" to="/register"> Sign up</a> -->
+            <div
+              v-if="page !== 'login' && page !== 'register'"
+              class="d-flex justify-content-end"
+            >
+              <a
+                v-if="!isLogin"
+                class="px-2 fw-bold nav-link"
+                @click.prevent="$router.push('/login')"
+              >
+                Sign in</a
+              >
+            </div>
+            <div
+              v-if="page !== 'login' && page !== 'register' && isLogin"
+              class="navbar-nav d-flex justify-content-end me-2"
+            >
               <div class="dropdown dropstart pt-1">
                 <a
                   href=""
@@ -108,14 +130,18 @@ export default {
                   <img
                     class="rounded-circle"
                     width="30"
-                    src="https://lh3.googleusercontent.com/ogw/AOh-ky1fwY6zSyQRXRMf0RMkn3bgXscy2mbmuzW4du5i5Q=s64-c-mo"
+                    :src="profPic"
                     alt=""
                   />
                 </a>
 
                 <ul class="dropdown-menu">
-                  <li><h6 class="dropdown-header">Free Member</h6></li>
                   <li>
+                    <h6 class="dropdown-header">
+                      {{ isPremium ? "Premium" : "Free Member" }}
+                    </h6>
+                  </li>
+                  <li v-if="!isPremium">
                     <a
                       class="dropdown-item"
                       role="button"
@@ -126,17 +152,30 @@ export default {
                       >Go Premium</a
                     >
                   </li>
-                  <li><a class="dropdown-item" href="#">Liked Videos</a></li>
+                  <li v-else>
+                    <button
+                      @click="$router.push('/likes')"
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      Liked Videos
+                    </button>
+                  </li>
+                  <li v-if="isLogin">
+                    <a @click.prevent="logout" class="dropdown-item" href="#"
+                      >Sign Out</a
+                    >
+                  </li>
                 </ul>
               </div>
-              <a href="" class="nav-link">
+              <a href="" @click.prevent="" class="nav-link">
                 <span class="icon material-symbols-outlined"
                   >notifications</span
                 >
               </a>
               <!-- <a href="" class="nav-link fs-sm" @click.prevent="handleLogout">
-              Sign out</a
-            > -->
+                Sign out</a
+              > -->
             </div>
           </div>
         </div>
@@ -204,3 +243,16 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.form-control,
+.input-group-text {
+  height: 40px;
+  border-radius: 20px;
+}
+
+.input-group-text {
+  padding-top: 8px;
+  font-size: 20px;
+}
+</style>

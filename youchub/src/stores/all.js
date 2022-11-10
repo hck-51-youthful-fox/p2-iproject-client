@@ -8,38 +8,46 @@ export const useAllStore = defineStore("counter", {
     baseUrl: "http://localhost:3000",
     paymentResponse: "",
     isLogin: false,
-    likedVideos: [],
+    likes: [],
+    profPic: "",
+    isPremium: false,
   }),
   actions: {
     async register(user) {
-      const { email, password, phoneNumber, address } = user;
+      const { email, password, avatar } = user;
       try {
-        const { data } = await axios.post("/pub/register", user);
+        const { data } = await axios.post(`${this.baseUrl}/register`, {
+          email,
+          password,
+          avatar,
+        });
         this.router.push("/login");
         this.showSuccessAlert("register success!");
       } catch (error) {
         console.log(error);
-        this.showErrorAlert(error.response.data.message);
+        this.showErrorAlert(error);
       }
     },
     async login(user) {
       try {
         const { email, password } = user;
-        const { data } = await axios.post("/pub/login", user);
+        const { data } = await axios.post(`${this.baseUrl}/login`, {
+          email,
+          password,
+        });
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("id", data.id);
         localStorage.setItem("email", data.email);
+        localStorage.setItem("isPremium", data.isPremium);
+        localStorage.setItem("profPic", data.profPic);
         this.isLogin = true;
-        this.user = {
-          email: data.email,
-          role: data.role,
-          id: data.id,
-        };
+        this.isPremium = data.isPremium;
+        this.profPic = data.avatar;
         this.router.push("/");
         this.showSuccessAlert("login success!");
       } catch (error) {
         console.log(error);
-        this.showErrorAlert(error.response.data.message);
+        // this.showErrorAlert(error.response.data.message);
       }
     },
     async logout() {
@@ -48,7 +56,7 @@ export const useAllStore = defineStore("counter", {
       this.router.push("/login");
       this.showSuccessAlert("Your account has been logged out.");
     },
-    async fetchVideos(keyword = "itzy") {
+    async fetchVideos(keyword = "youtube") {
       try {
         let { data } = await axios({
           method: "get",
@@ -70,6 +78,56 @@ export const useAllStore = defineStore("counter", {
         console.log(error);
       }
     },
+    async fetchLikes() {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: `${this.baseUrl}/likes`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data);
+        this.likes = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addLikes(videoId, vid) {
+      try {
+        const {
+          title,
+          link,
+          avatarUrl,
+          channel,
+          views,
+          publishedDate,
+          isVerified,
+        } = vid;
+        console.log(vid, videoId);
+        const { data } = await axios({
+          method: "post",
+          url: `${this.baseUrl}/likes/${videoId}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: {
+            title,
+            link,
+            avatarUrl,
+            channel,
+            views,
+            publishedDate,
+            isVerified,
+          },
+        });
+        this.fetchLikes();
+        this.showSuccessAlert(data.message);
+      } catch (error) {
+        console.log(error);
+        this.showErrorAlert(error.response.data.message);
+      }
+    },
     async updateStatus() {
       try {
         let { data } = await axios({
@@ -79,6 +137,9 @@ export const useAllStore = defineStore("counter", {
             access_token: localStorage.getItem("access_token"),
           },
         });
+        this.isPremium = true;
+        localStorage.setItem("isPremium", true);
+        this.router.push("/");
       } catch (error) {
         console.log(error);
       }
@@ -93,13 +154,9 @@ export const useAllStore = defineStore("counter", {
           },
         });
         snap.pay(`${data.transactionToken}`, {
-          // onSuccess: async (result) => {
-          //   this.paymentResponse = result;
-          // },
           onSuccess: async (result) => {
             try {
               this.updateStatus();
-              // console.log('');
             } catch (error) {
               console.log(error);
             }

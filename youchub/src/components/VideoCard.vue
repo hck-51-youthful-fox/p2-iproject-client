@@ -3,7 +3,7 @@ import moment from "moment";
 
 export default {
   name: "VideoCard",
-  props: ["video"],
+  props: ["video", "date", "page"],
   data() {
     return {
       //   video: {
@@ -72,7 +72,10 @@ export default {
         <p class="card-text mb-0">
           {{ video.channel }}
         </p>
-        <p class="card-text">{{ views }} views • {{ video.publishedDate }}</p>
+        <p class="card-text">
+          {{ views }} views •
+          {{ page === "likes" ? date : video.publishedDate }}
+        </p>
       </div>
     </div>
   </div>

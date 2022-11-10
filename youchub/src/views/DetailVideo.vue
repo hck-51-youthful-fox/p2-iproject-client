@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar.vue";
 import YouTube from "vue3-youtube";
 import SideVideoCard from "../components/SideVideoCard.vue";
 import { useAllStore } from "../stores/all";
-import { mapState, mapActions } from "pinia";
+import { mapState, mapWritableState, mapActions } from "pinia";
 
 export default {
   name: "HomePage",
@@ -35,6 +35,7 @@ export default {
   },
   computed: {
     ...mapState(useAllStore, ["videos", "video"]),
+    ...mapWritableState(useAllStore, ["isPremium"]),
     formattedDate() {
       return new Date(this.video.publishedDate).toLocaleDateString("en-US", {
         year: "numeric",
@@ -53,6 +54,7 @@ export default {
       "fetchVideos",
       "fetchVideoDetail",
       "showSuccessAlert",
+      "addLikes",
     ]),
     onReady() {
       this.$refs.youtube.playVideo();
@@ -83,8 +85,20 @@ export default {
       }
       return newValue;
     },
+    handleAdd() {
+      this.addLikes(this.video.videoId, {
+        title: this.video.title,
+        link: this.video.thumbnails,
+        channel: this.video.channel,
+        avatarUrl: this.video.avatarUrl,
+        views: this.video.viewsCount,
+        publishedDate: this.video.publishedDate,
+        isVerified: false,
+      });
+    },
   },
   created() {
+    if (localStorage.isPremium) this.isPremium = true;
     this.fetchVideos();
     this.fetchVideoDetail(this.$route.params.videoId);
   },
@@ -106,7 +120,10 @@ export default {
           />
           <div class="m-2 pe-5">
             <div class="d-flex">
-              <a v-for="(keyword, i) in video.keywords" :key="i" href=""
+              <a
+                v-for="(keyword, i) in video.keywords.slice(0, 5)"
+                :key="i"
+                href=""
                 >#{{ keyword }}
               </a>
             </div>
@@ -115,7 +132,7 @@ export default {
               <div class="">
                 <div class="d-flex align-items-bottom">
                   <div class="mx-1">
-                    <img :src="video.avatar" class="rounded-circle" />
+                    <img :src="video.avatarUrl" class="rounded-circle" />
                   </div>
                   <div class="ms-1 me-2">
                     <h6 class="fw-bold mb-0 fs-14">{{ video.channel }}</h6>
@@ -124,7 +141,9 @@ export default {
                     </p>
                   </div>
                   <div class="mx-1">
-                    <button class="fs-12 btn btn-dark fw-bold rounded-pill">
+                    <button
+                      class="fs-12 text-decoration-none btn btn-dark fw-bold rounded-pill"
+                    >
                       Subscribe
                     </button>
                   </div>
@@ -132,10 +151,11 @@ export default {
                 </div>
                 <div class="d-flex"></div>
               </div>
-              <div class="d-flex">
+              <div v-if="isPremium" class="d-flex">
                 <div class="me-2">
                   <button
-                    class="d-flex align-items-center btn btn-light rounded-pill fw-bold fs-12"
+                    @click="handleAdd"
+                    class="text-decoration-none d-flex align-items-center btn btn-light rounded-pill fw-bold fs-12"
                   >
                     <span class="material-symbols-outlined me-2">
                       heart_plus
@@ -145,7 +165,7 @@ export default {
                 </div>
                 <div class="">
                   <button
-                    class="d-flex align-items-center btn btn-light rounded-pill fw-bold fs-12"
+                    class="d-flex align-items-center text-decoration-none btn btn-light rounded-pill fw-bold fs-12"
                     @click="showSuccessAlert('Item has been downloaded')"
                   >
                     <span class="material-symbols-outlined me-2">
