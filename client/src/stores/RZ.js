@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const baseUrl = `http://localhost:3000`;
+const baseUrl = `https://secure-woodland-38516.herokuapp.com`;
 
 export const useRZStore = defineStore("RZ", {
   state: () => ({
