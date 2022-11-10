@@ -2,9 +2,13 @@
 import { RouterView } from 'vue-router';
 import { mapWritableState } from 'pinia';
 import { useRZStore } from './stores/RZ';
+import NavBar from './views/NavBar.vue';
 
 export default {
   name: "App",
+  components: {
+    NavBar
+  },
   computed: {
     ...mapWritableState(useRZStore, ['checkLogin'])
   },
@@ -17,5 +21,8 @@ export default {
 </script>
 
 <template>
+  <NavBar />
+
+  <RouterView />
 </template>
 

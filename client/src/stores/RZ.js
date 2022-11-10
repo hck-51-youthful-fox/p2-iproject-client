@@ -13,6 +13,9 @@ export const useRZStore = defineStore("RZ", {
       phoneNumber: "",
       address: "",
     },
+    products: [],
+    totalPage: 0,
+    currentPage: 0,
   }),
   getters: {},
   actions: {
@@ -30,6 +33,7 @@ export const useRZStore = defineStore("RZ", {
         });
         localStorage.setItem(`access_token`, data.access_token);
         localStorage.setItem(`username`, data.username);
+        localStorage.setItem(`role`, data.role);
 
         this.checkLogin = true;
         this.router.push("/");
@@ -61,9 +65,23 @@ export const useRZStore = defineStore("RZ", {
         );
         localStorage.setItem(`access_token`, data.access_token);
         localStorage.setItem(`username`, data.username);
+        localStorage.setItem(`role`, data.role);
 
         this.checkLogin = true;
         this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchProduct(page) {
+      if (!page) {
+        page = 1;
+      }
+      try {
+        let { data } = await axios.get(`${baseUrl}/product?page=${page}`);
+        this.products = data.rows;
+        this.totalPage = data.totalPages;
+        this.currentPage = data.currentPages;
       } catch (err) {
         console.log(err);
       }
