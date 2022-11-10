@@ -18,7 +18,10 @@ export default {
 <template>
   <div class="w-full h-full">
     <div>
-      <img class="object-fill border" :src="food.imageUrl" />
+      <img
+        class="h-64 w-64 bg-cover bg-center object-fill"
+        :src="food.imageUrl"
+      />
     </div>
     <div class="py-4 pb-5">
       <h5 class="text-xl font-regular tracking-tight text-gray-600">

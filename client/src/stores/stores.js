@@ -219,7 +219,6 @@ export const useCartStore = defineStore("carts", {
             access_token: localStorage.access_token,
           },
         });
-        console.log(data, "daatat");
         this.cart = data;
         this.totalPriceInCart = 0;
         this.totalOrderInCart = 0;
@@ -230,8 +229,6 @@ export const useCartStore = defineStore("carts", {
           this.totalOrderInCart += el.quantity;
         });
         this.totalAllCost += this.cost;
-        console.log(this.totalPriceInCart, "<<<TOTALBG");
-        console.log(data);
       } catch (error) {
         const Toast = Swal.mixin({
           toast: true,
@@ -263,9 +260,22 @@ export const useCartStore = defineStore("carts", {
             },
           }
         );
-        Swal.fire({
+        this.fetchCart();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
           icon: "success",
-          title: "Berhasil menambah pesanan!",
+          title: "Berhasil Menambah Pesanan",
         });
       } catch (error) {
         Swal.fire({
@@ -359,7 +369,6 @@ export const useCartStore = defineStore("carts", {
         this.cost = data;
         this.totalPriceInCart += this.cost;
       } catch (error) {
-        console.log(error);
         Swal.fire({
           icon: "error",
           title: error.response.data.message,
@@ -390,7 +399,6 @@ export const useCartStore = defineStore("carts", {
           }
         );
         this.transaction = data;
-        console.log(data.data.token);
         window.snap.pay(`${data.data.token}`, {
           onSuccess: async function (result) {
             const { data } = await axios.patch(

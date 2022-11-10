@@ -5,6 +5,7 @@ import { mapActions, mapState } from "pinia";
 
 export default {
   name: "Navbar",
+  props: ["totalOrderInCart"],
   computed: {
     ...mapState(useCustomerStore, ["isLogin"]),
     ...mapState(useCartStore, ["cart"]),
@@ -52,7 +53,7 @@ export default {
             <div
               class="inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white"
             >
-              {{ cart.length }}
+              {{ totalOrderInCart }}
             </div>
           </RouterLink>
         </li>
@@ -91,7 +92,7 @@ export default {
             type="button"
             class="text-gray-500 hover:text-gray-700 bg-white hover:bg-gray-100 focus:ring-4 border border-slate-300 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            Logout
+            Keluar
           </button>
         </li>
       </ul>
