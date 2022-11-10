@@ -14,6 +14,12 @@ export const useRZStore = defineStore("RZ", {
       address: "",
     },
     products: [],
+    product: {
+      name: "",
+      img: "",
+      description: "",
+      price: "",
+    },
     totalPage: 0,
     currentPage: 0,
   }),
@@ -82,6 +88,38 @@ export const useRZStore = defineStore("RZ", {
         this.products = data.rows;
         this.totalPage = data.totalPages;
         this.currentPage = data.currentPages;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    convertCurrencyRupiah(price) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 2,
+      }).format(price);
+    },
+
+    async addProduct() {
+      try {
+        var bodyFormData = new FormData();
+        bodyFormData.append("name", this.product.name);
+        bodyFormData.append("description", this.product.description);
+        bodyFormData.append("price", this.product.price);
+        bodyFormData.append("img", this.product.img);
+
+        const { data } = await axios({
+          method: "post",
+          url: `${baseUrl}/product`,
+          data: bodyFormData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        this.router.push("/");
       } catch (err) {
         console.log(err);
       }

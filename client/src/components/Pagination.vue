@@ -5,7 +5,7 @@ export default{
     emits: ['fetchProduct'],
     methods: {
         fetchProduct(page) {
-            this.emit('fetchProduct', page)
+            this.$emit('fetchProduct', page)
         }
     }
 

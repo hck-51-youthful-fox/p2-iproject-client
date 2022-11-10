@@ -3,6 +3,7 @@ import { mapState, mapActions } from 'pinia';
 import { useRZStore } from '../stores/RZ';
 import Pagination from '../components/Pagination.vue';
 import CardProduct from '../components/CardProduct.vue';
+import { RouterLink } from 'vue-router';
 
 export default {
     name: "HomePage",
@@ -11,7 +12,7 @@ export default {
         CardProduct
     },
     computed: {
-        ...mapState(useRZStore, ['products', 'totalPage', 'currentPage'])
+        ...mapState(useRZStore, ['products', 'totalPage', 'currentPage', 'checkLogin'])
     },
     methods: {
         ...mapActions(useRZStore, ['fetchProduct'])
@@ -24,8 +25,8 @@ export default {
 <template>
 <div class="mt-16 grid grid-rows-3 grid-flow-col gap-4">
   <div class="row-span-3 ...">
-    <div class="w-60 p-2 bg-white rounded-xl">
-        <button type="submit" class="mt-4 text-sm bg-sky-400 border border-1 px-2 py-1 rounded-md text-white">Add Product</button>
+    <div class="w-60 p-2 bg-white rounded-xl" v-if="checkLogin">
+        <RouterLink to="/addproduct" type="submit" class="mt-4 text-sm bg-sky-400 border border-1 px-2 py-1 rounded-md text-white">Add Product</RouterLink>
     </div>
   </div>
   <div class="col-span-2 ...">
