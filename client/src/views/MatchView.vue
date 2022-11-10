@@ -23,7 +23,7 @@ export default {
 
   <div class="flex flex-row justify-center">
     <div
-      class="grid mb-5 mt-5 rounded-lg border md:mb-12 md:grid-cols-2 mx-10 w-[80%]"
+      class="grid mb-5 mt-5 rounded-lg border md:mb-12 md:grid-cols-3 mx-10 w-[80%]"
     >
       <CardNba v-for="games in nbaData" :key="games.id" :games="games" />
     </div>

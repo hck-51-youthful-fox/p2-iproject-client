@@ -28,13 +28,8 @@ export default {
     <h4 class="" v-if="liveData.length === 0">
       Sorry, there is no live match now
     </h4>
-    <div
-      v-for="match in liveData"
-      :key="match.id"
-      :match="match"
-      class="grid mb-5 mt-5 rounded-lg border md:mb-12 md:grid-cols-2 mx-10"
-    >
-      <Card />
+    <div class="grid mb-5 mt-5 rounded-lg border md:mb-12 md:grid-cols-3 mx-10">
+      <Card v-for="match in liveData" :key="match.id" :match="match" />
     </div>
   </div>
 </template>

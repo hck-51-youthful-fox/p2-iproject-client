@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+//const baseUrl = "http://localhost:3000";
+const baseUrl = "https://nba-live.herokuapp.com";
 
 export const useMatchStore = defineStore("match", {
   state: () => {
@@ -105,7 +106,7 @@ export const useMatchStore = defineStore("match", {
             console.log(result);
             localStorage.setItem("status", "premium");
             //this.isPremium = true;
-            localStorage.clear();
+            //localStorage.clear();
           },
           onPending: function (result) {
             console.log("pending");

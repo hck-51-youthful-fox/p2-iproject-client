@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
-//const baseUrl = "https://findjob-app.herokuapp.com";
+//const baseUrl = "http://localhost:3000";
+const baseUrl = "https://nba-live.herokuapp.com";
 
 export const useUserStore = defineStore("user", {
   state: () => {
@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user", {
 
     logout() {
       (this.isLogin = false), localStorage.clear();
-      this.$router.push("/");
+      this.$router.push("/login");
       Swal.fire("Logged Out!", "You have logged Out!", "success");
     },
 
