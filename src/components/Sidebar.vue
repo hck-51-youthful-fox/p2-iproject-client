@@ -16,7 +16,7 @@ export default {
 <template>
   <!-- Sidebar -->
   <aside
-    class="h-full w-80 flex flex-col space-y-10 items-center justify-center relative bg-gray-800 text-white"
+    class="w-16 h-full flex flex-col space-y-10 items-center justify-center relative bg-gray-800 text-white"
   >
     <!-- Profile -->
     <div
