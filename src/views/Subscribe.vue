@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useAllStore } from "../stores/all";
 
 export default {
@@ -9,7 +9,9 @@ export default {
   },
   props: [""],
   emits: [""],
-  computed: {},
+  computed: {
+    ...mapState(useAllStore, ["status"]),
+  },
   watch: {},
   methods: {
     ...mapActions(useAllStore, ["payment"]),
@@ -27,6 +29,7 @@ export default {
   <br />
   <br />
   <p>Subs price: Rp10.000</p>
+  <p>Status membershipku sekarang: {{ status.status }}</p>
   <div>
     <button
       @click.prevent="payment"

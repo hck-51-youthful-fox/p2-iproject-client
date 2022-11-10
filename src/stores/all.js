@@ -8,6 +8,9 @@ export const useAllStore = defineStore("all", {
     games: [],
     game: {},
     paymentToken: "",
+    sections: "",
+    status: "",
+    userDetail: {},
   }),
   actions: {
     changePage(page) {
@@ -121,7 +124,7 @@ export const useAllStore = defineStore("all", {
         console.log(error);
       }
     },
-    async fetchGameDetail(id) {
+    async fetchFreeGameDetail(id) {
       const access_token = localStorage.getItem("access_token");
       try {
         const { data } = await instance.get(`/games/free-games/${id}`, {
@@ -171,24 +174,19 @@ export const useAllStore = defineStore("all", {
       } catch (error) {
         console.log(error);
       }
-
-      //! backup
-      // snap.pay(this.paymentToken, {
-      //   async onSuccess(result) {
-      //     console.log(result, "-----------");
-      //     const success = await instance.patch(
-      //       "/users/payment-success",
-      //       {},
-      //       {
-      //         params: {
-      //           token: data.token,
-      //         },
-      //         headers: { access_token },
-      //       }
-      //     );
-      //     console.log(success, "???????????????????");
-      //   },
-      // });
+    },
+    async fetchUserDetail() {
+      try {
+        const id = localStorage.getItem("UserId");
+        const access_token = localStorage.getItem("access_token");
+        const { data } = await instance.get(`/users/${id}`, {
+          headers: { access_token },
+        });
+        console.log("Ini dataaa", data);
+        this.status = data;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });

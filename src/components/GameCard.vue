@@ -37,7 +37,7 @@ export default {
     </div>
   </article>
   <article
-    @click.prevent="$router.push(`/games/${game.id}`)"
+    @click.prevent="$router.push(`/games/free-games/${game.id}`)"
     v-if="section === 'Free to Play'"
     :class="class"
     :style="{

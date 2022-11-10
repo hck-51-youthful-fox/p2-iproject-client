@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useAllStore } from "../stores/all";
 import GameCard from "./GameCard.vue";
 

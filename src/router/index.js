@@ -6,6 +6,8 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Subscribe from "../views/Subscribe.vue";
 import GameDetail from "../views/GameDetail.vue";
+import GameDetailFree from "../views/GameDetailFree.vue";
+import UserDetail from "../views/UserDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +46,16 @@ const router = createRouter({
       path: "/games/:id",
       name: "detail",
       component: GameDetail,
+    },
+    {
+      path: "/games/free-games/:id",
+      name: "free-detail",
+      component: GameDetailFree,
+    },
+    {
+      path: "/users/:id",
+      name: "user-detail",
+      component: UserDetail,
     },
   ],
 });

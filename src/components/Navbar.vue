@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useAllStore } from "../stores/all";
 
 export default {
@@ -9,13 +9,20 @@ export default {
   },
   props: [""],
   emits: [""],
-  computed: {},
+  computed: {
+    ...mapState(useAllStore, ["status"]),
+  },
   watch: {},
   methods: {
     ...mapActions(useAllStore, ["logout"]),
-    ...mapActions(useAllStore, ["changePage"]),
+    ...mapActions(useAllStore, ["changePage", "fetchUserDetail"]),
+    pindah() {
+      this.$router.push(`/users/${this.status.id}`);
+    },
   },
-  created() {},
+  created() {
+    this.fetchUserDetail();
+  },
 };
 </script>
 
@@ -30,10 +37,10 @@ export default {
       Home
     </button>
     <button
-      @click.prevent="changePage('library')"
+      @click.prevent="pindah"
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
     >
-      Library
+      {{ status.status }}
     </button>
     <div class="hidden relative md:block">
       <div

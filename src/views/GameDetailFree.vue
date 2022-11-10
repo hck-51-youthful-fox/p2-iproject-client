@@ -3,7 +3,7 @@ import { mapActions, mapState, mapWritableState } from "pinia";
 import { useAllStore } from "../stores/all";
 
 export default {
-  name: "GameDetail",
+  name: "GameDetailFree",
   data() {
     return {
       localGame: {},
@@ -20,7 +20,7 @@ export default {
   },
   created() {
     const { id } = this.$route.params;
-    this.fetchGameDetail(id);
+    this.fetchFreeGameDetail(id);
   },
 };
 </script>
