@@ -85,7 +85,6 @@ export const useCustomerStore = defineStore("customers", {
         const { data } = await axios.post("/pub/login", { email, password });
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("id", data.id);
-        localStorage.setItem("name", data.name);
         this.isLogin = true;
 
         const Toast = Swal.mixin({

@@ -110,7 +110,6 @@ export default {
               ></path>
             </svg>
           </div>
-          <h1>{{ search }}</h1>
           <input
             type="text"
             v-model="search"

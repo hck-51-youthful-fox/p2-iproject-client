@@ -14,7 +14,6 @@ export default {
   methods: {
     ...mapActions(useCustomerStore, ["login"]),
     onClickLogin() {
-      console.log("masuk");
       this.login({
         email: this.email,
         password: this.password,
