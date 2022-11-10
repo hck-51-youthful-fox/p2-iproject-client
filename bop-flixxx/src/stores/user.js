@@ -38,8 +38,7 @@ export const useUserStore = defineStore("user", {
         this.router.push({ name: "login" });
         Swal.fire({
           icon: "success",
-          title: "Your are registered",
-          showConfirmButton: false,
+          title: "Your are registered! Check your email for verification",
           timer: 1500,
         });
       } catch (error) {

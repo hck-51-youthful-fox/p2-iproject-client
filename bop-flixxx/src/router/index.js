@@ -47,8 +47,9 @@ const router = createRouter({
     }
   ],
 });
-// router.beforeEach((to, from) => {
-//   if (to.name == "login" && localStorage.access_token) return { name: "home" };
-// });
+router.beforeEach((to, from) => {
+  if (to.name == "login" && localStorage.access_token) return { name: "home" };
+  if (to.name == "upload" && !localStorage.access_token) return { name: "login" };
+});
 
 export default router;

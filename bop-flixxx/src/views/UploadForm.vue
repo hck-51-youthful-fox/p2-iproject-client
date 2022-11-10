@@ -2,6 +2,8 @@
 import { useShowStore } from "../stores/shows";
 import { mapActions } from "pinia";
 import axios from "axios";
+let baseUrl = 'https://bopflix.herokuapp.com/rents'
+// let baseUrl = 'http://localhost:3000/rents'
 
 export default {
   name: "UploadForm",
@@ -13,20 +15,39 @@ export default {
   methods: {
     ...mapActions(useShowStore, ["addRent"]),
     handleSubmit() {
-      let access_token = localStorage.access_token;
-      const formData = new FormData();
-      formData.append("image", this.selectedFile, this.selectedFile.name);
-      axios
-        .post(
-          `http://localhost:3000/rents/${this.$route.params.id}`,
-          formData,
-          {
-            headers: { access_token },
-          }
-        )
-        .then((res) => {
-          console.log(res);
+      try {
+        let access_token = localStorage.access_token;
+        const formData = new FormData();
+        formData.append("image", this.selectedFile, this.selectedFile.name);
+        axios
+          .post(
+            `${baseUrl}/${this.$route.params.id}`,
+            formData,
+            {
+              headers: {
+                access_token,
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+              },
+            }
+          )
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Successfully added to your list",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.$router.push({ name: "rented" });
+            console.log(res);
+          });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You already has this one on your list",
         });
+      }
     },
     // async submitForm(id) {
     //   await this.addRent(id);

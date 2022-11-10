@@ -20,7 +20,11 @@ export const useShowStore = defineStore("show", {
         let { data } = await axios.get(`/?page=${this.currentPage}`);
         this.shows = data;
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oh No!.",
+          text: "Something went wrong!",
+        });
       }
     },
     async fetchShowById(id) {
@@ -28,7 +32,11 @@ export const useShowStore = defineStore("show", {
         let { data } = await axios.get(`/${id}`);
         this.show = data;
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oh No!.",
+          text: "Something went wrong!",
+        });
       }
     },
     // async addRent(id) {
@@ -47,10 +55,27 @@ export const useShowStore = defineStore("show", {
     async deleteRented(id) {
       try {
         let access_token = localStorage.access_token;
-        await axios.delete("/rents/" + id, { headers: { access_token } });
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios.delete("/rents/" + id, { headers: { access_token } });
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          }
+        });
         this.fetchRented();
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oh No!.",
+          text: "Something went wrong!",
+        });
       }
     },
     async fetchRented() {
@@ -61,7 +86,11 @@ export const useShowStore = defineStore("show", {
         });
         this.rented = data;
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oh No!.",
+          text: "Something went wrong!",
+        });
       }
     },
     async fetchSearch(search) {
@@ -75,7 +104,11 @@ export const useShowStore = defineStore("show", {
         this.searched = mapped;
         this.router.push({ name: "search", params: { query: search } });
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oh No!.",
+          text: "Something went wrong!",
+        });
       }
     },
   },
