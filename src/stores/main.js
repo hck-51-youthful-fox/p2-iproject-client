@@ -60,14 +60,30 @@ export const useMainStore = defineStore("main", {
         localStorage.setItem("email", data.email);
         localStorage.setItem("username", data.username);
         localStorage.setItem("isPremium", data.isPremium);
+        Swal.fire({
+          icon: "success",
+          title: "Login Success",
+          text: `Login Success`,
+        });
         this.isLogin = true;
+        this.isPremium = localStorage.getItem("isPremium");
         this.router.push("/");
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error",
+          text: error.response.data.message,
+        });
         console.log(error);
       }
     },
 
     async logoutUser() {
+      Swal.fire({
+        icon: "success",
+        title: "Logout Success",
+        text: `Logout Success`,
+      });
       localStorage.clear();
       this.isLogin = false;
       this.router.push("/login");
@@ -80,8 +96,18 @@ export const useMainStore = defineStore("main", {
           password: this.user.password,
           username: this.user.username,
         });
+        Swal.fire({
+          icon: "success",
+          title: "Register Success",
+          text: `Register Success`,
+        });
         this.router.push("/login");
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error",
+          text: error.response.data.message,
+        });
         console.log(error);
       }
     },
@@ -98,11 +124,48 @@ export const useMainStore = defineStore("main", {
           }
         );
 
-        this.midtrans = data.redirect_url;
-        // window.location.href = data.redirect_url;
-        window.open(data.redirect_url, "_blank");
-        // this.isPremium = true
-        localStorage.setItem("isPremium", true);
+        // this.midtrans = data.redirect_url;
+        console.log(data);
+
+        let transactionToken = data.transactionToken;
+
+        snap.pay(transactionToken, {
+          onSuccess: async function (result) {
+            console.log("success");
+            console.log(result);
+            Swal.fire({
+              icon: "success",
+              title: "Payment Success!",
+              text: "Please Logout and Login again to Refresh your Premium Status",
+            });
+            await axios.patch(
+              "/user/updatePremium",
+              {},
+              {
+                headers: {
+                  access_token: localStorage.getItem("access_token"),
+                },
+              }
+            );
+            localStorage.clear();
+            this.isLogin = false;
+            // this.isPremium = true;
+          },
+
+          onPending: function (result) {
+            console.log("pending");
+            console.log(result);
+          },
+          onError: function (result) {
+            console.log("error");
+            console.log(result);
+          },
+          onClose: function () {
+            console.log(
+              "customer closed the popup without finishing the payment"
+            );
+          },
+        });
       } catch (error) {
         console.log(error);
       }
@@ -153,9 +216,19 @@ export const useMainStore = defineStore("main", {
             },
           }
         );
+        Swal.fire({
+          icon: "success",
+          title: "Comment Success",
+          text: "Comment Success",
+        });
         this.getPostById(this.postId);
         this.comment = "";
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error",
+          text: error.response.data,
+        });
         console.log(error);
       }
     },
@@ -209,9 +282,19 @@ export const useMainStore = defineStore("main", {
             access_token: localStorage.getItem("access_token"),
           },
         });
+        Swal.fire({
+          icon: "success",
+          title: "Post Delete Successfully!",
+          text: `Post Delete Successfully!`,
+        });
         console.log(data);
         this.loggedInPost();
       } catch (error) {
+        Swal.fire({
+          icon: "success",
+          title: "Error",
+          text: error.response.data.message,
+        });
         console.log(error);
       }
     },
@@ -234,9 +317,58 @@ export const useMainStore = defineStore("main", {
             },
           }
         );
+        Swal.fire({
+          icon: "success",
+          title: "Post Edit Successfully!",
+          text: `Post Edit Successfully!`,
+        });
         console.log("Post Edit Successfully!");
         this.router.push("/user/post");
       } catch (error) {
+        Swal.fire({
+          icon: "success",
+          title: "Error",
+          text: error.response.data.message,
+        });
+        console.log(error);
+      }
+    },
+
+    async addPost() {
+      try {
+        let { data } = await axios.post(
+          "/user/addPost",
+          {
+            title: this.post.title,
+            content: this.post.content,
+            imageUrl: this.post.imageUrl,
+            tag: this.post.tag,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Post Add Successfully!",
+          text: `Post Add Successfully!`,
+        });
+        console.log("Post Add Successfully!");
+        this.router.push("/user/post");
+        this.post = {
+          title: "",
+          content: "",
+          imageUrl: "",
+          tag: "",
+        };
+      } catch (error) {
+        Swal.fire({
+          icon: "success",
+          title: "Error",
+          text: error.response.data.message,
+        });
         console.log(error);
       }
     },

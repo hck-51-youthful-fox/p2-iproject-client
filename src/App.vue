@@ -13,6 +13,7 @@ export default {
     ...mapWritableState(useMainStore, ["isLogin", "isPremium"]),
   },
   created() {
+    this.isLogin = localStorage.getItem("isPremium")
     if (localStorage.getItem("access_token")) {
       this.isLogin = true;
     } else {

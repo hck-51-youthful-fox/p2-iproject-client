@@ -71,7 +71,7 @@ export default {
             </li>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <!-- Buy Premium Show when User Not Premium When Clicked Auto redirect to midtrans payment -->
-                <li><a class="dropdown-item" @click.prevent="payment" v-if="isPremium === true">Buy Premium</a></li>
+                <li><a class="dropdown-item" @click.prevent="payment" v-if="isPremium == 'false'">Buy Premium</a></li>
                 <li><RouterLink class="dropdown-item" to="/user/post">Your Posts</RouterLink></li>
                 <li><a class="dropdown-item" href="#!" @click.prevent="logoutUser">Log Out</a></li>
               </ul>
