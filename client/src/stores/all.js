@@ -6,6 +6,7 @@ export const useAllStore = defineStore("all", {
     beverages: [],
     transactions: [],
     isLogin: false,
+    weather: "",
   }),
   actions: {
     async getBeverages() {
@@ -30,6 +31,20 @@ export const useAllStore = defineStore("all", {
     },
     changeLoginStatus(boolean) {
       this.isLogin = boolean;
+    },
+    async getWeather() {
+      try {
+        const { data } = await axios.get("/weather", {
+          headers: {
+            latitude: localStorage.getItem("latitude"),
+            longitude: localStorage.getItem("longitude"),
+          },
+        });
+
+        this.weather = data;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 });

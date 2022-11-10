@@ -8,13 +8,14 @@ export default {
   name: "MenuPage",
   components: { NavBar, MenuCard },
   computed: {
-    ...mapState(useAllStore, ["beverages"]),
+    ...mapState(useAllStore, ["beverages", "weather"]),
   },
   methods: {
-    ...mapActions(useAllStore, ["getBeverages"]),
+    ...mapActions(useAllStore, ["getBeverages", "getWeather"]),
   },
   created() {
     this.getBeverages();
+    this.getWeather();
   },
 };
 </script>
@@ -24,7 +25,7 @@ export default {
   <div class="container-fluid">
     <div class="card">
       <div class="d-flex justify-content-center row mt-4 mb-4">
-        <a href="#">INI NAMA</a>
+        <h5 class="text-center">{{ weather }}</h5>
       </div>
       <div class="d-flex flex-wrap justify-content-center row">
         <div

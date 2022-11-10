@@ -20,6 +20,20 @@ export default {
         name: "menu-page",
       });
     },
+    async getPosition() {
+      try {
+        function success(pos) {
+          const crd = pos.coords;
+
+          localStorage.setItem("latitude", crd.latitude);
+          localStorage.setItem("longitude", crd.longitude);
+        }
+
+        navigator.geolocation.getCurrentPosition(success);
+      } catch (err) {
+        console.log(err);
+      }
+    },
     async login() {
       try {
         const { data } = await axios.post("/login", {
@@ -28,6 +42,7 @@ export default {
         });
 
         localStorage.setItem("access_token", data.access_token);
+        this.getPosition();
         this.changeLoginStatus(true);
         this.moveToHome();
       } catch (err) {
@@ -46,13 +61,10 @@ export default {
         },
       });
 
-      console.log(data);
-
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("email", data.email);
-      localStorage.setItem("role", data.role);
-      localStorage.setItem("id", data.id);
       this.isLogin = true;
+      this.getPosition();
       this.moveToHome();
     },
   },
