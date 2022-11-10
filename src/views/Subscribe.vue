@@ -16,6 +16,7 @@ export default {
   },
   created() {
     console.log(localStorage.getItem("UserId"));
+    console.log(localStorage.getItem("status"));
   },
 };
 </script>

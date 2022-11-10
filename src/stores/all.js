@@ -137,31 +137,40 @@ export const useAllStore = defineStore("all", {
       const { data } = await instance.post({});
     },
     async payment() {
-      const access_token = localStorage.getItem("access_token");
-      const { data } = await instance.get("/users/payment-test", {
-        headers: { access_token },
-      });
-      // console.log(data.data.redirect_url);
-      // console.log(data.data.token);
-      // this.router.push(data.data.redirect_url);
-      // window.location = data.data.redirect_url;
-      const UserId = localStorage.getItem("UserId");
-      this.paymentToken = data.token;
-      snap.pay(this.paymentToken, {
-        onSuccess: async function (result) {
-          console.log(result);
-          const success = await instance.patch(
-            "/users/payment-success",
-            {},
-            {
-              params: {
-                token: data.token,
-              },
-              headers: { access_token },
-            }
-          );
-        },
-      });
+      try {
+        const access_token = localStorage.getItem("access_token");
+        const { data } = await instance.get("/users/payment-test", {
+          headers: { access_token },
+        });
+        // console.log(data.data.redirect_url);
+        // console.log(data.data.token);
+        // this.router.push(data.data.redirect_url);
+        // window.location = data.data.redirect_url;
+        const UserId = localStorage.getItem("UserId");
+
+        this.paymentToken = data.token;
+        snap.pay(this.paymentToken, {
+          onSuccess: async function (result) {
+            console.log(result);
+            const success = await instance.patch(
+              "/users/payment-success",
+              {},
+              {
+                params: {
+                  token: data.token,
+                },
+                headers: { access_token },
+              }
+            );
+            console.log("ini success", success);
+            // localStorage.setItem("status", "subscription");
+            localStorage.setItem("status", "subscription");
+            localStorage.setItem("test", "nambah nih");
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
 
       //! backup
       // snap.pay(this.paymentToken, {
