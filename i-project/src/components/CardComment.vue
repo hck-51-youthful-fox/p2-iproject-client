@@ -23,11 +23,7 @@ export default {
           {{ listComment.comment }}
         </div>
         <div class="mt-4">
-          <img
-            class="w-32 h-32 rounded-lg"
-            src="https://i.pravatar.cc/32"
-            alt=""
-          />
+          <img class="w-32 h-32 rounded-lg" :src="listComment.imgUrl" alt="" />
         </div>
       </div>
     </div>
