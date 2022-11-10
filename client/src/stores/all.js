@@ -5,6 +5,7 @@ export const useAllStore = defineStore("all", {
   state: () => ({
     beverages: [],
     transactions: [],
+    isLogin: false,
   }),
   actions: {
     async getBeverages() {
@@ -26,6 +27,9 @@ export const useAllStore = defineStore("all", {
       } catch (err) {
         console.log(err);
       }
+    },
+    changeLoginStatus(boolean) {
+      this.isLogin = boolean;
     },
   },
 });
