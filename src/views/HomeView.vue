@@ -79,7 +79,7 @@ export default {
       </form>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-4">
     <GameCard v-for="game in games" :key="`game-${game.id}`" :game="game" />
   </div>
 </template>
