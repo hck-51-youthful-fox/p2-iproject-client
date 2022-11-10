@@ -11,7 +11,19 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useGlobalStore, ["login"]),
+    ...mapActions(useGlobalStore, ["login", "handleCredentialResponse"]),
+  },
+  mounted() {
+    google.accounts.id.initialize({
+      client_id:
+        "376060977012-nlm0aq6b83vaqhcs1gdk41js7uraqhqa.apps.googleusercontent.com",
+      callback: this.handleCredentialResponse,
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" } // customization attributes
+    );
+    google.accounts.id.prompt(); // also display the One Tap dialog
   },
 };
 </script>

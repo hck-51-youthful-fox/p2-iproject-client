@@ -27,7 +27,7 @@ export default {
         height: 50vh;
         width: 80vw;
         background-size: 100% 100%;
-        background-image: url(https://thumbs.dreamstime.com/b/banner-cute-pomeranian-puppy-dog-paws-table-front-green-blue-wall-background-225695459.jpg);
+        background-image: url(https://t3.ftcdn.net/jpg/04/47/79/04/240_F_447790481_poh2Tlm9bOTNSaRIyfL3yrH0gFpcsh5s.jpg);
       "
     >
       <h1 class="text-white mt-3 ms-5 text-center">Welcome to Rent-A-Pet!</h1>

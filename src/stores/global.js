@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const origin = "http://localhost:3000";
+const origin = "https://iproject-rent-pets.herokuapp.com";
 export const useGlobalStore = defineStore("global", {
   state: () => ({
     pets: [],
@@ -159,6 +159,31 @@ export const useGlobalStore = defineStore("global", {
           title: "Registration error!",
           text: error.response.data.msg,
         });
+      }
+    },
+    async handleCredentialResponse(response) {
+      try {
+        let loginData = await axios({
+          method: "post",
+          url: `${origin}/users/google-login`,
+          headers: {
+            google_token: response.credential,
+          },
+        });
+        const { access_token, username } = loginData.data;
+        console.log(access_token, username);
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("username", username);
+        this.loggedIn = true;
+        this.username = username;
+        this.router.push("/");
+        Swal.fire({
+          title: "Login success",
+          text: `Weolcome, ${username}!`,
+          icon: "success",
+        });
+      } catch (error) {
+        Swal.fire("Login Error", `${error.response.data.msg}`, "error");
       }
     },
   },
