@@ -30,16 +30,18 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from) => {
-//   if (
-//     !localStorage.access_token &&
-//     (to.name != "signin" || to.name != "signup")
-//   ) {
-//     return { name: "signin" };
-//   }
-// });
-// if (localStorage.access_token && (to.name == "signin" || to.name == "signup")) {
-//   return { name: "dashboard" };
-// }
+router.beforeEach((to, from) => {
+  if (
+    !localStorage.access_token &&
+    (to.name == "dashboard" || to.name == "tables")
+  ) {
+    return { name: "signin" };
+  } else if (
+    localStorage.access_token &&
+    (to.name == "signin" || to.name == "signup")
+  ) {
+    return { name: "dashboard" };
+  }
+});
 
 export default router;

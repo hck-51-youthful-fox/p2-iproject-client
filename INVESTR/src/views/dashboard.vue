@@ -33,18 +33,20 @@ export default {
       "aapl",
       "amzn",
       "goog",
+      "email",
     ]),
   },
   watch: {
     realtimeLabel() {
       this.renderChart();
+      this.unwatch();
     },
   },
   methods: {
-    ...mapActions(useInvestrStore, ["snapPayment"]),
+    ...mapActions(useInvestrStore, ["snapPayment", "logout"]),
     renderChart() {
-      console.log(this.realtimeLabel);
-      console.log(this.realtimeStock);
+      // console.log(this.realtimeLabel);
+      // console.log(this.realtimeStock);
       let myChart = null;
       const data = {
         labels: this.realtimeLabel,
@@ -68,7 +70,10 @@ export default {
       // if (myChart != null) chart.update();
 
       myChart = new Chart(document.getElementById("worldwide-sales"), config);
-      console.log(myChart);
+      // console.log(myChart);
+    },
+    unwatch() {
+      this.$watch("realtimeLabel", callback);
     },
   },
   // mounted() {
@@ -87,7 +92,7 @@ export default {
         <div class="d-flex align-items-center ms-4 mb-4">
           <div class="position-relative"></div>
           <div class="ms-3">
-            <h6 class="mb-0">Jhon Doe</h6>
+            <h6 class="mb-0">{{ email }}</h6>
             <span>Investor</span>
           </div>
         </div>
@@ -123,14 +128,14 @@ export default {
               class="nav-link dropdown-toggle"
               data-bs-toggle="dropdown"
             >
-              <span class="d-none d-lg-inline-flex">John Doe</span>
+              <span class="d-none d-lg-inline-flex">{{ email }}</span>
             </a>
             <div
               class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0"
             >
-              <a href="#" class="dropdown-item">My Profile</a>
-              <a href="#" class="dropdown-item">Settings</a>
-              <a href="#" class="dropdown-item">Log Out</a>
+              <a href="#" class="dropdown-item" @click.prevent="logout"
+                >Log Out</a
+              >
             </div>
           </div>
         </div>
@@ -145,7 +150,7 @@ export default {
               <div
                 class="d-flex align-items-center justify-content-between mb-4"
               >
-                <h6 class="mb-0">Worldwide Sales</h6>
+                <h6 class="mb-0">Worldwide Stocks</h6>
                 <!-- <a href="">Show All</a> -->
               </div>
               <canvas id="worldwide-sales"></canvas>
@@ -159,7 +164,7 @@ export default {
       <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
           <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Recent Salse</h6>
+            <h6 class="mb-0">Recent Stocks</h6>
             <!-- <a href="">Show All</a> -->
           </div>
           <div class="table-responsive">
@@ -186,13 +191,7 @@ export default {
                   <td>
                     <a
                       class="btn btn-sm btn-primary m-2"
-                      href=""
-                      @click.prevent=""
-                      >Detail</a
-                    >
-                    <a
-                      class="btn btn-sm btn-primary m-2"
-                      @click.prevent="snapPayment"
+                      @click.prevent="snapPayment(1)"
                       href=""
                       >Buy</a
                     >
@@ -205,10 +204,9 @@ export default {
                   <td>{{ amzn.l }}</td>
                   <td>{{ amzn.pc }}</td>
                   <td>
-                    <a class="btn btn-sm btn-primary m-2" href="">Detail</a>
                     <a
                       class="btn btn-sm btn-primary m-2"
-                      @click.prevent="snapPayment"
+                      @click.prevent="snapPayment(2)"
                       href=""
                       >Buy</a
                     >
@@ -221,10 +219,9 @@ export default {
                   <td>{{ goog.l }}</td>
                   <td>{{ goog.pc }}</td>
                   <td>
-                    <a class="btn btn-sm btn-primary m-2" href="">Detail</a>
                     <a
                       class="btn btn-sm btn-primary m-2"
-                      @click.prevent="snapPayment"
+                      @click.prevent="snapPayment(3)"
                       href=""
                       >Buy</a
                     >

@@ -18,6 +18,7 @@ export const useInvestrStore = defineStore("investr", {
     aapl: {},
     amzn: {},
     goog: {},
+    investments: [],
   }),
   actions: {
     async login(obj) {
@@ -25,13 +26,13 @@ export const useInvestrStore = defineStore("investr", {
         const { email, password } = obj;
         const { data } = await axios({
           method: "post",
-          url: "/clients/login",
+          url: "/login",
           data: { email, password },
         });
         localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("email", data.email);
+        localStorage.setItem("email", email);
         this.isLogin = true;
-        this.email = data.email;
+        this.email = email;
         this.router.push("/");
         this.successAlert("Login Success");
       } catch (error) {
@@ -41,7 +42,7 @@ export const useInvestrStore = defineStore("investr", {
     async handleCredentialResponse(response) {
       try {
         const { data } = await axios({
-          url: "/clients/google-sign-in",
+          url: "/google-sign-in",
           method: "POST",
           headers: {
             google_token: response.credential,
@@ -60,18 +61,16 @@ export const useInvestrStore = defineStore("investr", {
     },
     logout() {
       localStorage.clear();
-      this.router.push("/");
+      this.router.push("/signin");
       this.successAlert("Logout Success");
     },
     async signUp(obj) {
-      //cek lg
-
       try {
-        const { email, password, address, phoneNumber } = obj;
+        const { email, password, username } = obj;
         const { data } = await axios({
           method: "post",
-          url: "/clients/register",
-          data: { email, password, address, phoneNumber },
+          url: "/register",
+          data: { email, password, username },
         });
         this.router.push("/login");
         this.successAlert("Registration Success");
@@ -102,10 +101,10 @@ export const useInvestrStore = defineStore("investr", {
         }
         this.realtimeStock = temp;
         this.realtimeLabel = tempLabel;
-        console.log(temp);
+        // console.log(temp);
       });
     },
-    async snapPayment() {
+    async snapPayment(id) {
       try {
         let { data } = await axios({
           method: "POST",
@@ -120,8 +119,7 @@ export const useInvestrStore = defineStore("investr", {
           // },
           onSuccess: async (result) => {
             try {
-              this.updateStatus();
-              // console.log('');
+              this.addInvestment(id);
             } catch (error) {
               console.log(error);
             }
@@ -154,6 +152,30 @@ export const useInvestrStore = defineStore("investr", {
         .catch((error) => {
           console.log(error);
         });
+    },
+    async addInvestment(StockId) {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: `/buy/${StockId}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.successAlert("Success buy stock");
+      } catch (error) {
+        this.errorAlert(error.response.data.message);
+      }
+    },
+    async fetchInvestment() {
+      try {
+        const { data } = await axios.get("/stocks", {
+          headers: { access_token: localStorage.access_token },
+        });
+        this.investments = data;
+      } catch (error) {
+        this.errorAlert(error.response.data.message);
+      }
     },
     async confirmAlert() {
       try {
