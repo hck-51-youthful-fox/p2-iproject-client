@@ -48,7 +48,7 @@ export const useShowStore = defineStore("show", {
       try {
         let access_token = localStorage.access_token;
         await axios.delete("/rents/" + id, { headers: { access_token } });
-        this.fetchRented()
+        this.fetchRented();
       } catch (err) {
         console.log(err);
       }
@@ -71,7 +71,8 @@ export const useShowStore = defineStore("show", {
           querySearch = `search?q=${search}`;
         }
         let { data } = await axios.get(`/${querySearch}`);
-        this.searched = data;
+        let mapped = data.map((el) => el.show);
+        this.searched = mapped;
         this.router.push({ name: "search", params: { query: search } });
       } catch (err) {
         console.log(err);
