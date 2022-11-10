@@ -1,9 +1,28 @@
 <script>
+import { useAllStore } from "../stores/all";
+import { mapActions, mapState } from "pinia";
+
 export default {
   name: "Sidebar",
   components: {},
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(useAllStore, ["isPremium"]),
+  },
+  methods: {
+    ...mapActions(useAllStore, ["showErrorAlert"]),
+    handleClick() {
+      console.log("miawww");
+      if (this.isPremium) {
+        this.$router.push("/likes");
+      } else {
+        this.showErrorAlert(
+          "You need to subscribe to our premium plan to enjoy this feature"
+        );
+      }
+    },
   },
 };
 </script>
@@ -27,7 +46,7 @@ export default {
         </li>
         <li class="nav-item">
           <a
-            @click.prevent="$router.push('/likes')"
+            @click.prevent="handleClick"
             class="nav-link"
             href=""
             id="nav-category"
@@ -84,7 +103,7 @@ export default {
           >
         </li>
       </ul>
-      <h6
+      <!-- <h6
         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase"
       >
         <span>Subscriptions</span>
@@ -102,7 +121,7 @@ export default {
             >Logout</a
           >
         </li>
-      </ul>
+      </ul> -->
     </div>
   </nav>
 </template>

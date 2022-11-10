@@ -6,11 +6,14 @@ import { RouterLink, RouterView } from "vue-router";
 export default {
   name: "App",
   computed: {
-    ...mapWritableState(useAllStore, ["isLogin"]),
+    ...mapWritableState(useAllStore, ["isLogin", "profPic"]),
   },
   created() {
     if (localStorage.access_token) {
       this.isLogin = true;
+    }
+    if (localStorage.profPic) {
+      this.profPic = localStorage.profPic;
     }
   },
 };

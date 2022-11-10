@@ -41,9 +41,9 @@ export default {
   <div class="wrapper">
     <nav class="navbar bg-white navbar-expand-lg sticky-top py-2 px-0">
       <div class="container-fluid">
-        <a href="" class="nav-link ms-2">
+        <button href="" class="nav-link ms-2">
           <span class="icon material-symbols-outlined">menu</span>
-        </a>
+        </button>
         <a
           @click.prevent="$router.push('/')"
           href=""
@@ -130,7 +130,10 @@ export default {
                   <img
                     class="rounded-circle"
                     width="30"
-                    :src="profPic"
+                    :src="
+                      profPic ||
+                      'https://st3.depositphotos.com/6672868/13801/v/600/depositphotos_138013506-stock-illustration-user-profile-group.jpg'
+                    "
                     alt=""
                   />
                 </a>
