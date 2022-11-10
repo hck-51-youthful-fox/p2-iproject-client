@@ -87,7 +87,8 @@ export default {
           />
         </svg>
       </button>
-      <button></button>
+      <button>
+      </button>
     </div>
   </div>
   <cardThread

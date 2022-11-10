@@ -31,7 +31,7 @@ export default {
           <div>
             <img
               class="mx-auto h-12 w-auto"
-              src="./img/chill_logo.svg"
+              src="../assets/vga.svg"
               alt="d'Movie"
             />
             <h2

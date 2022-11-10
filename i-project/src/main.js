@@ -1,5 +1,6 @@
 import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
+import VueSocialSharing from "vue-social-sharing";
 
 import App from "./App.vue";
 import router from "./router";
@@ -12,6 +13,7 @@ pinia.use(({ store }) => {
   store.router = markRaw(router);
 });
 
+app.use(VueSocialSharing);
 app.use(pinia);
 app.use(router);
 

@@ -1,6 +1,19 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 const baseUrl = "http://localhost:3000";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 export const useDataStore = defineStore("data", {
   state: () => ({
@@ -23,8 +36,15 @@ export const useDataStore = defineStore("data", {
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         this.router.push("/");
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
       } catch (error) {
-        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: `${error.response.data.message}`,
+        });
       }
     },
 
@@ -84,9 +104,16 @@ export const useDataStore = defineStore("data", {
         name = "";
         rating = "";
         thread = "";
+        Toast.fire({
+          icon: "success",
+          title: "Add new thread successfully",
+        });
         window.location.reload();
       } catch (error) {
-        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: `${error.response.data.message}`,
+        });
       }
     },
     async registerUser(username, email, password) {
@@ -97,8 +124,15 @@ export const useDataStore = defineStore("data", {
           password,
         });
         this.router.push("/");
+        Toast.fire({
+          icon: "success",
+          title: "Register new user successfully",
+        });
       } catch (error) {
-        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: `${error.response.data.message}`,
+        });
       }
     },
     async addComment(threadId, comment, imgUrl) {
@@ -111,10 +145,16 @@ export const useDataStore = defineStore("data", {
           },
           { headers: { access_token: localStorage.access_token } }
         );
+        Toast.fire({
+          icon: "success",
+          title: "Add new comment successfully",
+        });
         window.location.reload();
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: `${error.response.data.message}`,
+        });
       }
     },
 
@@ -133,6 +173,10 @@ export const useDataStore = defineStore("data", {
       localStorage.clear();
       this.isLogin = false;
       this.router.push("/");
+      Toast.fire({
+        icon: "success",
+        title: "Signed Out   successfully",
+      });
     },
   },
 });
