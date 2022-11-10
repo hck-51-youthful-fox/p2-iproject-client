@@ -5,8 +5,8 @@ export const useAllStore = defineStore("counter", {
   state: () => ({
     videos: [],
     video: {},
-    baseUrl: "http://localhost:3000",
-    // baseUrl: "https://youchubb.herokuapp.com",
+    // baseUrl: "http://localhost:3000",
+    baseUrl: "https://youchubb.herokuapp.com",
     paymentResponse: "",
     isLogin: false,
     likes: [],
