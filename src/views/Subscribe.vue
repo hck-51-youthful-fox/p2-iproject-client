@@ -1,4 +1,7 @@
 <script>
+import { mapActions } from "pinia";
+import { useAllStore } from "../stores/all";
+
 export default {
   name: "Subscribe",
   data() {
@@ -9,16 +12,11 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    payment() {
-      snap.pay("3fbbacd9-b827-47d7-9ec1-1ea8131c2f93", {
-        onSuccess(result) {
-          console.log(result);
-          console.log("Berhasillllllll");
-        },
-      });
-    },
+    ...mapActions(useAllStore, ["payment"]),
   },
-  created() {},
+  created() {
+    console.log(localStorage.getItem("UserId"));
+  },
 };
 </script>
 
@@ -27,10 +25,11 @@ export default {
   <P>Bayar subscription di halaman ini</P>
   <br />
   <br />
+  <p>Subs price: Rp10.000</p>
   <div>
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
       @click.prevent="payment"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
       id="pay-button"
     >
       Pay, Pay, Pay!

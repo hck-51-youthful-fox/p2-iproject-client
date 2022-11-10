@@ -1,4 +1,7 @@
 <script>
+import { mapActions } from "pinia";
+import { useAllStore } from "../stores/all";
+
 export default {
   name: "Navbar",
   data() {
@@ -8,7 +11,10 @@ export default {
   emits: [""],
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    ...mapActions(useAllStore, ["logout"]),
+    ...mapActions(useAllStore, ["changePage"]),
+  },
   created() {},
 };
 </script>
@@ -17,6 +23,18 @@ export default {
   <header
     class="h-32 w-full flex items-center relative justify-center px-5 space-x-10"
   >
+    <button
+      @click.prevent="changePage('home')"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+    >
+      Home
+    </button>
+    <button
+      @click.prevent="changePage('library')"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+    >
+      Library
+    </button>
     <div class="hidden relative md:block">
       <div
         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -47,9 +65,16 @@ export default {
     </div>
     <div>
       <button
+        @click.prevent="changePage('subscribe')"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
       >
         Premium Button
+      </button>
+      <button
+        @click.prevent="logout"
+        class="ml-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+      >
+        Log Out
       </button>
     </div>
   </header>
