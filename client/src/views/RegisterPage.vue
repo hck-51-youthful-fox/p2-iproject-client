@@ -1,5 +1,5 @@
 <script>
-import axios from "../apis/axiosRegister";
+import axios from "../apis/axios";
 
 export default {
   name: "RegisterView",
@@ -26,7 +26,7 @@ export default {
           password: this.formRegister.password,
         });
 
-        this.moveToHome();
+        this.moveToLandingPage();
       } catch (err) {
         console.log(err);
       }

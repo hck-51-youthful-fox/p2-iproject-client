@@ -9,7 +9,7 @@ export default {
     ...mapState(useAllStore, ["transactions"]),
   },
   methods: {
-    ...mapActions(useAllStore, ["getTransaction"]),
+    ...mapActions(useAllStore, ["getTransaction", "getPayment"]),
   },
   created() {
     this.getTransaction();
@@ -28,7 +28,7 @@ export default {
             :key="transaction.id"
             :transaction="transaction"
           />
-          <div class="btn btn-6 ms-4">bayar</div>
+          <div class="btn btn-6 ms-4" @click.prevent="getPayment">bayar</div>
         </div>
       </div>
     </div>
