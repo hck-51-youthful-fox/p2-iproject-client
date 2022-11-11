@@ -41,20 +41,25 @@ export default {
     },
     async login() {
       try {
-        const { data } = await axios.post("/login", {
-          email: this.formLogin.email,
-          password: this.formLogin.password,
+        const { data } = await axios({
+          method: "post",
+          url: "/login",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            email: this.formLogin.email,
+            password: this.formLogin.password,
+          },
         });
 
         localStorage.setItem("access_token", data.access_token);
+        this.isLogin = true;
         this.getPosition();
-        localStorage.setItem("isLogin", this.changeLoginStatus(true));
+        console.log(localStorage.getItem("latitude"));
         this.moveToHome();
       } catch (err) {
-        Swal.fire({
-          icon: "error",
-          text: err.response.data.message,
-        });
+        console.log(err);
       }
     },
     async handleCredentialResponse(response) {
