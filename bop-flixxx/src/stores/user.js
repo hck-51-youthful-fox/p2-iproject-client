@@ -27,8 +27,8 @@ export const useUserStore = defineStore("user", {
       } catch (error) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
+          title: "Invalid email/password",
+          text: "Make sure you have verified your email, check your email for verification",
         });
       }
     },
@@ -39,7 +39,7 @@ export const useUserStore = defineStore("user", {
         Swal.fire({
           icon: "success",
           title: "Your are registered! Check your email for verification",
-          timer: 1500,
+          showCloseButton: true,
         });
       } catch (error) {
         Swal.fire({
