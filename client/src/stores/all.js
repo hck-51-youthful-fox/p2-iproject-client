@@ -21,7 +21,11 @@ export const useAllStore = defineStore("all", {
     },
     async getTransaction() {
       try {
-        const { data } = await axios.get("/transactions");
+        const { data } = await axios.get("/transactions", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
         console.log(data);
         this.transactions = data;
       } catch (err) {
@@ -40,7 +44,55 @@ export const useAllStore = defineStore("all", {
           },
         });
 
-        this.weather = data;
+        this.weather = `Suhu sekarang ${data.celcius}°C. ${data.message}`;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getPayment() {
+      try {
+        const access_token = localStorage.getItem("access_token");
+
+        const { data } = await axios.post(
+          "/payment",
+          {},
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+
+        this.paymentToken = data.token;
+        snap.pay(this.paymentToken, {
+          onSuccess: async () => {
+            try {
+              const { data } = axios.patch(
+                "/payment",
+                {},
+                {
+                  headers: {
+                    access_token: localStorage.getItem("access_token"),
+                  },
+                }
+              );
+
+              this.router.push({ name: "menu-page" });
+            } catch (err) {
+              console.log(err);
+            }
+          },
+          onClose: async () => {
+            try {
+              console.log("Customer closed the pop-up window");
+              this.router.push({ name: "menu-page" });
+            } catch (err) {
+              console.log(err);
+            }
+          },
+        });
+
+        console.log(data);
       } catch (err) {
         console.log(err);
       }
