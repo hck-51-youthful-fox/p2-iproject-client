@@ -30,7 +30,7 @@ export default {
     window.addEventListener("scroll", this.onScroll);
     this.exploreGames();
   },
-  destroyed() {
+  beforeUnmount() {
     window.removeEventListener("scroll", this.onScroll);
     this.flushExplore();
   },

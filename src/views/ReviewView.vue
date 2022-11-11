@@ -63,6 +63,7 @@ export default {
                 ></textarea>
               </div>
               <div class="d-flex my-2 gap-2">
+                <label class="align-self-center">Score:</label>
                 <input
                   v-model="reviewForm.score"
                   type="number"
