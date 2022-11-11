@@ -90,7 +90,7 @@ export const useBonfireStore = defineStore("bonfire", {
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
-          text: err.response.data.message,
+          text: error.response.data.message,
         });
       }
     },
@@ -204,7 +204,7 @@ export const useBonfireStore = defineStore("bonfire", {
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
-          text: err.response.data.message,
+          text: error.response.data.message,
         });
       }
     },
@@ -234,7 +234,7 @@ export const useBonfireStore = defineStore("bonfire", {
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
-          text: err.response.data.message,
+          text: error.response.data.message,
         });
       }
     },
@@ -273,7 +273,7 @@ export const useBonfireStore = defineStore("bonfire", {
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
-          text: err.response.data.message,
+          text: error.response.data.message,
         });
       }
     },
@@ -297,7 +297,7 @@ export const useBonfireStore = defineStore("bonfire", {
         Swal.fire({
           title: "An Error has occured...",
           icon: "error",
-          text: err.response.data.message,
+          text: error.response.data.message,
         });
       }
     },

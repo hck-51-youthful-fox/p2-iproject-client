@@ -80,7 +80,7 @@ export default {
         </ul>
 
         <ul v-show="isLoggedIn" class="navbar-nav">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown mr-3">
             <a
               class="nav-link dropdown-toggle align-items-center"
               href="#"
