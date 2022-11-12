@@ -93,7 +93,7 @@ export default {
                   type="number"
                   autocomplete="off"
                   class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-400 focus:outline-none focus:ring-gray-400 sm:text-sm"
-                  placeholder="No. Handphone (Opsional)"
+                  placeholder="No. Handphone"
                 />
               </div>
 
@@ -106,7 +106,7 @@ export default {
                   type="text"
                   autocomplete="off"
                   class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-400 focus:outline-none focus:ring-gray-400 sm:text-sm"
-                  placeholder="Adress (Optional)"
+                  placeholder="Alamat"
                 ></textarea>
               </div>
 
