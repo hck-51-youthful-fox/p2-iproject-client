@@ -2,8 +2,9 @@
 Makans is a restaurant website for ordering food and making payments through the website.
 
 ## Built With
-* [![Vue][Vue.js]][https://vuejs.org/]
-* [![Tailwind][tailwindcss.com]][https://tailwindcss.com/]
+* Vue
+* Tailwindcss
+* Express.js
 
 ## Features
 * Add food to Cart
