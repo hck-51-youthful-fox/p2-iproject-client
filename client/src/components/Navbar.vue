@@ -18,7 +18,7 @@ export default {
 
 <template>
   <nav
-    class="flex justify-between px-44 py-4 items-center bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200"
+    class="flex justify-between px-72 py-4 items-center bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200"
   >
     <div>
       <RouterLink :to="{ name: 'home' }" class="flex items-center">
