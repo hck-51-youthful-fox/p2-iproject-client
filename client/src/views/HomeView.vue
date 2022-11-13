@@ -21,6 +21,7 @@ export default {
     ...mapActions(useCategoriesStore, ["fetchCategories"]),
     previousHandler() {
       this.currentPage -= 1;
+      this.changePageNumber(this.currentPage);
       this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
     nextHandler() {
@@ -29,6 +30,7 @@ export default {
         this.pageAccessedNow = this.totalPage;
         this.currentPage = this.pageAccessedNow;
       }
+      this.changePageNumber(this.currentPage);
       this.fetchFoods(this.currentPage, this.selectedCategory, this.search);
     },
     changePageNumber(index) {
@@ -84,7 +86,7 @@ export default {
     class="pt-96 py-24 mt-12 relative w-full bg-[url('../assets/banner.jpg')] bg-cover bg-no-repeat"
   ></section>
   <div
-    class="content bg-white pt-8 md:p-8 pb-12 ml-4 lg:max-w-lg w-96 lg:absolute top-96 left-40 border round-md border-slate-300"
+    class="content bg-white pt-8 md:p-8 pb-12 ml-4 lg:max-w-lg w-96 lg:absolute top-96 left-64 border round-md border-slate-300"
   >
     <div class="flex justify-between font-semibold round-md text-3xl">
       <p>Mau pesan makan apa hari ini?</p>
@@ -113,7 +115,7 @@ export default {
           <input
             type="text"
             v-model="search"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-4 focus:outline-none focus:ring-[#13984f] block w-full pl-10 p-2.5"
             placeholder="Cari makanan"
           />
         </div>
@@ -140,7 +142,7 @@ export default {
       </form>
     </div>
   </div>
-  <section class="pt-20 px-40 bg-slate-50">
+  <section class="pt-16 pb-8 px-64 bg-slate-50">
     <main class="flex-1 max-h-full p-5">
       <div class="flex py-4">
         <h2
@@ -190,101 +192,108 @@ export default {
         </div>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
         <CardFood v-for="food in foods.rows" :key="food.id" :food="food" />
       </div>
 
-      <div class="flex pt-4 flex-row-reverse items-center">
+      <div class="flex pt-8 flex-row-reverse items-center">
         <div class="flex items-center">
-          <div class="flex items-center space-x-6">
-            <div
-              class="pt-4 isolate inline-flex -space-x-px rounded-md shadow-sm"
+          <a
+            v-if="this.currentPage > 1"
+            @click.prevent="previousHandler"
+            class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+          >
+            <svg
+              class="h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
             >
+              <path
+                fill-rule="evenodd"
+                d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+          <a
+            v-else
+            class="bg-gray-200 relative inline-flex items-center rounded-l-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
+            disabled
+          >
+            <svg
+              class="h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+          <div
+            class="flex items-center space-x-6"
+            v-for="index in foods.totalPage"
+            :key="index"
+          >
+            <div class="isolate inline-flex -space-x-px rounded-md shadow-sm">
               <a
-                v-if="this.currentPage > 1"
-                @click.prevent="previousHandler"
-                class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-              >
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
-              <a
-                v-else
-                class="bg-gray-200 relative inline-flex items-center rounded-l-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
-                disabled
-              >
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
-              <a
-                v-for="index in foods.totalPage"
-                :key="index"
                 @click.prevent="changePageNumber(index)"
+                v-if="+index !== +this.$route.query.page"
                 class="relative cursor-pointer hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex"
                 >{{ index }}</a
               >
               <a
-                v-if="this.totalPage > 1 && this.currentPage !== this.totalPage"
-                @click.prevent="nextHandler"
-                class="cursor-pointer relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-              >
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
-              <a
+                @click.prevent="changePageNumber(index)"
                 v-else
-                class="bg-gray-200 relative inline-flex items-center rounded-r-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
-                disabled
+                class="relative cursor-pointer hidden items-center border border-[#00B14F] bg-green-100 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex"
+                >{{ index }}</a
               >
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
             </div>
           </div>
+          <a
+            v-if="this.totalPage > 1 && this.currentPage !== this.totalPage"
+            @click.prevent="nextHandler"
+            class="cursor-pointer relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+          >
+            <svg
+              class="h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+          <a
+            v-else
+            class="bg-gray-200 relative inline-flex items-center rounded-r-md border border-gray-300 px-2 py-2 text-sm font-medium text-white"
+            disabled
+          >
+            <svg
+              class="h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </main>
