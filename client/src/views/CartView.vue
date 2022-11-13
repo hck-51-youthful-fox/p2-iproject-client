@@ -20,14 +20,6 @@ export default {
     ...mapActions(useFoodStore, ["convertPrice"]),
     ...mapActions(useCartStore, ["findShippingCost"]),
     ...mapActions(useCartStore, ["addTransaction"]),
-    // handleAddTransaction() {
-    //   this.$router.push({
-    //     name: "invoice",
-    //     params: {
-    //       id: this.product.id,
-    //     },
-    //   });
-    // },
   },
   computed: {
     ...mapState(useCartStore, ["cart"]),
@@ -161,8 +153,15 @@ export default {
                 </div>
                 <div class="flex items-center justify-between">
                   <button
+                    v-if="cost !== 0"
                     @click="addTransaction(cost)"
                     class="block w-full py-4 font-bold text-center text-gray-100 uppercase bg-[#00B14F] rounded-md focus:shadow-outline hover:bg-[#13984f]"
+                  >
+                    Checkout
+                  </button>
+                  <button
+                    v-else
+                    class="block w-full py-4 font-bold text-center text-gray-100 uppercase bg-gray-400 rounded-md focus:shadow-outline"
                   >
                     Checkout
                   </button>
