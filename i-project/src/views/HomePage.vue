@@ -39,7 +39,7 @@ export default {
       </div>
     </section>
   </div>
-  <section class="container mx-auto py-6 md:py-10 antialiased">
+  <!-- <section class="container mx-auto py-6 md:py-10 antialiased">
     <h2 class="text-3xl font-bold mb-20 text-center">TOP PEFORMANCE VGA</h2>
     <section class="grid lg:grid-cols-2 2xl:grid-cols-4 grid-cols-1 gap-8">
       <cardVGA
@@ -48,7 +48,7 @@ export default {
         :listVga="listVga"
       />
     </section>
-  </section>
+  </section> -->
   <h2 class="text-3xl font-bold mt-20 mb-20 text-center">PC PEEKER FORUM</h2>
   <formPost v-if="isLogin !== false" />
   <div

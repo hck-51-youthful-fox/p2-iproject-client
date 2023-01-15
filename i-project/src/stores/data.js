@@ -54,6 +54,7 @@ export const useDataStore = defineStore("data", {
         const { data } = await axios.get(`${baseUrl}/news`);
         this.dataNews = data;
         this.newsImage = data.news.urlToImage;
+        console.log(data, "dari news");
       } catch (error) {
         console.log(error);
       }
